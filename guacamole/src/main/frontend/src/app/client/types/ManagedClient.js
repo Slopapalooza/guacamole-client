@@ -658,11 +658,47 @@ angular.module('client').factory('ManagedClient', ['$rootScope', '$injector',
             });
         };
         
+        /**
+         * Instructions that must not be replayed in secondary monitor
+         * windows. These are connection-level concerns handled by the
+         * primary window only - replaying "audio" would create a duplicate
+         * AudioPlayer in every window (audible echo), and stream/control
+         * instructions are pure overhead. Display, clipboard, cursor and
+         * sync instructions are replayed. Stream data instructions
+         * ("blob"/"end") pass through: they are needed by image and
+         * clipboard streams, and are safely ignored for streams a secondary
+         * window never created.
+         */
+        const NON_DISPLAY_INSTRUCTIONS = {
+            'ack'        : true,
+            'args'       : true,
+            'argv'       : true,
+            'audio'      : true,
+            'body'       : true,
+            'disconnect' : true,
+            'error'      : true,
+            'file'       : true,
+            'filesystem' : true,
+            'log'        : true,
+            'msg'        : true,
+            'name'       : true,
+            'nest'       : true,
+            'nop'        : true,
+            'pipe'       : true,
+            'required'   : true,
+            'undefine'   : true
+        };
+
         // Update display on other monitors
         client.ondisplayupdate = async function displayUpdate(opcode, parameters) {
 
             // Skip if no other monitor
             if (guacManageMonitor.getMonitorCount() <= 1)
+                return;
+
+            // Skip instructions that are not relevant to remote display
+            // windows
+            if (NON_DISPLAY_INSTRUCTIONS[opcode])
                 return;
 
             const handler = {

@@ -111,6 +111,14 @@ angular.module('client').directive('guacClientSecondary', [function guacClient()
         // Set client instance on guacManageMonitor service
         guacManageMonitor.setClient(client);
 
+        // This window renders a full-canvas replica of the combined display;
+        // shift it so this monitor's slice is in view whenever the layout
+        // changes
+        guacManageMonitor.onoffsets = function offsetsChanged(x, y) {
+            displayElement.style.transform =
+                    'translate(' + (-x) + 'px,' + (-y) + 'px)';
+        };
+
         // Remove any existing display
         displayContainer.innerHTML = "";
 
@@ -198,12 +206,16 @@ angular.module('client').directive('guacClientSecondary', [function guacClient()
             // Ensure software cursor is shown
             display.showCursor(true);
 
-            // Update client-side cursor
-            display.moveCursor(e.state.x, e.state.y);
-
             // Click on actual display instead of the first
             const displayOffsetX = guacManageMonitor.getOffsetX();
             const displayOffsetY = guacManageMonitor.getOffsetY();
+
+            // Update client-side cursor. The cursor lives in display
+            // coordinates: the display is a full-canvas replica shifted by
+            // this monitor's offset, so window coordinates must be
+            // translated back into the combined display's space.
+            display.moveCursor(e.state.x + displayOffsetX,
+                               e.state.y + displayOffsetY);
 
             // Convert mouse state to serializable object
             mouseState.down = e.state.down;

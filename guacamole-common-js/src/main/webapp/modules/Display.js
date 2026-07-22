@@ -784,13 +784,21 @@ Guacamole.Display = function() {
     this.resize = function(layer, width, height) {
         scheduleTask(function __display_resize() {
 
-            // Adjust width when using multiple monitors
-            if (monitorWidth)
-                width = monitorWidth;
+            // Constrain to the current monitor size when using multiple
+            // monitors. Only the default layer represents this monitor's
+            // slice of the combined display - buffers and sublayers must
+            // keep their requested dimensions.
+            if (layer === default_layer) {
 
-            // Adjust height when using multiple monitors
-            if (monitorHeight)
-                height = monitorHeight;
+                // Adjust width when using multiple monitors
+                if (monitorWidth)
+                    width = monitorWidth;
+
+                // Adjust height when using multiple monitors
+                if (monitorHeight)
+                    height = monitorHeight;
+
+            }
 
             layer.resize(width, height);
 

@@ -216,7 +216,7 @@ angular.module('index').config(['$routeProvider', '$locationProvider',
         })
 
         // Secondary monitor view
-        .when('/secondaryMonitor/:id', {
+        .when('/secondaryMonitor/:id/:channel', {
             bodyClassName : 'secondaryMonitor',
             templateUrl   : 'app/client/templates/secondaryMonitor.html',
             controller    : 'secondaryMonitorController',
