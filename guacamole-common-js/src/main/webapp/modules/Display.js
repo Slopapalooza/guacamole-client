@@ -763,8 +763,23 @@ Guacamole.Display = function() {
      *     The height of the monitor, in pixels.
      */
     this.setMonitorSize = function setMonitorSize(width, height) {
+
+        var changed = (monitorWidth !== width || monitorHeight !== height);
+
         monitorWidth = width;
         monitorHeight = height;
+
+        // The server sends the combined-display "size" instruction BEFORE the
+        // "multimon-layout" that drives this call, and the size handler clamps
+        // the default layer to the (then-current) monitor size. When the
+        // monitor size changes on resize, the layer was therefore clamped to
+        // the OLD size and would stay that way - leaving newly-exposed regions
+        // blank - until some later instruction happened to resize it again.
+        // Resize the default layer to the new monitor size now so it always
+        // matches the layout, without waiting for another size instruction.
+        if (changed && width && height)
+            guac_display.resize(default_layer, width, height);
+
     }
 
     /**
