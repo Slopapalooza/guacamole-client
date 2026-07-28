@@ -501,16 +501,26 @@ angular.module('form').directive('guacForm', [function form() {
             };
 
             /**
-             * Expands or collapses every advanced section.
+             * Expands or collapses every advanced section of every guac-form
+             * sharing this form's parent scope. Broadcast so that pages
+             * rendering multiple advanced-layout forms (e.g. attributes and
+             * protocol parameters in one card) expand and collapse together
+             * from a single control row.
              *
              * @param {Boolean} state
              *     true to expand all sections, false to collapse all.
              */
             $scope.setAllSections = function setAllSections(state) {
+                $scope.$parent.$broadcast('guacFormSetAllSections', state);
+            };
+
+            // Apply expand/collapse-all requests from any form sharing the
+            // parent scope, including this one
+            $scope.$on('guacFormSetAllSections', function setAll(event, state) {
                 angular.forEach($scope.advancedSections, function setSection(section) {
                     $scope.expanded[section.key] = state;
                 });
-            };
+            });
 
             // Rebuild layout whenever the set of forms is replaced or the
             // namespace changes (the two update together on protocol switch,

@@ -63,6 +63,10 @@
     font-weight: 600;
     letter-spacing: -0.01em;
     text-transform: none;
+
+    /* Align the title's left edge with the page content and subtitle */
+    margin: 0;
+    padding-left: 0;
 }
 
 /* Breadcrumb-style subtitle line under the page header */
@@ -80,49 +84,84 @@
  * this redesign's own card headers.
  */
 
+/* Standalone headers (Permissions, History, Groups/Connections editors,
+ * settings sections): grey banner bars above their cards */
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) h2.header,
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .header ~ * .header,
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .header ~ .header {
-    background: none;
+    background: #f3f4f6;
     border: none;
     box-shadow: none;
-    padding: 0;
-    margin: 1.75rem 0 0.75rem;
+    border-radius: 8px;
+    padding: 0.625rem 1rem;
+    margin: 1.5rem 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #374151;
 }
 
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) h2.header,
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .header ~ * .header h2,
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .header ~ .header h2,
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .header ~ .header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #374151;
+    margin: 0;
+    padding: 0;
+}
+
+/* In-card section headers: grey banners bleeding to the card edges */
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-group h3.form-header,
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) h3.advanced-header {
-    background: none;
+    background: #f3f4f6;
     border: none;
-    padding: 0;
-    font-size: 0.8125rem;
-    font-weight: 700;
+    border-bottom: 1px solid #e2e4e9;
+    margin: 1.25rem -1.5rem 1rem;
+    padding: 0.625rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #6b7280;
+    color: #374151;
 }
 
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-group h3.form-header {
-    margin: 1.25rem 0 0.75rem;
-}
-
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-group .form:first-child h3.form-header {
-    margin-top: 0;
-}
-
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) h3.advanced-header {
-    margin: 0 0 0.75rem;
+/* Headers at the very top of a card round into its corners */
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-group > div > .form:first-child h3.form-header,
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-group > .form.form-essentials h3.form-header,
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .attributes .form-group .form h3.form-header,
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .section > h3.advanced-header:first-child {
+    margin-top: -1.25rem;
+    border-radius: 10px 10px 0 0;
 }
 
 /*
  * 3. Card treatment for the major page sections
  */
 
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .section,
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .section {
+    background: #fff;
+    border: 1px solid #e2e4e9;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+    padding: 1.25rem 1.5rem;
+    margin: 0 0 1.25rem;
+}
+
+/* Attribute forms render as one card per section (Profile, Account
+ * Restrictions, TOTP status, concurrency settings, ...), each headed by
+ * its own banner. The container itself carries no chrome. */
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .attributes {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+}
+
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .attributes .form-group .form:not(.advanced-section):not(.form-essentials) {
     background: #fff;
     border: 1px solid #e2e4e9;
     border-radius: 10px;
@@ -151,9 +190,10 @@
 }
 
 /* The advanced card holds two guac-form instances (attributes and protocol
- * parameters); only the parameter form's expand/collapse-all controls are
- * shown to avoid two identical control rows in one card */
-.manage-connection .advanced-settings .attributes .section-controls {
+ * parameters). Expand/collapse-all is synchronized across instances, so a
+ * single control row - the attribute form's, which renders at the top of
+ * the card - is shown; the parameter form's duplicate row is hidden. */
+.manage-connection .advanced-settings > .form-group .section-controls {
     display: none;
 }
 
