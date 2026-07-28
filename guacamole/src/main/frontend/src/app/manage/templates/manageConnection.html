@@ -6,6 +6,7 @@
         <h2>{{'MANAGE_CONNECTION.SECTION_HEADER_EDIT_CONNECTION' | translate}}</h2>
         <guac-user-menu></guac-user-menu>
     </div>
+    <div class="page-subtitle" ng-show="connection.name">{{connection.name}} &middot; {{getProtocolName(connection.protocol) | translate}}</div>
     <div class="section">
         <table class="properties">
             
@@ -38,18 +39,24 @@
         </table>
     </div>
 
-    <!-- Connection attributes section -->
-    <div class="attributes">
-        <guac-form namespace="'CONNECTION_ATTRIBUTES'" content="attributes"
-                   model="connection.attributes" model-only="!managementPermissions.canChangeAllAttributes"></guac-form>
-    </div>
-
-    <!-- Connection parameters -->
-    <h2 class="header">{{'MANAGE_CONNECTION.SECTION_HEADER_PARAMETERS' | translate}}</h2>
+    <!-- Essential connection parameters -->
     <div class="section connection-parameters" ng-class="{loading: !parameters}">
         <guac-form namespace="getNamespace(connection.protocol)"
                    content="protocols[connection.protocol].connectionForms"
-                   model="parameters"></guac-form>
+                   model="parameters" layout="essentials"></guac-form>
+    </div>
+
+    <!-- Advanced settings: connection attributes and remaining parameters -->
+    <div class="section advanced-settings">
+        <h3 class="advanced-header">{{'FORM_LAYOUT.SECTION_HEADER_ADVANCED' | translate}}</h3>
+        <div class="attributes">
+            <guac-form namespace="'CONNECTION_ATTRIBUTES'" content="attributes"
+                       model="connection.attributes" model-only="!managementPermissions.canChangeAllAttributes"
+                       layout="advanced"></guac-form>
+        </div>
+        <guac-form namespace="getNamespace(connection.protocol)"
+                   content="protocols[connection.protocol].connectionForms"
+                   model="parameters" layout="advanced"></guac-form>
     </div>
 
     <!-- Form action buttons -->

@@ -92,7 +92,19 @@ angular.module('form').directive('guacForm', [function form() {
              *
              * @type ManagedClient
              */
-            client: '='
+            client: '=',
+
+            /**
+             * The layout mode to render with, if any. When omitted, all
+             * forms render flat with their fields visible (the standard
+             * behavior). When "essentials", only the fields curated as
+             * essential by formLayoutService render, flat and without
+             * section headers. When "advanced", all non-essential fields
+             * render grouped in their sections as collapsible disclosures.
+             *
+             * @type String
+             */
+            layout : '@'
 
         },
         templateUrl: 'app/form/templates/form.html',
@@ -300,6 +312,216 @@ angular.module('form').directive('guacForm', [function form() {
                 return false;
 
             };
+
+            /*
+             * Support for the optional "essentials"/"advanced" layout modes.
+             * All state below is inert unless the layout attribute is
+             * present; the standard rendering path is unaffected.
+             */
+
+            var formLayoutService = $injector.get('formLayoutService');
+
+            /**
+             * The curated essential fields to render when the layout mode is
+             * "essentials", in curated order.
+             *
+             * @type Field[]
+             */
+            $scope.essentialFields = [];
+
+            /**
+             * The sections to render as disclosures when the layout mode is
+             * "advanced". Each entry provides the underlying form, the
+             * non-essential fields to render, a unique key for expansion
+             * state, the translation keys of the fields having set values
+             * (for the collapsed-state badge), and whether any of those set
+             * fields is sensitive.
+             *
+             * @type Object[]
+             */
+            $scope.advancedSections = [];
+
+            /**
+             * Map of section key to whether that section is currently
+             * expanded.
+             *
+             * @type Object.<String, Boolean>
+             */
+            $scope.expanded = {};
+
+            /**
+             * Produces the translation string for the header of the given
+             * field, identical in form to the string used by the field's own
+             * label.
+             *
+             * @param {Field} field
+             *     The field for which to produce the translation string.
+             *
+             * @returns {String}
+             *     The translation string of the given field's header.
+             */
+            var getFieldHeaderKey = function getFieldHeaderKey(field) {
+
+                if (!field || !field.name)
+                    return '';
+
+                return translationStringService.canonicalize($scope.namespace || 'MISSING_NAMESPACE')
+                        + '.FIELD_HEADER_' + translationStringService.canonicalize(field.name);
+
+            };
+
+            /**
+             * Recalculates which fields within each advanced section
+             * currently have set values, updating the badge data of each
+             * section in $scope.advancedSections.
+             */
+            var updateSetFields = function updateSetFields() {
+
+                angular.forEach($scope.advancedSections, function updateSection(section) {
+
+                    var setFieldKeys = [];
+                    var sensitive = false;
+
+                    angular.forEach(section.fields, function checkField(field) {
+
+                        if (!formLayoutService.isSet($scope.values[field.name])
+                                || !$scope.isVisible(field))
+                            return;
+
+                        setFieldKeys.push(getFieldHeaderKey(field));
+                        sensitive = sensitive || formLayoutService.isSensitive(field.name);
+
+                    });
+
+                    section.setFieldKeys = setFieldKeys;
+                    section.sensitive = sensitive;
+
+                });
+
+            };
+
+            /**
+             * Rebuilds the essential field list and advanced section list
+             * from the current set of forms, preserving any expansion state
+             * the user has already established.
+             */
+            var updateLayout = function updateLayout() {
+
+                $scope.essentialFields = [];
+                $scope.advancedSections = [];
+
+                if (!$scope.layout)
+                    return;
+
+                var essentialNames = formLayoutService.getEssentialFields($scope.namespace) || [];
+
+                // Map of field name to field across all given forms
+                var allFields = {};
+                angular.forEach($scope.forms, function mapForm(form) {
+                    angular.forEach(form.fields, function mapField(field) {
+                        allFields[field.name] = field;
+                    });
+                });
+
+                // The essentials layout renders only the curated fields, in
+                // curated order
+                if ($scope.layout === 'essentials') {
+                    angular.forEach(essentialNames, function addEssential(name) {
+                        if (allFields[name])
+                            $scope.essentialFields.push(allFields[name]);
+                    });
+                    return;
+                }
+
+                // The advanced layout renders each form as a disclosure
+                // section containing its non-essential fields
+                var essentialSet = {};
+                angular.forEach(essentialNames, function markEssential(name) {
+                    essentialSet[name] = true;
+                });
+
+                angular.forEach($scope.forms, function addSection(form, index) {
+
+                    var remaining = [];
+                    angular.forEach(form.fields, function addField(field) {
+                        if (!essentialSet[field.name])
+                            remaining.push(field);
+                    });
+
+                    // Skip sections whose fields were all lifted into the
+                    // essentials layout
+                    if (!remaining.length)
+                        return;
+
+                    var key = form.name || 'form-' + index;
+                    $scope.advancedSections.push({
+                        form         : form,
+                        fields       : remaining,
+                        key          : key,
+                        setFieldKeys : [],
+                        sensitive    : false
+                    });
+
+                    // Establish default expansion state only where the user
+                    // has not already toggled the section
+                    if (!(key in $scope.expanded))
+                        $scope.expanded[key] = formLayoutService.isExpandedByDefault(
+                                $scope.namespace, form.name);
+
+                });
+
+                updateSetFields();
+
+            };
+
+            /**
+             * Returns the DOM id of the fields container of the given
+             * advanced section, for association of the disclosure button
+             * with the content it controls.
+             *
+             * @param {Object} section
+             *     The advanced section entry.
+             *
+             * @returns {String}
+             *     A DOM id unique to the given section.
+             */
+            $scope.getSectionId = function getSectionId(section) {
+                return 'guac-form-section-' + $scope.$id + '-'
+                        + section.key.replace(/[^A-Za-z0-9_-]/g, '_');
+            };
+
+            /**
+             * Toggles the expansion state of the given advanced section.
+             *
+             * @param {Object} section
+             *     The advanced section entry to toggle.
+             */
+            $scope.toggleSection = function toggleSection(section) {
+                $scope.expanded[section.key] = !$scope.expanded[section.key];
+            };
+
+            /**
+             * Expands or collapses every advanced section.
+             *
+             * @param {Boolean} state
+             *     true to expand all sections, false to collapse all.
+             */
+            $scope.setAllSections = function setAllSections(state) {
+                angular.forEach($scope.advancedSections, function setSection(section) {
+                    $scope.expanded[section.key] = state;
+                });
+            };
+
+            // Rebuild layout whenever the set of forms is replaced or the
+            // namespace changes (the two update together on protocol switch,
+            // and curation is keyed by namespace)
+            $scope.$watchGroup(['forms', 'namespace'], updateLayout);
+
+            // Track set values for the collapsed-section badges
+            $scope.$watchCollection('values', function valuesChanged() {
+                if ($scope.layout === 'advanced')
+                    updateSetFields();
+            });
 
         }] // end controller
     };

@@ -1,4 +1,7 @@
 <div class="form-group">
+
+    <!-- Standard layout (unchanged behavior when no layout mode is given) -->
+    <div ng-if="!layout">
     <div ng-repeat="form in forms" class="form"
          ng-class="getFormClasses(form)"
          ng-show="containsVisible(form.fields)">
@@ -18,4 +21,75 @@
         </div>
 
     </div>
+    </div>
+
+    <!-- Curated essential fields only, flat and without section headers -->
+    <div ng-if="layout === 'essentials' && essentialFields.length"
+         class="form form-essentials">
+
+        <h3 class="form-header">{{'FORM_LAYOUT.SECTION_HEADER_ESSENTIALS' | translate}}</h3>
+
+        <div class="fields">
+            <guac-form-field ng-repeat="field in essentialFields" namespace="namespace"
+                             ng-if="isVisible(field)"
+                             data-disabled="isDisabled(field)"
+                             focused="isFocused(field)"
+                             field="field"
+                             client="client"
+                             model="values[field.name]"></guac-form-field>
+        </div>
+
+    </div>
+
+    <!-- All non-essential fields, grouped as collapsible sections -->
+    <div ng-if="layout === 'advanced'" class="form-layout-advanced">
+
+        <!-- Expand/collapse all sections -->
+        <div class="section-controls" ng-show="advancedSections.length > 1">
+            <button type="button" class="expand-control"
+                    ng-click="setAllSections(true)">{{'FORM_LAYOUT.ACTION_EXPAND_ALL' | translate}}</button>
+            <button type="button" class="expand-control"
+                    ng-click="setAllSections(false)">{{'FORM_LAYOUT.ACTION_COLLAPSE_ALL' | translate}}</button>
+        </div>
+
+        <div ng-repeat="section in advancedSections" class="form advanced-section"
+             ng-class="[getFormClasses(section.form), {'has-set': section.setFieldKeys.length}]"
+             ng-show="containsVisible(section.fields)">
+
+            <!-- Section disclosure row -->
+            <button type="button" class="section-toggle"
+                    ng-click="toggleSection(section)"
+                    aria-expanded="{{!!expanded[section.key]}}"
+                    ng-attr-aria-controls="{{getSectionId(section)}}">
+                <span class="section-chevron" ng-class="{expanded: expanded[section.key]}"
+                      aria-hidden="true"></span>
+                <span class="section-title">{{getSectionHeader(section.form) | translate}}</span>
+                <span class="section-badge" ng-show="section.setFieldKeys.length"
+                      ng-class="{sensitive: section.sensitive}"
+                      translate="FORM_LAYOUT.INFO_FIELDS_SET"
+                      translate-values="{COUNT: section.setFieldKeys.length}"></span>
+            </button>
+
+            <!-- Names of set fields, shown while collapsed -->
+            <div class="section-set-fields"
+                 ng-show="!expanded[section.key] && section.setFieldKeys.length">
+                <span ng-repeat="fieldKey in section.setFieldKeys">{{fieldKey | translate}}<span ng-if="!$last">, </span></span>
+            </div>
+
+            <!-- Fields of the expanded section -->
+            <div class="fields" ng-if="expanded[section.key]"
+                 ng-attr-id="{{getSectionId(section)}}">
+                <guac-form-field ng-repeat="field in section.fields" namespace="namespace"
+                                 ng-if="isVisible(field)"
+                                 data-disabled="isDisabled(field)"
+                                 focused="isFocused(field)"
+                                 field="field"
+                                 client="client"
+                                 model="values[field.name]"></guac-form-field>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

@@ -281,6 +281,18 @@
 
     },
 
+    "FORM_LAYOUT" : {
+
+        "ACTION_COLLAPSE_ALL" : "Collapse all",
+        "ACTION_EXPAND_ALL"   : "Expand all",
+
+        "INFO_FIELDS_SET" : "{COUNT} set",
+
+        "SECTION_HEADER_ADVANCED"   : "Advanced settings",
+        "SECTION_HEADER_ESSENTIALS" : "Essentials"
+
+    },
+
     "HOME" : {
 
         "FIELD_PLACEHOLDER_FILTER" : "@:APP.FIELD_PLACEHOLDER_FILTER",

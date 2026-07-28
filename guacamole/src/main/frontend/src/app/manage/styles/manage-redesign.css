@@ -124,6 +124,23 @@
     margin: 0;
 }
 
+/* The essentials card renders no chrome when the protocol has no curated
+ * essential fields, since the guac-form inside it renders nothing */
+.manage-connection .section.connection-parameters:not(:has(.form-essentials)) {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* The advanced card holds two guac-form instances (attributes and protocol
+ * parameters); only the parameter form's expand/collapse-all controls are
+ * shown to avoid two identical control rows in one card */
+.manage-connection .advanced-settings .attributes .section-controls {
+    display: none;
+}
+
 /* Header of an "Advanced settings" card */
 .manage-connection h3.advanced-header,
 .manage-connection-group h3.advanced-header,
