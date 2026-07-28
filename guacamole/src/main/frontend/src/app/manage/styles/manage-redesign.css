@@ -1,0 +1,481 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/*
+ * Card-based visual refresh of the object-management pages. Every selector is
+ * deliberately scoped to the five manage-page root classes so that no rule
+ * can leak into the login screen, dialogs, settings pages, or the in-session
+ * client menu.
+ */
+
+/*
+ * Page layout
+ */
+
+.manage-connection,
+.manage-connection-group,
+.manage-user,
+.manage-user-group,
+.manage-sharing-profile {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 0 1.5rem 1rem;
+    box-sizing: border-box;
+}
+
+/*
+ * Headers
+ */
+
+.manage-connection .header,
+.manage-connection-group .header,
+.manage-user .header,
+.manage-user-group .header,
+.manage-sharing-profile .header {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.manage-connection .header h2,
+.manage-connection-group .header h2,
+.manage-user .header h2,
+.manage-user-group .header h2,
+.manage-sharing-profile .header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+}
+
+/* Standalone section headers (e.g. "History") */
+.manage-connection h2.header,
+.manage-connection-group h2.header,
+.manage-user h2.header,
+.manage-user-group h2.header,
+.manage-sharing-profile h2.header {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+/* Breadcrumb-style subtitle line under the page header */
+.manage-connection .page-subtitle,
+.manage-connection-group .page-subtitle,
+.manage-user .page-subtitle,
+.manage-user-group .page-subtitle,
+.manage-sharing-profile .page-subtitle {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin: -0.5rem 0 1.25rem;
+}
+
+/*
+ * Card treatment for the major page sections
+ */
+
+.manage-connection .section,
+.manage-connection .attributes,
+.manage-connection-group .section,
+.manage-connection-group .attributes,
+.manage-user .section,
+.manage-user .attributes,
+.manage-user-group .section,
+.manage-user-group .attributes,
+.manage-sharing-profile .section,
+.manage-sharing-profile .attributes {
+    background: #fff;
+    border: 1px solid #e2e4e9;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+    padding: 1.25rem 1.5rem;
+    margin: 0 0 1.25rem;
+}
+
+/* A section nested inside another card must not render as a second card */
+.manage-connection .section .attributes,
+.manage-connection .section .section,
+.manage-connection-group .section .attributes,
+.manage-user .section .attributes,
+.manage-user-group .section .attributes,
+.manage-sharing-profile .section .attributes {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Header of an "Advanced settings" card */
+.manage-connection h3.advanced-header,
+.manage-connection-group h3.advanced-header,
+.manage-sharing-profile h3.advanced-header {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+/*
+ * Properties tables (name/location/protocol etc.): stack each label above its
+ * input and lay the rows out on a responsive grid.
+ */
+
+.manage-connection table.properties,
+.manage-connection-group table.properties,
+.manage-user table.properties,
+.manage-user-group table.properties,
+.manage-sharing-profile table.properties {
+    display: block;
+    width: 100%;
+}
+
+.manage-connection table.properties tbody,
+.manage-connection-group table.properties tbody,
+.manage-user table.properties tbody,
+.manage-user-group table.properties tbody,
+.manage-sharing-profile table.properties tbody {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem 1.5rem;
+}
+
+.manage-connection table.properties tr,
+.manage-connection-group table.properties tr,
+.manage-user table.properties tr,
+.manage-user-group table.properties tr,
+.manage-sharing-profile table.properties tr {
+    display: block;
+}
+
+/* The first row (typically the object's name) spans the full width */
+.manage-connection table.properties tr:first-child,
+.manage-connection-group table.properties tr:first-child,
+.manage-user table.properties tr:first-child,
+.manage-user-group table.properties tr:first-child,
+.manage-sharing-profile table.properties tr:first-child {
+    grid-column: 1 / -1;
+}
+
+.manage-connection table.properties th,
+.manage-connection-group table.properties th,
+.manage-user table.properties th,
+.manage-user-group table.properties th,
+.manage-sharing-profile table.properties th {
+    display: block;
+    text-align: left;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #374151;
+    padding: 0 0 0.375rem;
+}
+
+.manage-connection table.properties td,
+.manage-connection-group table.properties td,
+.manage-user table.properties td,
+.manage-user-group table.properties td,
+.manage-sharing-profile table.properties td {
+    display: block;
+    padding: 0;
+}
+
+/*
+ * Form controls
+ */
+
+.manage-connection input[type=text],
+.manage-connection input[type=password],
+.manage-connection input[type=number],
+.manage-connection input[type=email],
+.manage-connection select,
+.manage-connection textarea,
+.manage-connection-group input[type=text],
+.manage-connection-group input[type=password],
+.manage-connection-group input[type=number],
+.manage-connection-group input[type=email],
+.manage-connection-group select,
+.manage-connection-group textarea,
+.manage-user input[type=text],
+.manage-user input[type=password],
+.manage-user input[type=number],
+.manage-user input[type=email],
+.manage-user select,
+.manage-user textarea,
+.manage-user-group input[type=text],
+.manage-user-group input[type=password],
+.manage-user-group input[type=number],
+.manage-user-group input[type=email],
+.manage-user-group select,
+.manage-user-group textarea,
+.manage-sharing-profile input[type=text],
+.manage-sharing-profile input[type=password],
+.manage-sharing-profile input[type=number],
+.manage-sharing-profile input[type=email],
+.manage-sharing-profile select,
+.manage-sharing-profile textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 0.375rem 0.625rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+}
+
+.manage-connection input:focus,
+.manage-connection select:focus,
+.manage-connection textarea:focus,
+.manage-connection-group input:focus,
+.manage-connection-group select:focus,
+.manage-connection-group textarea:focus,
+.manage-user input:focus,
+.manage-user select:focus,
+.manage-user textarea:focus,
+.manage-user-group input:focus,
+.manage-user-group select:focus,
+.manage-user-group textarea:focus,
+.manage-sharing-profile input:focus,
+.manage-sharing-profile select:focus,
+.manage-sharing-profile textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* Selects: replace the native chrome with a consistent chevron */
+.manage-connection select,
+.manage-connection-group select,
+.manage-user select,
+.manage-user-group select,
+.manage-sharing-profile select {
+    -webkit-appearance: none;
+    appearance: none;
+    padding-right: 2rem;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='none' stroke='%236b7280' stroke-width='2' d='M1 1l5 5 5-5'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.625rem center;
+}
+
+/*
+ * Checkboxes rendered by guac-form become toggle switches. The native input
+ * is kept (semantics, focusability, and the existing value plumbing are
+ * untouched) - only its appearance changes.
+ */
+
+.manage-connection .checkbox-field input[type=checkbox],
+.manage-connection-group .checkbox-field input[type=checkbox],
+.manage-user .checkbox-field input[type=checkbox],
+.manage-user-group .checkbox-field input[type=checkbox],
+.manage-sharing-profile .checkbox-field input[type=checkbox] {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 2.25rem;
+    height: 1.25rem;
+    margin: 0;
+    border: none;
+    border-radius: 999px;
+    background: #d1d5db;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    vertical-align: middle;
+}
+
+.manage-connection .checkbox-field input[type=checkbox]::after,
+.manage-connection-group .checkbox-field input[type=checkbox]::after,
+.manage-user .checkbox-field input[type=checkbox]::after,
+.manage-user-group .checkbox-field input[type=checkbox]::after,
+.manage-sharing-profile .checkbox-field input[type=checkbox]::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(1.25rem - 4px);
+    height: calc(1.25rem - 4px);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: left 0.15s ease;
+}
+
+.manage-connection .checkbox-field input[type=checkbox]:checked,
+.manage-connection-group .checkbox-field input[type=checkbox]:checked,
+.manage-user .checkbox-field input[type=checkbox]:checked,
+.manage-user-group .checkbox-field input[type=checkbox]:checked,
+.manage-sharing-profile .checkbox-field input[type=checkbox]:checked {
+    background: #2563eb;
+}
+
+.manage-connection .checkbox-field input[type=checkbox]:checked::after,
+.manage-connection-group .checkbox-field input[type=checkbox]:checked::after,
+.manage-user .checkbox-field input[type=checkbox]:checked::after,
+.manage-user-group .checkbox-field input[type=checkbox]:checked::after,
+.manage-sharing-profile .checkbox-field input[type=checkbox]:checked::after {
+    left: calc(100% - 1.25rem + 2px);
+}
+
+.manage-connection .checkbox-field input[type=checkbox]:focus-visible,
+.manage-connection-group .checkbox-field input[type=checkbox]:focus-visible,
+.manage-user .checkbox-field input[type=checkbox]:focus-visible,
+.manage-user-group .checkbox-field input[type=checkbox]:focus-visible,
+.manage-sharing-profile .checkbox-field input[type=checkbox]:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/*
+ * Action buttons: sticky bar with a prominent Save and a de-emphasized,
+ * separated Delete.
+ */
+
+.manage-connection .action-buttons,
+.manage-connection-group .action-buttons,
+.manage-user .action-buttons,
+.manage-user-group .action-buttons,
+.manage-sharing-profile .action-buttons {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 0.625rem;
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border-top: 1px solid #e2e4e9;
+    padding: 0.75rem 0.25rem;
+    margin: 0 0 1.25rem;
+    text-align: initial;
+}
+
+.manage-connection .action-buttons button,
+.manage-connection-group .action-buttons button,
+.manage-user .action-buttons button,
+.manage-user-group .action-buttons button,
+.manage-sharing-profile .action-buttons button {
+    margin: 0;
+    padding: 0.5rem 1.125rem;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+}
+
+.manage-connection .action-buttons button.save,
+.manage-connection-group .action-buttons button.save,
+.manage-user .action-buttons button.save,
+.manage-user-group .action-buttons button.save,
+.manage-sharing-profile .action-buttons button.save {
+    background: #2563eb;
+    border: 1px solid #2563eb;
+    color: #fff;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.manage-connection .action-buttons button.save:hover,
+.manage-connection-group .action-buttons button.save:hover,
+.manage-user .action-buttons button.save:hover,
+.manage-user-group .action-buttons button.save:hover,
+.manage-sharing-profile .action-buttons button.save:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+.manage-connection .action-buttons button.danger,
+.manage-connection-group .action-buttons button.danger,
+.manage-user .action-buttons button.danger,
+.manage-user-group .action-buttons button.danger,
+.manage-sharing-profile .action-buttons button.danger {
+    background: transparent;
+    border: 1px solid #fca5a5;
+    color: #dc2626;
+    text-shadow: none;
+    box-shadow: none;
+
+    /* Physically leftmost in the reversed row; the auto margin separates it
+     * from the Save/Clone/Cancel cluster so it cannot be clicked by reflex. */
+    margin-right: auto;
+}
+
+.manage-connection .action-buttons button.danger:hover,
+.manage-connection-group .action-buttons button.danger:hover,
+.manage-user .action-buttons button.danger:hover,
+.manage-user-group .action-buttons button.danger:hover,
+.manage-sharing-profile .action-buttons button.danger:hover {
+    background: #fef2f2;
+}
+
+/*
+ * History table polish
+ */
+
+.manage-connection .history table,
+.manage-user .history table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.manage-connection .history th,
+.manage-user .history th {
+    text-align: left;
+    font-weight: 600;
+    color: #6b7280;
+    border: none;
+    border-bottom: 1px solid #e2e4e9;
+    padding: 0.5rem;
+    background: none;
+}
+
+.manage-connection .history td,
+.manage-user .history td {
+    border: none;
+    padding: 0.5rem;
+}
+
+.manage-connection .history tbody tr:nth-child(even),
+.manage-user .history tbody tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+/*
+ * Motion
+ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .manage-connection .checkbox-field input[type=checkbox],
+    .manage-connection .checkbox-field input[type=checkbox]::after,
+    .manage-connection-group .checkbox-field input[type=checkbox],
+    .manage-connection-group .checkbox-field input[type=checkbox]::after,
+    .manage-user .checkbox-field input[type=checkbox],
+    .manage-user .checkbox-field input[type=checkbox]::after,
+    .manage-user-group .checkbox-field input[type=checkbox],
+    .manage-user-group .checkbox-field input[type=checkbox]::after,
+    .manage-sharing-profile .checkbox-field input[type=checkbox],
+    .manage-sharing-profile .checkbox-field input[type=checkbox]::after {
+        transition: none;
+    }
+
+}
