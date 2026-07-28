@@ -107,6 +107,29 @@
     box-sizing: border-box;
 }
 
+/* Checkbox/toggle fields render inline: label on the left, toggle on the
+ * right of the same row (these rules follow the stacked-label defaults
+ * above and therefore win at equal specificity) */
+.form-group .form.form-essentials .fields .labeled-field:has(.checkbox-field),
+.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field:has(.checkbox-field) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 2rem;
+}
+
+.form-group .form.form-essentials .fields .labeled-field:has(.checkbox-field) .field-header label,
+.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field:has(.checkbox-field) .field-header label {
+    padding-bottom: 0;
+}
+
+.form-group .form.form-essentials .fields .labeled-field:has(.checkbox-field) .form-field,
+.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field:has(.checkbox-field) .form-field {
+    flex: 0 0 auto;
+    line-height: 1;
+}
+
 /* Ports are short; keep their inputs proportionate */
 .form-group .form.form-essentials .fields .labeled-field-port .form-field input,
 .form-group .form-layout-advanced .form.advanced-section .fields .labeled-field-port .form-field input,

@@ -185,13 +185,45 @@
     display: block;
 }
 
-/* The first row (typically the object's name) spans the full width */
-.manage-connection table.properties tr:first-child,
-.manage-connection-group table.properties tr:first-child,
-.manage-user table.properties tr:first-child,
-.manage-user-group table.properties tr:first-child,
-.manage-sharing-profile table.properties tr:first-child {
+/* The first row (typically the object's name) spans the full width -
+ * unless it is a checkbox row, as in the permissions table */
+.manage-connection table.properties tr:first-child:not(:has(input[type=checkbox])),
+.manage-connection-group table.properties tr:first-child:not(:has(input[type=checkbox])),
+.manage-user table.properties tr:first-child:not(:has(input[type=checkbox])),
+.manage-user-group table.properties tr:first-child:not(:has(input[type=checkbox])),
+.manage-sharing-profile table.properties tr:first-child:not(:has(input[type=checkbox])) {
     grid-column: 1 / -1;
+}
+
+/* Checkbox rows render inline: label on the left, toggle on the right */
+.manage-connection table.properties tr:has(> td > input[type=checkbox]),
+.manage-connection-group table.properties tr:has(> td > input[type=checkbox]),
+.manage-user table.properties tr:has(> td > input[type=checkbox]),
+.manage-user-group table.properties tr:has(> td > input[type=checkbox]),
+.manage-sharing-profile table.properties tr:has(> td > input[type=checkbox]) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 2rem;
+}
+
+.manage-connection table.properties tr:has(> td > input[type=checkbox]) th,
+.manage-connection-group table.properties tr:has(> td > input[type=checkbox]) th,
+.manage-user table.properties tr:has(> td > input[type=checkbox]) th,
+.manage-user-group table.properties tr:has(> td > input[type=checkbox]) th,
+.manage-sharing-profile table.properties tr:has(> td > input[type=checkbox]) th {
+    padding: 0;
+    flex: 0 1 auto;
+}
+
+.manage-connection table.properties tr:has(> td > input[type=checkbox]) td,
+.manage-connection-group table.properties tr:has(> td > input[type=checkbox]) td,
+.manage-user table.properties tr:has(> td > input[type=checkbox]) td,
+.manage-user-group table.properties tr:has(> td > input[type=checkbox]) td,
+.manage-sharing-profile table.properties tr:has(> td > input[type=checkbox]) td {
+    flex: 0 0 auto;
+    line-height: 1;
 }
 
 .manage-connection table.properties th,
@@ -295,16 +327,24 @@
 }
 
 /*
- * Checkboxes rendered by guac-form become toggle switches. The native input
- * is kept (semantics, focusability, and the existing value plumbing are
- * untouched) - only its appearance changes.
+ * Checkboxes rendered by guac-form fields and by the properties/permissions
+ * tables become toggle switches. The native input is kept (semantics,
+ * focusability, and the existing value plumbing are untouched) - only its
+ * appearance changes. Checkboxes in selection trees and lists (e.g. the
+ * connection permission tree) deliberately keep their stock look: they are
+ * bulk-selection controls, not settings.
  */
 
 .manage-connection .checkbox-field input[type=checkbox],
 .manage-connection-group .checkbox-field input[type=checkbox],
 .manage-user .checkbox-field input[type=checkbox],
 .manage-user-group .checkbox-field input[type=checkbox],
-.manage-sharing-profile .checkbox-field input[type=checkbox] {
+.manage-sharing-profile .checkbox-field input[type=checkbox],
+.manage-connection table.properties input[type=checkbox],
+.manage-connection-group table.properties input[type=checkbox],
+.manage-user table.properties input[type=checkbox],
+.manage-user-group table.properties input[type=checkbox],
+.manage-sharing-profile table.properties input[type=checkbox] {
     -webkit-appearance: none;
     appearance: none;
     position: relative;
@@ -323,7 +363,12 @@
 .manage-connection-group .checkbox-field input[type=checkbox]::after,
 .manage-user .checkbox-field input[type=checkbox]::after,
 .manage-user-group .checkbox-field input[type=checkbox]::after,
-.manage-sharing-profile .checkbox-field input[type=checkbox]::after {
+.manage-sharing-profile .checkbox-field input[type=checkbox]::after,
+.manage-connection table.properties input[type=checkbox]::after,
+.manage-connection-group table.properties input[type=checkbox]::after,
+.manage-user table.properties input[type=checkbox]::after,
+.manage-user-group table.properties input[type=checkbox]::after,
+.manage-sharing-profile table.properties input[type=checkbox]::after {
     content: '';
     position: absolute;
     top: 2px;
@@ -340,7 +385,12 @@
 .manage-connection-group .checkbox-field input[type=checkbox]:checked,
 .manage-user .checkbox-field input[type=checkbox]:checked,
 .manage-user-group .checkbox-field input[type=checkbox]:checked,
-.manage-sharing-profile .checkbox-field input[type=checkbox]:checked {
+.manage-sharing-profile .checkbox-field input[type=checkbox]:checked,
+.manage-connection table.properties input[type=checkbox]:checked,
+.manage-connection-group table.properties input[type=checkbox]:checked,
+.manage-user table.properties input[type=checkbox]:checked,
+.manage-user-group table.properties input[type=checkbox]:checked,
+.manage-sharing-profile table.properties input[type=checkbox]:checked {
     background: #2563eb;
 }
 
@@ -348,7 +398,12 @@
 .manage-connection-group .checkbox-field input[type=checkbox]:checked::after,
 .manage-user .checkbox-field input[type=checkbox]:checked::after,
 .manage-user-group .checkbox-field input[type=checkbox]:checked::after,
-.manage-sharing-profile .checkbox-field input[type=checkbox]:checked::after {
+.manage-sharing-profile .checkbox-field input[type=checkbox]:checked::after,
+.manage-connection table.properties input[type=checkbox]:checked::after,
+.manage-connection-group table.properties input[type=checkbox]:checked::after,
+.manage-user table.properties input[type=checkbox]:checked::after,
+.manage-user-group table.properties input[type=checkbox]:checked::after,
+.manage-sharing-profile table.properties input[type=checkbox]:checked::after {
     left: calc(100% - 1.25rem + 2px);
 }
 
@@ -356,7 +411,12 @@
 .manage-connection-group .checkbox-field input[type=checkbox]:focus-visible,
 .manage-user .checkbox-field input[type=checkbox]:focus-visible,
 .manage-user-group .checkbox-field input[type=checkbox]:focus-visible,
-.manage-sharing-profile .checkbox-field input[type=checkbox]:focus-visible {
+.manage-sharing-profile .checkbox-field input[type=checkbox]:focus-visible,
+.manage-connection table.properties input[type=checkbox]:focus-visible,
+.manage-connection-group table.properties input[type=checkbox]:focus-visible,
+.manage-user table.properties input[type=checkbox]:focus-visible,
+.manage-user-group table.properties input[type=checkbox]:focus-visible,
+.manage-sharing-profile table.properties input[type=checkbox]:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
 }
@@ -482,16 +542,16 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-    .manage-connection .checkbox-field input[type=checkbox],
-    .manage-connection .checkbox-field input[type=checkbox]::after,
-    .manage-connection-group .checkbox-field input[type=checkbox],
-    .manage-connection-group .checkbox-field input[type=checkbox]::after,
-    .manage-user .checkbox-field input[type=checkbox],
-    .manage-user .checkbox-field input[type=checkbox]::after,
-    .manage-user-group .checkbox-field input[type=checkbox],
-    .manage-user-group .checkbox-field input[type=checkbox]::after,
-    .manage-sharing-profile .checkbox-field input[type=checkbox],
-    .manage-sharing-profile .checkbox-field input[type=checkbox]::after {
+    .manage-connection input[type=checkbox],
+    .manage-connection input[type=checkbox]::after,
+    .manage-connection-group input[type=checkbox],
+    .manage-connection-group input[type=checkbox]::after,
+    .manage-user input[type=checkbox],
+    .manage-user input[type=checkbox]::after,
+    .manage-user-group input[type=checkbox],
+    .manage-user-group input[type=checkbox]::after,
+    .manage-sharing-profile input[type=checkbox],
+    .manage-sharing-profile input[type=checkbox]::after {
         transition: none;
     }
 
