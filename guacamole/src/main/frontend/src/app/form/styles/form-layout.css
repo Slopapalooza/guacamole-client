@@ -18,142 +18,16 @@
  */
 
 /*
- * Styles for the optional "essentials"/"advanced" guac-form layout modes.
- * Every selector is scoped to .form-essentials / .form-layout-advanced, so
- * forms rendered without a layout mode are unaffected.
- *
- * Selectors are deliberately written with higher specificity than the
- * page-level table layouts in connection-parameter.css / attributes.css
- * (e.g. ".connection-parameters .form .fields { display: table }"), which
- * would otherwise override the grid within these layout modes.
+ * Styles for the optional "essentials"/"advanced" guac-form layout modes:
+ * the section disclosures, badges, and expand/collapse controls. Field
+ * geometry (the shared "label | control" rows) comes from the page-level
+ * management styling; every selector here is scoped to .form-essentials /
+ * .form-layout-advanced, so forms rendered without a layout mode are
+ * unaffected.
  */
 
 /*
- * Shared field grid, replacing the stock table layout
- */
-
-.form-group .form.form-essentials .fields,
-.form-group .form-layout-advanced .form.advanced-section .fields {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: 1rem 1.5rem;
-    align-items: start;
-    width: auto;
-    border-left: none;
-    padding: 0;
-}
-
-.form-group .form.form-essentials .fields .labeled-field,
-.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field {
-    display: block;
-}
-
-.form-group .form.form-essentials .fields .field-header,
-.form-group .form.form-essentials .fields .form-field,
-.form-group .form-layout-advanced .form.advanced-section .fields .field-header,
-.form-group .form-layout-advanced .form.advanced-section .fields .form-field {
-    display: block;
-    padding: 0;
-    width: auto;
-    white-space: normal;
-}
-
-/* Multiline fields consume the full row */
-.form-group .form.form-essentials .fields .labeled-field:has(textarea),
-.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field:has(textarea) {
-    grid-column: 1 / -1;
-}
-
-.form-group .form.form-essentials .fields .field-header label,
-.form-group .form-layout-advanced .form.advanced-section .fields .field-header label {
-    display: block;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: #374151;
-    padding-bottom: 0.375rem;
-}
-
-/*
- * Inputs fill their grid cell. Password fields are excluded here (their
- * show/hide icon shares the row - see the flex rules below) and checkboxes
- * keep their natural size.
- */
-
-.form-group .form.form-essentials .form-field input[type=text],
-.form-group .form.form-essentials .form-field input[type=number],
-.form-group .form.form-essentials .form-field input[type=email],
-.form-group .form.form-essentials .form-field select,
-.form-group .form.form-essentials .form-field textarea,
-.form-group .form-layout-advanced .form.advanced-section .form-field input[type=text],
-.form-group .form-layout-advanced .form.advanced-section .form-field input[type=number],
-.form-group .form-layout-advanced .form.advanced-section .form-field input[type=email],
-.form-group .form-layout-advanced .form.advanced-section .form-field select,
-.form-group .form-layout-advanced .form.advanced-section .form-field textarea {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.form-group .form.form-essentials .form-field .password-field,
-.form-group .form-layout-advanced .form.advanced-section .form-field .password-field {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-}
-
-.form-group .form.form-essentials .form-field .password-field input,
-.form-group .form-layout-advanced .form.advanced-section .form-field .password-field input {
-    flex: 1 1 auto;
-    min-width: 0;
-    box-sizing: border-box;
-}
-
-/* Checkbox/toggle fields render inline: label on the left, toggle on the
- * right of the same row (these rules follow the stacked-label defaults
- * above and therefore win at equal specificity) */
-.form-group .form.form-essentials .fields .labeled-field:has(.checkbox-field),
-.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field:has(.checkbox-field) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    min-height: 2rem;
-}
-
-.form-group .form.form-essentials .fields .labeled-field:has(.checkbox-field) .field-header label,
-.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field:has(.checkbox-field) .field-header label {
-    padding-bottom: 0;
-}
-
-.form-group .form.form-essentials .fields .labeled-field:has(.checkbox-field) .form-field,
-.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field:has(.checkbox-field) .form-field {
-    flex: 0 0 auto;
-    line-height: 1;
-}
-
-/* Ports are short; keep their inputs proportionate */
-.form-group .form.form-essentials .fields .labeled-field-port .form-field input,
-.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field-port .form-field input,
-.form-group .form.form-essentials .fields .labeled-field-sftp-port .form-field input,
-.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field-sftp-port .form-field input {
-    max-width: 10rem;
-}
-
-/*
- * Essentials block
- */
-
-.form-group .form.form-essentials h3.form-header {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0 0 1rem;
-    font-size: 1.0625rem;
-    font-weight: 600;
-    text-transform: none;
-}
-
-/*
- * Advanced block: expand/collapse-all controls
+ * Expand/collapse-all controls
  */
 
 .form-layout-advanced .section-controls {
@@ -182,7 +56,7 @@
 }
 
 /*
- * Advanced block: section disclosures
+ * Section disclosures
  */
 
 .form-layout-advanced .advanced-section {
@@ -274,9 +148,17 @@
     text-overflow: ellipsis;
 }
 
-/* Fields of an expanded section */
+/* Fields of an expanded section are indented under their disclosure row */
 .form-group .form-layout-advanced .form.advanced-section .fields {
     padding: 0.25rem 0.25rem 1rem 1.625rem;
+}
+
+/* Ports are short; keep their inputs proportionate */
+.form-group .form.form-essentials .fields .labeled-field.labeled-field-port .form-field input,
+.form-group .form.form-essentials .fields .labeled-field.labeled-field-sftp-port .form-field input,
+.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field.labeled-field-port .form-field input,
+.form-group .form-layout-advanced .form.advanced-section .fields .labeled-field.labeled-field-sftp-port .form-field input {
+    max-width: 8rem;
 }
 
 /*
