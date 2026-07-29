@@ -95,6 +95,11 @@
     border-radius: 8px;
     padding: 0.625rem 1rem;
     margin: 1.5rem 0 0.75rem;
+
+    /* Stock .header carries width:100%, which with content-box sizing and
+     * this rule's padding would overflow the banner past its column */
+    width: auto;
+    box-sizing: border-box;
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -119,8 +124,15 @@
     background: #f3f4f6;
     border: none;
     border-bottom: 1px solid #e2e4e9;
+    box-shadow: none;
     margin: 1.25rem -1.5rem 1rem;
     padding: 0.625rem 1.5rem;
+
+    /* Stock ".attributes .form h3" sets width:100%, which breaks the
+     * negative-margin bleed: the banner gets sized to the card's content
+     * width, shifts left, and falls short of the card's right edge */
+    width: auto;
+    box-sizing: border-box;
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.02em;
