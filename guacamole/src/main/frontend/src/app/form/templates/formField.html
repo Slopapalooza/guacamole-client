@@ -9,4 +9,20 @@
     <!-- Field content -->
     <div class="form-field"></div>
 
+    <!-- Inherited value annotation -->
+    <div class="inherited-annotation" ng-if="isInherited()">
+        <span class="inherited-chip"
+              translate="FORM_LAYOUT.INFO_INHERITED_FROM"
+              translate-values="{NAME: inherited.sourceName, VALUE: inherited.value}"></span>
+    </div>
+
+    <!-- Overridden value annotation -->
+    <div class="inherited-annotation overriding" ng-if="isOverriding()">
+        <span class="override-chip"
+              translate="FORM_LAYOUT.INFO_OVERRIDES_DEFAULT"
+              translate-values="{NAME: inherited.sourceName, VALUE: inherited.value}"></span>
+        <button type="button" class="use-inherited"
+                ng-click="useInherited()">{{'FORM_LAYOUT.ACTION_USE_DEFAULT' | translate}}</button>
+    </div>
+
 </div>

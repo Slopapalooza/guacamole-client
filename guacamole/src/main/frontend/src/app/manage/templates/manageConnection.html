@@ -39,11 +39,29 @@
         </table>
     </div>
 
+    <!-- Warning that moving this connection changes what it inherits -->
+    <div class="section location-changes" ng-show="locationChanges.length">
+        <p class="notice">{{'MANAGE_CONNECTION.INFO_LOCATION_CHANGES_DEFAULTS' | translate}}</p>
+        <ul>
+            <li ng-repeat="change in locationChanges">
+                <span class="parameter-name">{{change.name}}</span>
+                <span class="parameter-change">
+                    <span class="from" ng-show="change.from">{{change.from}}</span>
+                    <span class="from unset" ng-hide="change.from">{{'MANAGE_CONNECTION.INFO_NO_INHERITED_VALUE' | translate}}</span>
+                    &rarr;
+                    <span class="to" ng-show="change.to">{{change.to}}</span>
+                    <span class="to unset" ng-hide="change.to">{{'MANAGE_CONNECTION.INFO_NO_INHERITED_VALUE' | translate}}</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
     <!-- Essential connection parameters -->
     <div class="section connection-parameters" ng-class="{loading: !parameters}">
         <guac-form namespace="getNamespace(connection.protocol)"
                    content="protocols[connection.protocol].connectionForms"
-                   model="parameters" layout="essentials"></guac-form>
+                   model="parameters" layout="essentials"
+                   inherited="inheritedParameters"></guac-form>
     </div>
 
     <!-- Advanced settings: connection attributes and remaining parameters -->
@@ -56,7 +74,8 @@
         </div>
         <guac-form namespace="getNamespace(connection.protocol)"
                    content="protocols[connection.protocol].connectionForms"
-                   model="parameters" layout="advanced"></guac-form>
+                   model="parameters" layout="advanced"
+                   inherited="inheritedParameters"></guac-form>
     </div>
 
     <!-- Form action buttons -->

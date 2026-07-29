@@ -526,7 +526,89 @@
 }
 
 /*
- * 10. History table polish
+ * 10. Inheritance annotations on connection parameter fields
+ */
+
+.manage-connection .labeled-field .inherited-annotation {
+    flex: 1 1 100%;
+    margin: 0.125rem 0 0 15rem;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.manage-connection .labeled-field .inherited-chip {
+    color: #6b7280;
+}
+
+.manage-connection .labeled-field .override-chip {
+    color: #92400e;
+}
+
+.manage-connection .labeled-field button.use-inherited {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    color: #2563eb;
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-shadow: none;
+}
+
+.manage-connection .labeled-field button.use-inherited:hover {
+    background: none;
+    text-decoration: underline;
+}
+
+/* Warning shown when re-parenting changes inherited values */
+.manage-connection .location-changes {
+    border-color: #fcd34d;
+    background: #fffbeb;
+}
+
+.manage-connection .location-changes .notice {
+    margin: 0 0 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #92400e;
+}
+
+.manage-connection .location-changes ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.manage-connection .location-changes li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.125rem 0;
+    font-size: 0.8125rem;
+    color: #374151;
+}
+
+.manage-connection .location-changes .parameter-name {
+    min-width: 12rem;
+    font-weight: 500;
+}
+
+.manage-connection .location-changes .parameter-change {
+    font-family: monospace;
+}
+
+.manage-connection .location-changes .unset {
+    color: #9ca3af;
+    font-style: italic;
+    font-family: inherit;
+}
+
+/*
+ * 11. History table polish
  */
 
 :is(.manage-connection, .manage-user) .history table {
@@ -555,7 +637,7 @@
 }
 
 /*
- * 11. Motion
+ * 12. Motion
  */
 
 @media (prefers-reduced-motion: reduce) {

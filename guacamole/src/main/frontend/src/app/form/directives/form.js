@@ -104,7 +104,17 @@ angular.module('form').directive('guacForm', [function form() {
              *
              * @type String
              */
-            layout : '@'
+            layout : '@',
+
+            /**
+             * The values which fields of this form inherit when they have no
+             * value of their own, as a map of field name to an object having
+             * "value", "source", and "sourceName" properties. Optional; when
+             * omitted, no inheritance annotations are rendered.
+             *
+             * @type Object.<String, Object>
+             */
+            inherited : '='
 
         },
         templateUrl: 'app/form/templates/form.html',

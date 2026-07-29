@@ -75,7 +75,17 @@ angular.module('form').directive('guacFormField', [function formField() {
              *
              * @type ManagedClient
              */
-            client: '='
+            client: '=',
+
+            /**
+             * A description of the value this field inherits when it has no
+             * value of its own, if any. If provided, this must be an object
+             * having "value", "source", and "sourceName" properties naming
+             * the inherited value and the object supplying it.
+             *
+             * @type Object
+             */
+            inherited : '='
 
         },
         templateUrl: 'app/form/templates/formField.html',
@@ -186,6 +196,40 @@ angular.module('form').directive('guacFormField', [function formField() {
              */
             $scope.isFieldVisible = function isFieldVisible() {
                 return fieldContent[0].hasChildNodes();
+            };
+
+            /**
+             * Returns whether this field currently takes its value from an
+             * inherited default rather than from a value of its own.
+             *
+             * @returns {Boolean}
+             *     true if the effective value of this field is inherited,
+             *     false otherwise.
+             */
+            $scope.isInherited = function isInherited() {
+                return !!$scope.inherited && !$scope.model;
+            };
+
+            /**
+             * Returns whether this field overrides a value which would
+             * otherwise be inherited.
+             *
+             * @returns {Boolean}
+             *     true if this field has a value of its own despite an
+             *     inherited value being available, false otherwise.
+             */
+            $scope.isOverriding = function isOverriding() {
+                return !!$scope.inherited && !!$scope.model;
+            };
+
+            /**
+             * Clears this field's own value, returning it to the inherited
+             * value. The inherited value is deliberately never written into
+             * the model: an absent value is what inheritance means, and
+             * storing the value would sever it permanently.
+             */
+            $scope.useInherited = function useInherited() {
+                $scope.model = '';
             };
 
             // Update field contents when field definition is changed

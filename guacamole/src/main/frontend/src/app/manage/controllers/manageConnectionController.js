@@ -40,6 +40,7 @@ angular.module('manage').controller('manageConnectionController', ['$scope', '$i
     var authenticationService    = $injector.get('authenticationService');
     var connectionService        = $injector.get('connectionService');
     var connectionGroupService   = $injector.get('connectionGroupService');
+    var groupDefaultsService     = $injector.get('groupDefaultsService');
     var permissionService        = $injector.get('permissionService');
     var requestService           = $injector.get('requestService');
     var schemaService            = $injector.get('schemaService');
@@ -268,6 +269,60 @@ angular.module('manage').controller('manageConnectionController', ['$scope', '$i
 
     };
 
+    /**
+     * The parameter values this connection inherits from its ancestor
+     * connection groups, as a map of parameter name to an object describing
+     * the inherited value and its source group. These are rendered as
+     * annotations only and are never written into the parameter model: an
+     * absent parameter is what inheritance means, so storing an inherited
+     * value would permanently sever it.
+     *
+     * @type Object.<String, Object>
+     */
+    $scope.inheritedParameters = {};
+
+    /**
+     * The parameters whose inherited values would change were this
+     * connection saved at its currently-selected location, as an array of
+     * objects having "name", "from", and "to" properties. Empty while the
+     * location is unchanged.
+     *
+     * @type Object[]
+     */
+    $scope.locationChanges = [];
+
+    /**
+     * The location this connection occupied when the page was loaded.
+     *
+     * @type String
+     */
+    var originalParentIdentifier = null;
+
+    /**
+     * Returns a promise resolving with the parameter values inherited from
+     * the ancestors of the given connection group.
+     *
+     * @param {String} groupIdentifier
+     *     The identifier of the connection group whose inherited values
+     *     should be retrieved.
+     *
+     * @returns {Promise.<Object.<String, Object>>}
+     *     A promise resolving with the map of inherited parameter values,
+     *     which is empty if inherited values are unavailable.
+     */
+    var getInheritedForGroup = function getInheritedForGroup(groupIdentifier) {
+
+        if (!groupIdentifier || groupIdentifier === ConnectionGroup.ROOT_IDENTIFIER)
+            return $q.resolve({});
+
+        return groupDefaultsService.getGroupInheritedDefaults(
+                $scope.selectedDataSource, groupIdentifier)
+            ['catch'](function unavailable() {
+                return {};
+            });
+
+    };
+
     // Populate interface with requested data
     $q.all({
         connectionData : loadRequestedConnection(),
@@ -288,7 +343,64 @@ angular.module('manage').controller('manageConnectionController', ['$scope', '$i
                     PermissionSet.hasConnectionPermission,
                     identifier);
 
+        originalParentIdentifier = $scope.connection.parentIdentifier;
+
+        // Annotate parameter fields with the values inherited from ancestors
+        if (identifier) {
+            groupDefaultsService.getConnectionDefaults($scope.selectedDataSource, identifier)
+            .then(function inheritedRetrieved(inherited) {
+                $scope.inheritedParameters = inherited || {};
+            }, angular.noop);
+        }
+
     }, requestService.DIE);
+
+    // Warn when moving this connection would change what it inherits
+    $scope.$watch('connection.parentIdentifier', function locationChanged(parentIdentifier) {
+
+        $scope.locationChanges = [];
+
+        if (!parentIdentifier || parentIdentifier === originalParentIdentifier
+                || originalParentIdentifier === null)
+            return;
+
+        getInheritedForGroup(parentIdentifier)
+        .then(function newInheritedRetrieved(inherited) {
+
+            var changes = [];
+            var names = {};
+
+            angular.forEach(inherited, function noteNew(value, name) {
+                names[name] = true;
+            });
+            angular.forEach($scope.inheritedParameters, function noteOld(value, name) {
+                names[name] = true;
+            });
+
+            angular.forEach(names, function compare(unused, name) {
+
+                // A parameter set on the connection itself is unaffected by
+                // any change in what would otherwise be inherited
+                if ($scope.parameters && $scope.parameters[name])
+                    return;
+
+                var from = $scope.inheritedParameters[name];
+                var to = inherited[name];
+
+                if ((from && from.value) !== (to && to.value))
+                    changes.push({
+                        name : name,
+                        from : from ? from.value : null,
+                        to   : to ? to.value : null
+                    });
+
+            });
+
+            $scope.locationChanges = changes;
+
+        }, angular.noop);
+
+    });
     
     // Get history date format
     $translate('MANAGE_CONNECTION.FORMAT_HISTORY_START').then(function historyDateFormatReceived(historyDateFormat) {

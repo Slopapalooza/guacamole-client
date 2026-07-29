@@ -288,6 +288,11 @@
 
         "INFO_FIELDS_SET" : "{COUNT} set",
 
+        "ACTION_USE_DEFAULT" : "Use default",
+
+        "INFO_INHERITED_FROM"     : "Inherited from {NAME}: {VALUE}",
+        "INFO_OVERRIDES_DEFAULT"  : "Overrides {NAME} default: {VALUE}",
+
         "OPTION_DISABLED"   : "Disabled",
         "OPTION_ENABLED"    : "Enabled",
         "OPTION_NO_DEFAULT" : "— No default —",
@@ -353,6 +358,9 @@
         "INFO_CONNECTION_DURATION_UNKNOWN" : "--",
         "INFO_CONNECTION_ACTIVE_NOW"       : "Active Now",
         "INFO_CONNECTION_NOT_USED"         : "This connection has not yet been used.",
+
+        "INFO_LOCATION_CHANGES_DEFAULTS" : "Moving this connection changes the values it inherits:",
+        "INFO_NO_INHERITED_VALUE"        : "none",
 
         "SECTION_HEADER_EDIT_CONNECTION" : "Edit Connection",
         "SECTION_HEADER_HISTORY"         : "Usage History",
