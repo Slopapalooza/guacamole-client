@@ -332,7 +332,12 @@
     padding: 0.375rem 0.625rem;
     border: 1px solid #d1d5db;
     border-radius: 8px;
-    background: #fff;
+
+    /* Deliberately not the background shorthand: this rule outranks the
+     * select rule below (:is() takes the specificity of its most specific
+     * argument, and input[type=text] carries an attribute selector), so a
+     * shorthand here would erase the chevron drawn there */
+    background-color: #fff;
     font-size: 0.9375rem;
     line-height: 1.4;
 }
