@@ -288,6 +288,10 @@
 
         "INFO_FIELDS_SET" : "{COUNT} set",
 
+        "OPTION_DISABLED"   : "Disabled",
+        "OPTION_ENABLED"    : "Enabled",
+        "OPTION_NO_DEFAULT" : "— No default —",
+
         "SECTION_HEADER_ADVANCED"   : "Advanced settings",
         "SECTION_HEADER_ESSENTIALS" : "Essentials"
 
@@ -379,9 +383,15 @@
         "FIELD_HEADER_NAME"     : "Name:",
         "FIELD_HEADER_TYPE"     : "Type:",
 
+        "HELP_CONNECTION_DEFAULTS" : "Values set here apply to every connection within this group, including connections in nested groups, unless that connection sets its own value. Leave a field blank to set no default. Changes take effect the next time a connection is opened.",
+
+        "INFO_INHERITED_DEFAULTS" : "Already inherited from parent groups:",
+        "INFO_INHERITED_FROM"     : "from {NAME}",
+
         "NAME_TYPE_BALANCING"       : "Balancing",
         "NAME_TYPE_ORGANIZATIONAL"  : "Organizational",
 
+        "SECTION_HEADER_CONNECTION_DEFAULTS"   : "Connection Defaults",
         "SECTION_HEADER_EDIT_CONNECTION_GROUP" : "Edit Connection Group",
 
         "TEXT_CONFIRM_DELETE" : "Connection groups cannot be restored after they have been deleted. Are you sure you want to delete this connection group?"
@@ -691,6 +701,30 @@
         "FIELD_OPTION_RESIZE_METHOD_DISPLAY_UPDATE" : "\"Display Update\" virtual channel (RDP 8.1+)",
         "FIELD_OPTION_RESIZE_METHOD_EMPTY"          : "",
         "FIELD_OPTION_RESIZE_METHOD_RECONNECT"      : "Reconnect",
+
+        "FIELD_OPTION_ENABLE_DESKTOP_COMPOSITION_EMPTY" : "@:FORM_LAYOUT.OPTION_NO_DEFAULT",
+        "FIELD_OPTION_ENABLE_DESKTOP_COMPOSITION_FALSE" : "@:FORM_LAYOUT.OPTION_DISABLED",
+        "FIELD_OPTION_ENABLE_DESKTOP_COMPOSITION_TRUE"  : "@:FORM_LAYOUT.OPTION_ENABLED",
+
+        "FIELD_OPTION_ENABLE_FONT_SMOOTHING_EMPTY" : "@:FORM_LAYOUT.OPTION_NO_DEFAULT",
+        "FIELD_OPTION_ENABLE_FONT_SMOOTHING_FALSE" : "@:FORM_LAYOUT.OPTION_DISABLED",
+        "FIELD_OPTION_ENABLE_FONT_SMOOTHING_TRUE"  : "@:FORM_LAYOUT.OPTION_ENABLED",
+
+        "FIELD_OPTION_ENABLE_FULL_WINDOW_DRAG_EMPTY" : "@:FORM_LAYOUT.OPTION_NO_DEFAULT",
+        "FIELD_OPTION_ENABLE_FULL_WINDOW_DRAG_FALSE" : "@:FORM_LAYOUT.OPTION_DISABLED",
+        "FIELD_OPTION_ENABLE_FULL_WINDOW_DRAG_TRUE"  : "@:FORM_LAYOUT.OPTION_ENABLED",
+
+        "FIELD_OPTION_ENABLE_MENU_ANIMATIONS_EMPTY" : "@:FORM_LAYOUT.OPTION_NO_DEFAULT",
+        "FIELD_OPTION_ENABLE_MENU_ANIMATIONS_FALSE" : "@:FORM_LAYOUT.OPTION_DISABLED",
+        "FIELD_OPTION_ENABLE_MENU_ANIMATIONS_TRUE"  : "@:FORM_LAYOUT.OPTION_ENABLED",
+
+        "FIELD_OPTION_ENABLE_THEMING_EMPTY" : "@:FORM_LAYOUT.OPTION_NO_DEFAULT",
+        "FIELD_OPTION_ENABLE_THEMING_FALSE" : "@:FORM_LAYOUT.OPTION_DISABLED",
+        "FIELD_OPTION_ENABLE_THEMING_TRUE"  : "@:FORM_LAYOUT.OPTION_ENABLED",
+
+        "FIELD_OPTION_ENABLE_WALLPAPER_EMPTY" : "@:FORM_LAYOUT.OPTION_NO_DEFAULT",
+        "FIELD_OPTION_ENABLE_WALLPAPER_FALSE" : "@:FORM_LAYOUT.OPTION_DISABLED",
+        "FIELD_OPTION_ENABLE_WALLPAPER_TRUE"  : "@:FORM_LAYOUT.OPTION_ENABLED",
 
         "FIELD_OPTION_SECURITY_ANY"   : "Any",
         "FIELD_OPTION_SECURITY_EMPTY" : "",

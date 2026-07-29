@@ -35,6 +35,7 @@ angular.module('manage').controller('manageConnectionGroupController', ['$scope'
     var $window                = $injector.get('$window');
     var authenticationService  = $injector.get('authenticationService');
     var connectionGroupService = $injector.get('connectionGroupService');
+    var groupDefaultsService   = $injector.get('groupDefaultsService');
     var permissionService      = $injector.get('permissionService');
     var requestService         = $injector.get('requestService');
     var schemaService          = $injector.get('schemaService');
@@ -228,15 +229,125 @@ angular.module('manage').controller('manageConnectionGroupController', ['$scope'
 
     };
 
+    /**
+     * The forms describing the default connection parameters which may be
+     * set on this connection group, or null if they are not available (the
+     * current user cannot manage defaults, or the group does not yet exist).
+     *
+     * @type Form[]
+     */
+    $scope.defaultForms = null;
+
+    /**
+     * The default parameter values set on this connection group, as a map of
+     * parameter name to value.
+     *
+     * @type Object.<String, String>
+     */
+    $scope.groupDefaults = {};
+
+    /**
+     * The default parameters inherited by this connection group from its
+     * ancestors, as a map of parameter name to an object describing the
+     * inherited value and its source group.
+     *
+     * @type Object.<String, Object>
+     */
+    $scope.inheritedDefaults = {};
+
+    /**
+     * The names of the parameters which may be set as inheritable defaults,
+     * in the order they should be presented. Only parameters actually
+     * defined by the RDP protocol form are rendered.
+     *
+     * @type String[]
+     */
+    var DEFAULT_PARAMETERS = [
+        'domain',
+        'resize-method',
+        'secondary-monitors',
+        'color-depth',
+        'server-layout',
+        'timezone',
+        'enable-font-smoothing',
+        'enable-wallpaper',
+        'enable-theming',
+        'enable-full-window-drag',
+        'enable-desktop-composition',
+        'enable-menu-animations'
+    ];
+
+    /**
+     * Builds the form describing the settable default parameters, cloning
+     * the relevant field definitions out of the given protocol schema.
+     * Cloning is required: the schema objects are cached and shared with
+     * every other page which renders protocol fields.
+     *
+     * @param {Object.<String, Protocol>} protocols
+     *     All protocols defined by the data source, as a map of protocol
+     *     name to protocol.
+     *
+     * @returns {Form[]}
+     *     A single-element array containing the form of settable defaults,
+     *     or null if the fields could not be resolved.
+     */
+    var getDefaultForms = function getDefaultForms(protocols) {
+
+        var rdp = protocols && protocols['rdp'];
+        if (!rdp || !rdp.connectionForms)
+            return null;
+
+        // Index every field defined by the protocol by name
+        var fields = {};
+        angular.forEach(rdp.connectionForms, function indexForm(form) {
+            angular.forEach(form.fields, function indexField(field) {
+                fields[field.name] = field;
+            });
+        });
+
+        var defaultFields = [];
+        angular.forEach(DEFAULT_PARAMETERS, function addField(name) {
+
+            var field = fields[name];
+            if (!field)
+                return;
+
+            // Deep clone, as the schema is cached and shared
+            field = angular.copy(field);
+
+            // Booleans must be able to express "no default" as distinct from
+            // "false", which a checkbox cannot do
+            if (field.type === 'BOOLEAN')
+                field = {
+                    name    : field.name,
+                    type    : 'ENUM',
+                    options : ['', 'true', 'false']
+                };
+
+            defaultFields.push(field);
+
+        });
+
+        if (!defaultFields.length)
+            return null;
+
+        return [{
+            name   : 'connection-defaults',
+            fields : defaultFields
+        }];
+
+    };
+
     // Query the user's permissions for the current connection group
     $q.all({
         connectionGroupData : loadRequestedConnectionGroup(),
         attributes  : schemaService.getConnectionGroupAttributes($scope.selectedDataSource),
         permissions : permissionService.getEffectivePermissions($scope.selectedDataSource, authenticationService.getCurrentUsername()),
+        protocols   : schemaService.getProtocols($scope.selectedDataSource),
         rootGroup   : connectionGroupService.getConnectionGroupTree($scope.selectedDataSource, ConnectionGroup.ROOT_IDENTIFIER, [PermissionSet.ObjectPermissionType.ADMINISTER])
     })
     .then(function connectionGroupDataRetrieved(values) {
-                
+
         $scope.attributes = values.attributes;
         $scope.rootGroup = values.rootGroup;
 
@@ -246,7 +357,38 @@ angular.module('manage').controller('manageConnectionGroupController', ['$scope'
                     PermissionSet.hasConnectionGroupPermission,
                     identifier);
 
+        // Default parameters may only be managed by administrators, and only
+        // for groups which already exist
+        if (identifier && values.permissions.systemPermissions.indexOf(
+                PermissionSet.SystemPermissionType.ADMINISTER) !== -1) {
+
+            $scope.defaultForms = getDefaultForms(values.protocols);
+
+            groupDefaultsService.getGroupDefaults($scope.selectedDataSource, identifier)
+            .then(function defaultsRetrieved(defaults) {
+                $scope.groupDefaults = defaults || {};
+            }, requestService.WARN);
+
+            groupDefaultsService.getGroupInheritedDefaults($scope.selectedDataSource, identifier)
+            .then(function inheritedRetrieved(inherited) {
+                $scope.inheritedDefaults = inherited || {};
+            }, requestService.WARN);
+
+        }
+
     }, requestService.DIE);
+
+    /**
+     * Returns whether this connection group inherits any default parameters
+     * from its ancestors.
+     *
+     * @returns {Boolean}
+     *     true if any defaults are inherited, false otherwise.
+     */
+    $scope.hasInheritedDefaults = function hasInheritedDefaults() {
+        return !!$scope.inheritedDefaults
+            && Object.keys($scope.inheritedDefaults).length > 0;
+    };
 
     /**
      * Cancels all pending edits, returning to the main list of connections
@@ -277,7 +419,19 @@ angular.module('manage').controller('manageConnectionGroupController', ['$scope'
      *     rejected with an {@link Error} if the save operation fails.
      */
     $scope.saveConnectionGroup = function saveConnectionGroup() {
-        return connectionGroupService.saveConnectionGroup($scope.selectedDataSource, $scope.connectionGroup);
+        return connectionGroupService.saveConnectionGroup($scope.selectedDataSource, $scope.connectionGroup)
+
+        // Store default parameters only once the group itself exists, as a
+        // group created by this same save has no identifier until then
+        .then(function connectionGroupSaved() {
+
+            if (!$scope.defaultForms || !$scope.connectionGroup.identifier)
+                return;
+
+            return groupDefaultsService.setGroupDefaults($scope.selectedDataSource,
+                    $scope.connectionGroup.identifier, $scope.groupDefaults);
+
+        });
     };
     
     /**

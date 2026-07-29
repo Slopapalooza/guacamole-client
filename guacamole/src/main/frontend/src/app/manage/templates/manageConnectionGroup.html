@@ -44,6 +44,31 @@
                    model="connectionGroup.attributes" model-only="!managementPermissions.canChangeAllAttributes"></guac-form>
     </div>
 
+    <!-- Default connection parameters inherited by descendants -->
+    <div class="section connection-defaults" ng-show="defaultForms">
+
+        <h3 class="advanced-header">{{'MANAGE_CONNECTION_GROUP.SECTION_HEADER_CONNECTION_DEFAULTS' | translate}}</h3>
+        <p class="defaults-help">{{'MANAGE_CONNECTION_GROUP.HELP_CONNECTION_DEFAULTS' | translate}}</p>
+
+        <!-- Defaults arriving from ancestor groups -->
+        <div class="inherited-defaults" ng-show="hasInheritedDefaults()">
+            <p class="inherited-header">{{'MANAGE_CONNECTION_GROUP.INFO_INHERITED_DEFAULTS' | translate}}</p>
+            <ul>
+                <li ng-repeat="(name, inherited) in inheritedDefaults">
+                    <span class="parameter-name">{{name}}</span>
+                    <span class="parameter-value">{{inherited.value}}</span>
+                    <span class="parameter-source"
+                          translate="MANAGE_CONNECTION_GROUP.INFO_INHERITED_FROM"
+                          translate-values="{NAME: inherited.sourceName}"></span>
+                </li>
+            </ul>
+        </div>
+
+        <guac-form namespace="'PROTOCOL_RDP'" content="defaultForms"
+                   model="groupDefaults"></guac-form>
+
+    </div>
+
     <!-- Form action buttons -->
     <management-buttons namespace="MANAGE_CONNECTION_GROUP"
           permissions="managementPermissions"

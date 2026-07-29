@@ -472,7 +472,61 @@
 }
 
 /*
- * 9. History table polish
+ * 9. Connection group defaults
+ */
+
+.manage-connection-group .connection-defaults .defaults-help {
+    margin: 0 0 1rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.manage-connection-group .connection-defaults .inherited-defaults {
+    background: #f9fafb;
+    border: 1px solid #e2e4e9;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0 0 1.25rem;
+}
+
+.manage-connection-group .connection-defaults .inherited-header {
+    margin: 0 0 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.manage-connection-group .connection-defaults .inherited-defaults ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.manage-connection-group .connection-defaults .inherited-defaults li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.125rem 0;
+    font-size: 0.8125rem;
+}
+
+.manage-connection-group .connection-defaults .parameter-name {
+    color: #374151;
+    font-weight: 500;
+    min-width: 12rem;
+}
+
+.manage-connection-group .connection-defaults .parameter-value {
+    color: #111827;
+    font-family: monospace;
+}
+
+.manage-connection-group .connection-defaults .parameter-source {
+    color: #6b7280;
+}
+
+/*
+ * 10. History table polish
  */
 
 :is(.manage-connection, .manage-user) .history table {
@@ -501,7 +555,7 @@
 }
 
 /*
- * 10. Motion
+ * 11. Motion
  */
 
 @media (prefers-reduced-motion: reduce) {
