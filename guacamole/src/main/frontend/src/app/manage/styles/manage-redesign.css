@@ -371,37 +371,42 @@
 }
 
 /*
- * Selects: replace the native chrome with a chevron drawn as a rotated
- * border, so that a dropdown never reads as a plain text box. The chevron is
- * drawn on the wrapper the field templates provide rather than as a
- * background image, which keeps it independent of any image handling.
+ * Selects: replace the native chrome with a chevron so that a dropdown never
+ * reads as a plain text box. The chevron is drawn on the select itself using
+ * two gradients rather than on a wrapper, because some field templates put
+ * several selects in one wrapper (time zone) and others none at all.
  */
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) select {
     -webkit-appearance: none;
     appearance: none;
     padding-right: 2rem;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #6b7280 50%),
+        linear-gradient(135deg, #6b7280 50%, transparent 50%);
+    background-position:
+        right 1.05rem center,
+        right 0.7rem center;
+    background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+    background-repeat: no-repeat;
 }
 
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-field .select-field {
-    position: relative;
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-field :is(.select-field, .language-field) {
     display: block;
 }
 
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-field .select-field::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0.875rem;
-    width: 0.45rem;
-    height: 0.45rem;
-    margin-top: -0.32rem;
-    border-right: 2px solid #6b7280;
-    border-bottom: 2px solid #6b7280;
-    transform: rotate(45deg);
-    pointer-events: none;
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-field :is(.select-field, .language-field) select {
+    width: 100%;
 }
 
-:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-field .select-field select {
+/* The time zone field stacks a region select above a zone select */
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-field .time-zone-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-field .time-zone-field select {
     width: 100%;
 }
 
@@ -521,9 +526,16 @@
     font-size: 0.875rem;
 }
 
-/* Separate each group of defaults from the one before it */
+/* Separate each group of defaults from the one before it, and from the
+ * description above the first group (which would otherwise be pulled tight
+ * against it by the rule rounding a leading header into the card corners) */
 .manage-connection-group .connection-defaults .form-group .form + .form h3.form-header {
     margin-top: 2rem;
+}
+
+.manage-connection-group .connection-defaults .form-group > div > .form:first-child h3.form-header {
+    margin-top: 1.5rem;
+    border-radius: 0;
 }
 
 /* A parameter left at its unset state is not in effect; say so quietly by
