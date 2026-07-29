@@ -256,29 +256,37 @@ angular.module('manage').controller('manageConnectionGroupController', ['$scope'
     $scope.inheritedDefaults = {};
 
     /**
-     * The names of the parameters which may be set as inheritable defaults,
-     * in the order they should be presented. Only parameters actually
-     * defined by the RDP protocol form are rendered.
+     * The parameters which may be set as inheritable defaults, grouped into
+     * the sections they are presented in. Only parameters actually defined
+     * by the RDP protocol form are rendered.
      *
-     * @type String[]
+     * @type Object[]
      */
-    var DEFAULT_PARAMETERS = [
-        'domain',
-        'security',
-        'ignore-cert',
-        'cert-tofu',
-        'resize-method',
-        'secondary-monitors',
-        'color-depth',
-        'server-layout',
-        'timezone',
-        'enable-font-smoothing',
-        'enable-wallpaper',
-        'enable-theming',
-        'enable-full-window-drag',
-        'enable-desktop-composition',
-        'enable-menu-animations'
+    var DEFAULT_PARAMETER_GROUPS = [
+        {
+            name   : 'default-authentication',
+            fields : ['domain', 'security', 'ignore-cert', 'cert-tofu']
+        },
+        {
+            name   : 'default-display',
+            fields : ['resize-method', 'secondary-monitors', 'color-depth',
+                      'server-layout', 'timezone']
+        },
+        {
+            name   : 'default-appearance',
+            fields : ['enable-font-smoothing', 'enable-wallpaper',
+                      'enable-theming', 'enable-full-window-drag',
+                      'enable-desktop-composition', 'enable-menu-animations']
+        }
     ];
+
+    /**
+     * The value of the resize method required for a connection to make use
+     * of additional monitors.
+     *
+     * @type String
+     */
+    var DISPLAY_UPDATE = 'display-update';
 
     /**
      * Builds the form describing the settable default parameters, cloning
@@ -308,36 +316,41 @@ angular.module('manage').controller('manageConnectionGroupController', ['$scope'
             });
         });
 
-        var defaultFields = [];
-        angular.forEach(DEFAULT_PARAMETERS, function addField(name) {
+        var forms = [];
+        angular.forEach(DEFAULT_PARAMETER_GROUPS, function addGroup(group) {
 
-            var field = fields[name];
-            if (!field)
-                return;
+            var groupFields = [];
+            angular.forEach(group.fields, function addField(name) {
 
-            // Deep clone, as the schema is cached and shared
-            field = angular.copy(field);
+                var field = fields[name];
+                if (!field)
+                    return;
 
-            // Booleans must be able to express "no default" as distinct from
-            // "false", which a checkbox cannot do
-            if (field.type === 'BOOLEAN')
-                field = {
-                    name    : field.name,
-                    type    : 'ENUM',
-                    options : ['', 'true', 'false']
-                };
+                // Deep clone, as the schema is cached and shared with every
+                // other page which renders protocol fields
+                field = angular.copy(field);
 
-            defaultFields.push(field);
+                // Booleans must be able to express "no default" as distinct
+                // from "disabled", which a checkbox cannot do
+                if (field.type === 'BOOLEAN')
+                    field = {
+                        name : field.name,
+                        type : 'GUAC_TRI_STATE'
+                    };
+
+                groupFields.push(field);
+
+            });
+
+            if (groupFields.length)
+                forms.push({
+                    name   : group.name,
+                    fields : groupFields
+                });
 
         });
 
-        if (!defaultFields.length)
-            return null;
-
-        return [{
-            name   : 'connection-defaults',
-            fields : defaultFields
-        }];
+        return forms.length ? forms : null;
 
     };
 
@@ -391,6 +404,58 @@ angular.module('manage').controller('manageConnectionGroupController', ['$scope'
     $scope.hasInheritedDefaults = function hasInheritedDefaults() {
         return !!$scope.inheritedDefaults
             && Object.keys($scope.inheritedDefaults).length > 0;
+    };
+
+    /**
+     * Whether the resize method was set automatically because additional
+     * monitors were requested, such that the interface can say so.
+     *
+     * @type Boolean
+     */
+    $scope.resizeMethodForced = false;
+
+    /*
+     * Additional monitors are only usable when the display-update channel is
+     * in use, so requesting them here selects that resize method rather than
+     * leaving a combination which cannot work.
+     */
+    $scope.$watch('groupDefaults["secondary-monitors"]', function monitorsChanged(monitors) {
+
+        if (!monitors || monitors === '0') {
+            $scope.resizeMethodForced = false;
+            return;
+        }
+
+        if ($scope.groupDefaults['resize-method'] !== DISPLAY_UPDATE) {
+            $scope.groupDefaults['resize-method'] = DISPLAY_UPDATE;
+            $scope.resizeMethodForced = true;
+        }
+
+    });
+
+    // Choosing a different resize method while monitors are requested would
+    // silently break them, so the notice stays until one or the other changes
+    $scope.$watch('groupDefaults["resize-method"]', function resizeMethodChanged(method) {
+        if (method === DISPLAY_UPDATE)
+            return;
+        $scope.resizeMethodForced = false;
+    });
+
+    /**
+     * Returns whether the currently-selected defaults request additional
+     * monitors without the resize method they require.
+     *
+     * @returns {Boolean}
+     *     true if the combination cannot work, false otherwise.
+     */
+    $scope.hasUnusableMonitorSettings = function hasUnusableMonitorSettings() {
+
+        var monitors = $scope.groupDefaults['secondary-monitors'];
+        if (!monitors || monitors === '0')
+            return false;
+
+        return $scope.groupDefaults['resize-method'] !== DISPLAY_UPDATE;
+
     };
 
     /**

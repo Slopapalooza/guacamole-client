@@ -1,0 +1,9 @@
+<div class="tri-state-field" role="radiogroup">
+    <button type="button" ng-repeat="option in options"
+            class="tri-state-option"
+            ng-class="{selected: isSelected(option.value), unset: !option.value}"
+            ng-disabled="disabled"
+            role="radio"
+            aria-checked="{{isSelected(option.value)}}"
+            ng-click="select(option.value)">{{option.label | translate}}</button>
+</div>

@@ -67,6 +67,9 @@
         <guac-form namespace="'PROTOCOL_RDP'" content="defaultForms"
                    model="groupDefaults"></guac-form>
 
+        <p class="notice resize-method-forced" ng-show="resizeMethodForced">{{'MANAGE_CONNECTION_GROUP.INFO_RESIZE_METHOD_FORCED' | translate}}</p>
+        <p class="notice monitors-unusable" ng-show="hasUnusableMonitorSettings()">{{'MANAGE_CONNECTION_GROUP.INFO_MONITORS_NEED_DISPLAY_UPDATE' | translate}}</p>
+
     </div>
 
     <!-- Form action buttons -->

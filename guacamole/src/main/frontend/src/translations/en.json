@@ -394,6 +394,8 @@
         "HELP_CONNECTION_DEFAULTS" : "Values set here apply to every connection within this group, including connections in nested groups, unless that connection sets its own value. Leave a field blank to set no default. Changes take effect the next time a connection is opened.",
 
         "INFO_INHERITED_DEFAULTS" : "Already inherited from parent groups:",
+        "INFO_MONITORS_NEED_DISPLAY_UPDATE" : "Additional monitors require the \"Display Update\" resize method.",
+        "INFO_RESIZE_METHOD_FORCED"         : "Resize method set to \"Display Update\", which additional monitors require.",
         "INFO_INHERITED_FROM"     : "from {NAME}",
 
         "NAME_TYPE_BALANCING"       : "Balancing",
@@ -709,6 +711,10 @@
         "FIELD_OPTION_RESIZE_METHOD_DISPLAY_UPDATE" : "\"Display Update\" virtual channel (RDP 8.1+)",
         "FIELD_OPTION_RESIZE_METHOD_EMPTY"          : "",
         "FIELD_OPTION_RESIZE_METHOD_RECONNECT"      : "Reconnect",
+
+        "SECTION_HEADER_DEFAULT_APPEARANCE"     : "Appearance Defaults",
+        "SECTION_HEADER_DEFAULT_AUTHENTICATION" : "Authentication and Trust Defaults",
+        "SECTION_HEADER_DEFAULT_DISPLAY"        : "Display Defaults",
 
         "FIELD_OPTION_CERT_TOFU_EMPTY" : "@:FORM_LAYOUT.OPTION_NO_DEFAULT",
         "FIELD_OPTION_CERT_TOFU_FALSE" : "@:FORM_LAYOUT.OPTION_DISABLED",
