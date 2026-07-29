@@ -64,6 +64,8 @@ import org.apache.guacamole.auth.jdbc.activeconnection.TrackedActiveConnection;
 import org.apache.guacamole.auth.jdbc.base.EntityMapper;
 import org.apache.guacamole.auth.jdbc.base.EntityService;
 import org.apache.guacamole.auth.jdbc.connection.ConnectionParameterMapper;
+import org.apache.guacamole.auth.jdbc.connectiongroup.ConnectionGroupParameterMapper;
+import org.apache.guacamole.auth.jdbc.connectiongroup.GroupDefaultsService;
 import org.apache.guacamole.auth.jdbc.permission.SharingProfilePermissionMapper;
 import org.apache.guacamole.auth.jdbc.permission.SharingProfilePermissionService;
 import org.apache.guacamole.auth.jdbc.permission.SharingProfilePermissionSet;
@@ -139,6 +141,7 @@ public class JDBCAuthenticationProviderModule extends MyBatisModule {
         addMapperClass(ConnectionGroupPermissionMapper.class);
         addMapperClass(ConnectionPermissionMapper.class);
         addMapperClass(ConnectionRecordMapper.class);
+        addMapperClass(ConnectionGroupParameterMapper.class);
         addMapperClass(ConnectionParameterMapper.class);
         addMapperClass(EntityMapper.class);
         addMapperClass(PasswordRecordMapper.class);
@@ -190,6 +193,7 @@ public class JDBCAuthenticationProviderModule extends MyBatisModule {
         bind(ConnectionSharingService.class);
         bind(ConnectionService.class);
         bind(EntityService.class);
+        bind(GroupDefaultsService.class);
         bind(GuacamoleTunnelService.class).to(RestrictedGuacamoleTunnelService.class);
         bind(PasswordEncryptionService.class).to(SHA256PasswordEncryptionService.class);
         bind(PasswordPolicyService.class);

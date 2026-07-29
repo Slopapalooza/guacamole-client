@@ -35,6 +35,7 @@ import org.apache.guacamole.auth.jdbc.base.ActivityRecordModel;
 import org.apache.guacamole.auth.jdbc.connection.ConnectionRecordSet;
 import org.apache.guacamole.auth.jdbc.connection.ModeledConnection;
 import org.apache.guacamole.auth.jdbc.connectiongroup.ModeledConnectionGroup;
+import org.apache.guacamole.auth.jdbc.rest.GroupDefaultsResource;
 import org.apache.guacamole.auth.jdbc.sharingprofile.ModeledSharingProfile;
 import org.apache.guacamole.auth.jdbc.sharingprofile.SharingProfileDirectory;
 import org.apache.guacamole.auth.jdbc.usergroup.ModeledUserGroup;
@@ -139,6 +140,13 @@ public class ModeledUserContext extends RestrictedObject
     private UserRecordMapper userRecordMapper;
 
     /**
+     * Provider for the REST resource exposing connection group default
+     * parameters.
+     */
+    @Inject
+    private Provider<GroupDefaultsResource> groupDefaultsResourceProvider;
+
+    /**
      * The environment of the Guacamole server.
      */
     @Inject
@@ -212,7 +220,14 @@ public class ModeledUserContext extends RestrictedObject
 
     @Override
     public Object getResource() throws GuacamoleException {
-        return null;
+
+        // FORK: expose connection group default parameters as an
+        // extension-specific REST resource. If upstream ever returns its own
+        // resource here, the two must be composed rather than replaced.
+        GroupDefaultsResource resource = groupDefaultsResourceProvider.get();
+        resource.init(getCurrentUser());
+        return resource;
+
     }
 
     @Override

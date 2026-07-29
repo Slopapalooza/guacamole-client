@@ -37,6 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.guacamole.auth.jdbc.JDBCEnvironment;
 import org.apache.guacamole.auth.jdbc.user.ModeledAuthenticatedUser;
 import org.apache.guacamole.auth.jdbc.connection.ModeledConnection;
+import org.apache.guacamole.auth.jdbc.connectiongroup.GroupDefaultsService;
 import org.apache.guacamole.auth.jdbc.connectiongroup.ModeledConnectionGroup;
 import org.apache.guacamole.auth.jdbc.connection.ConnectionRecordMapper;
 import org.apache.guacamole.auth.jdbc.connection.ConnectionModel;
@@ -151,6 +152,12 @@ public abstract class AbstractGuacamoleTunnelService implements GuacamoleTunnelS
      */
     @Inject
     private ConnectionParameterMapper connectionParameterMapper;
+
+    /**
+     * Service for resolving inheritable connection group default parameters.
+     */
+    @Inject
+    private GroupDefaultsService groupDefaultsService;
 
     /**
      * Mapper for accessing sharing profile parameters.
@@ -305,9 +312,24 @@ public abstract class AbstractGuacamoleTunnelService implements GuacamoleTunnelS
                 config.setParameter(parameter.getName(), parameter.getValue());
         }
         else {
+
+            // FORK: apply inheritable connection group defaults beneath the
+            // connection's own parameters. The connection's own values,
+            // applied afterwards, always win.
+            Map<String, String> defaults =
+                    groupDefaultsService.getEffectiveDefaults(model.getParentIdentifier());
+            if (!defaults.isEmpty()) {
+                logger.debug("Applying {} inherited default parameter(s) to "
+                        + "connection \"{}\": {}", defaults.size(),
+                        connection.getIdentifier(), defaults.keySet());
+                for (Map.Entry<String, String> parameter : defaults.entrySet())
+                    config.setParameter(parameter.getKey(), parameter.getValue());
+            }
+
             Collection<ConnectionParameterModel> parameters = connectionParameterMapper.select(connection.getIdentifier());
             for (ConnectionParameterModel parameter : parameters)
                 config.setParameter(parameter.getName(), parameter.getValue());
+
         }
 
         return config;

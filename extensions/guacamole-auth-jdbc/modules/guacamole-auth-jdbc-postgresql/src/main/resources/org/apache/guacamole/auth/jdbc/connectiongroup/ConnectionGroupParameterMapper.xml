@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<mapper namespace="org.apache.guacamole.auth.jdbc.connectiongroup.ConnectionGroupParameterMapper">
+
+    <!-- Result mapper for connection group default parameters -->
+    <resultMap id="ParameterResultMap" type="org.apache.guacamole.auth.jdbc.connectiongroup.ConnectionGroupParameterModel">
+        <result column="connection_group_id"   property="groupIdentifier" jdbcType="INTEGER"/>
+        <result column="parameter_name"        property="name"            jdbcType="VARCHAR"/>
+        <result column="parameter_value"       property="value"           jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- Result mapper for ancestry queries, including provenance -->
+    <resultMap id="AncestryParameterResultMap" type="org.apache.guacamole.auth.jdbc.connectiongroup.ConnectionGroupParameterModel">
+        <result column="connection_group_id"   property="groupIdentifier" jdbcType="INTEGER"/>
+        <result column="connection_group_name" property="groupName"       jdbcType="VARCHAR"/>
+        <result column="parameter_name"        property="name"            jdbcType="VARCHAR"/>
+        <result column="parameter_value"       property="value"           jdbcType="VARCHAR"/>
+        <result column="depth"                 property="depth"           jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- Select the default parameters stored directly on a given group -->
+    <select id="select" resultMap="ParameterResultMap">
+        SELECT
+            connection_group_id,
+            parameter_name,
+            parameter_value
+        FROM guacamole_connection_group_parameter
+        WHERE
+            connection_group_id = #{identifier,jdbcType=INTEGER}::integer
+    </select>
+
+    <!-- Select all default parameters of a group and its ancestors,
+         root-first, with a depth guard against reference cycles -->
+    <select id="selectEffective" resultMap="AncestryParameterResultMap">
+        WITH RECURSIVE ancestors (connection_group_id, parent_id, depth) AS (
+
+            SELECT
+                connection_group_id,
+                parent_id,
+                0
+            FROM guacamole_connection_group
+            WHERE connection_group_id = #{identifier,jdbcType=INTEGER}::integer
+
+            UNION ALL
+
+            SELECT
+                g.connection_group_id,
+                g.parent_id,
+                a.depth + 1
+            FROM guacamole_connection_group g
+            JOIN ancestors a ON g.connection_group_id = a.parent_id
+            WHERE a.depth &lt; 64
+
+        )
+        SELECT
+            p.connection_group_id,
+            g.connection_group_name,
+            p.parameter_name,
+            p.parameter_value,
+            a.depth
+        FROM ancestors a
+        JOIN guacamole_connection_group_parameter p
+            ON p.connection_group_id = a.connection_group_id
+        JOIN guacamole_connection_group g
+            ON g.connection_group_id = a.connection_group_id
+        ORDER BY a.depth DESC, p.parameter_name
+    </select>
+
+    <!-- Select the parent group of a given group -->
+    <select id="selectParentIdentifier" resultType="string">
+        SELECT parent_id
+        FROM guacamole_connection_group
+        WHERE connection_group_id = #{identifier,jdbcType=INTEGER}::integer
+    </select>
+
+    <!-- Select the parent group of a given connection -->
+    <select id="selectConnectionParentIdentifier" resultType="string">
+        SELECT parent_id
+        FROM guacamole_connection
+        WHERE connection_id = #{identifier,jdbcType=INTEGER}::integer
+    </select>
+
+    <!-- Delete all default parameters of a given group -->
+    <delete id="delete">
+        DELETE FROM guacamole_connection_group_parameter
+        WHERE connection_group_id = #{identifier,jdbcType=INTEGER}::integer
+    </delete>
+
+    <!-- Insert all given default parameters -->
+    <insert id="insert" parameterType="org.apache.guacamole.auth.jdbc.connectiongroup.ConnectionGroupParameterModel">
+
+        INSERT INTO guacamole_connection_group_parameter (
+            connection_group_id,
+            parameter_name,
+            parameter_value
+        )
+        VALUES
+            <foreach collection="parameters" item="parameter" separator=",">
+                (#{parameter.groupIdentifier,jdbcType=INTEGER}::integer,
+                 #{parameter.name,jdbcType=VARCHAR},
+                 #{parameter.value,jdbcType=VARCHAR})
+            </foreach>
+
+    </insert>
+
+</mapper>
