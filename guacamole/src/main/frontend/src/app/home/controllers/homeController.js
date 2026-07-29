@@ -44,6 +44,14 @@ angular.module('home').controller('homeController', ['$scope', '$injector',
     $scope.rootConnectionGroups = null;
 
     /**
+     * The current user preferences, used to control whether connection
+     * groups within the list render expanded by default.
+     *
+     * @type Object.<String, Object>
+     */
+    $scope.preferences = preferenceService.preferences;
+
+    /**
      * Array of all connection properties that are filterable.
      *
      * @type String[]

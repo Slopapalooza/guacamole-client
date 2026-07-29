@@ -128,6 +128,14 @@ angular.module('settings').provider('preferenceService', ['$injector',
         emulateAbsoluteMouse : true,
 
         /**
+         * Whether connection groups on the home screen should be expanded
+         * by default, rather than requiring each folder to be clicked open.
+         *
+         * @type Boolean
+         */
+        expandConnectionGroups : true,
+
+        /**
          * The default input method. This may be any of the values defined
          * within preferenceService.inputMethods.
          *

@@ -1120,6 +1120,8 @@
         "NAME_INPUT_METHOD_OSK"  : "@:CLIENT.NAME_INPUT_METHOD_OSK",
         "NAME_INPUT_METHOD_TEXT" : "@:CLIENT.NAME_INPUT_METHOD_TEXT",
 
+        "FIELD_HEADER_EXPAND_CONNECTION_GROUPS" : "Expand connection groups by default:",
+
         "SECTION_HEADER_APPEARANCE"           : "Appearance",
         "SECTION_HEADER_DEFAULT_INPUT_METHOD" : "Default Input Method",
         "SECTION_HEADER_DEFAULT_MOUSE_MODE"   : "Default Mouse Emulation Mode",

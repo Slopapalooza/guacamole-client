@@ -84,7 +84,17 @@ angular.module('groupList').directive('guacGroupList', [function guacGroupList()
              *
              * @type Function
              */
-            decorator : '='
+            decorator : '=',
+
+            /**
+             * Whether connection groups should render expanded rather than
+             * collapsed when the list is (re)built. Optional; when omitted,
+             * groups start collapsed as before. Groups may still be toggled
+             * manually regardless of this setting.
+             *
+             * @type Boolean
+             */
+            expandAll : '='
 
         },
 
@@ -230,6 +240,41 @@ angular.module('groupList').directive('guacGroupList', [function guacGroupList()
                 if ($scope.decorator)
                     $scope.decorator($scope.rootItems);
 
+                // Start with all groups expanded, if requested
+                if ($scope.expandAll)
+                    setExpanded($scope.rootItems, true);
+
+            });
+
+            /**
+             * Recursively sets the expansion state of every expandable
+             * connection group within the given items and their descendants.
+             *
+             * @param {GroupListItem[]} items
+             *     The items whose expansion state should be set.
+             *
+             * @param {Boolean} expanded
+             *     true to expand every group, false to collapse every group.
+             */
+            var setExpanded = function setExpanded(items, expanded) {
+                angular.forEach(items, function setItemExpanded(item) {
+
+                    if (item.type === GroupListItem.Type.CONNECTION_GROUP
+                            && item.expandable)
+                        item.expanded = expanded;
+
+                    if (item.children)
+                        setExpanded(item.children, expanded);
+
+                });
+            };
+
+            // Apply changes to the expand-all setting to the current items,
+            // such that toggling the associated preference takes effect
+            // without a rebuild
+            $scope.$watch('expandAll', function expandAllChanged(expandAll, oldExpandAll) {
+                if (expandAll !== oldExpandAll)
+                    setExpanded($scope.rootItems, !!expandAll);
             });
 
             /**
