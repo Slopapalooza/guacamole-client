@@ -264,6 +264,9 @@ angular.module('manage').controller('manageConnectionGroupController', ['$scope'
      */
     var DEFAULT_PARAMETERS = [
         'domain',
+        'security',
+        'ignore-cert',
+        'cert-tofu',
         'resize-method',
         'secondary-monitors',
         'color-depth',

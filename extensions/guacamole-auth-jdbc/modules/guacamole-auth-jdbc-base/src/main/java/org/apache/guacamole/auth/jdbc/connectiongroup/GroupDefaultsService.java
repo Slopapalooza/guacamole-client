@@ -56,16 +56,21 @@ public class GroupDefaultsService {
      * again when they are applied at connect time (defense in depth against
      * rows inserted outside the API).
      *
-     * Trust-affecting parameters (ignore-cert, security, cert-tofu) are
-     * deliberately absent until the inheritance-visibility UI ships.
      * Credentials, file paths, program execution, and addressing parameters
-     * are permanently excluded.
+     * are permanently excluded: inheriting them would grant descendants
+     * ambient authority, expose the guacd host's filesystem, or silently
+     * redirect connections.
      */
     public static final Set<String> INHERITABLE_PARAMETERS =
             Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
 
         // Session/identity
         "domain",
+
+        // Trust posture - see TRUST_PARAMETERS
+        "security",
+        "ignore-cert",
+        "cert-tofu",
 
         // Display
         "resize-method",
@@ -87,6 +92,22 @@ public class GroupDefaultsService {
         "disable-offscreen-caching",
         "disable-glyph-caching"
 
+    )));
+
+    /**
+     * The names of the inheritable parameters which affect how rigorously a
+     * connection verifies the identity of the server it connects to. These
+     * are inheritable because managing certificate trust per folder is the
+     * primary reason to have group defaults at all, but because a single
+     * group edit can relax verification for every descendant - including
+     * connections created later - their application is logged at a level
+     * which survives ordinary log filtering.
+     */
+    private static final Set<String> TRUST_PARAMETERS =
+            Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
+        "security",
+        "ignore-cert",
+        "cert-tofu"
     )));
 
     /**
@@ -216,8 +237,20 @@ public class GroupDefaultsService {
 
         Map<String, String> defaults = new LinkedHashMap<String, String>();
 
-        for (ConnectionGroupParameterModel parameter : getEffectiveDefaultModels(groupIdentifier))
+        for (ConnectionGroupParameterModel parameter : getEffectiveDefaultModels(groupIdentifier)) {
+
             defaults.put(parameter.getName(), parameter.getValue());
+
+            // Relaxed server verification arriving from a group applies to
+            // descendants which never mention it themselves; record it where
+            // it can be found after the fact
+            if (TRUST_PARAMETERS.contains(parameter.getName()))
+                logger.info("Connection group \"{}\" ({}) supplies inherited "
+                        + "server verification setting \"{}\" = \"{}\".",
+                        parameter.getGroupName(), parameter.getGroupIdentifier(),
+                        parameter.getName(), parameter.getValue());
+
+        }
 
         return defaults;
 
