@@ -153,6 +153,14 @@ body:not(.client):not(.secondaryMonitor) #content {
     margin-left: var(--pdg-layout-sidebar-width);
 }
 
+/* The settings view has no gutter of its own (the home and manage pages set
+ * their own), so give it breathing room from the sidebar and page edge. */
+body:not(.client):not(.secondaryMonitor) .settings-view {
+    padding-left: var(--pdg-space-margin);
+    padding-right: var(--pdg-space-margin);
+    box-sizing: border-box;
+}
+
 /* Fullscreen views own the whole viewport */
 
 body.client .pico-sidebar,
