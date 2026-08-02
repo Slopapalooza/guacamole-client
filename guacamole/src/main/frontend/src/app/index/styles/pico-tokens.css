@@ -1,0 +1,141 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/*
+ * Pico de Gallo design tokens — translated from the prototype's Tailwind
+ * config into bundle-ready CSS custom properties. NO CDN: the prototype
+ * loaded Tailwind, Google Fonts, and Material Symbols from external hosts;
+ * this deployment is WAF-fronted and self-hosted, so fonts and the icon
+ * font must be bundled as local assets and referenced here.
+ *
+ * Scope: light theme only for v1. The prototype declares darkMode:"class"
+ * but defines no dark palette; Guacamole has no dark mode today. Dark is a
+ * documented follow-up — every color below is a variable so a dark block is
+ * an additive :root[data-theme=dark] override later.
+ */
+
+:root {
+
+    /* ---- Core palette (slate-based) ---- */
+    --pdg-primary:                    #475569;
+    --pdg-on-primary:                 #ffffff;
+    --pdg-primary-container:          #f1f5f9;
+    --pdg-on-primary-container:       #0f172a;
+
+    --pdg-secondary:                  #64748b;
+    --pdg-on-secondary:               #ffffff;
+    --pdg-secondary-container:        #e2e8f0;
+    --pdg-on-secondary-container:     #0f172a;
+
+    --pdg-tertiary:                   #64748b;
+    --pdg-tertiary-container:         #f1f5f9;
+
+    /* ---- Surfaces (elevation ladder, lowest to highest) ---- */
+    --pdg-surface:                    #ffffff;
+    --pdg-surface-container-lowest:   #ffffff;
+    --pdg-surface-container-low:      #f8fafc;
+    --pdg-surface-container:          #f8fafc;
+    --pdg-surface-container-high:     #f1f5f9;
+    --pdg-surface-container-highest:  #e2e8f0;
+    --pdg-surface-dim:                #e2e8f0;
+    --pdg-surface-bright:             #ffffff;
+    --pdg-background:                 #ffffff;
+
+    /* ---- Content / text ---- */
+    --pdg-on-surface:                 #0f172a;
+    --pdg-on-surface-variant:         #475569;
+    --pdg-on-background:              #0f172a;
+
+    /* ---- Lines ---- */
+    --pdg-outline:                    #94a3b8;
+    --pdg-outline-variant:            #cbd5e1;
+
+    /* ---- Error ---- */
+    --pdg-error:                      #b91c1c;
+    --pdg-on-error:                   #ffffff;
+    --pdg-error-container:            #fee2e2;
+    --pdg-on-error-container:         #7f1d1d;
+
+    /* ---- Inverse (for the in-session/dark card backdrops) ---- */
+    --pdg-inverse-surface:            #1e293b;
+    --pdg-inverse-on-surface:         #f8fafc;
+
+    /* ---- Status (connection state dots + protocol badges) ---- */
+    --pdg-status-active:              #10b981;   /* green — active/connected */
+    --pdg-status-inuse:               #3b82f6;   /* blue — in use by others */
+    --pdg-status-idle:                var(--pdg-outline);
+
+    --pdg-badge-ssh-bg:               #dbeafe;   --pdg-badge-ssh-fg:  #1e40af;
+    --pdg-badge-vnc-bg:               #f3e8ff;   --pdg-badge-vnc-fg:  #6b21a8;
+    --pdg-badge-rdp-bg:               var(--pdg-surface-container-highest);
+    --pdg-badge-rdp-fg:               var(--pdg-on-surface-variant);
+
+    /* ---- Radii (note: the prototype's scale, not pill-shaped) ---- */
+    --pdg-radius:                     0.125rem;
+    --pdg-radius-lg:                  0.25rem;
+    --pdg-radius-xl:                  0.5rem;
+    --pdg-radius-full:                0.75rem;   /* card/nav corner, not 9999px */
+    --pdg-radius-pill:                999px;     /* actual pills: badges, dots */
+
+    /* ---- Spacing scale ---- */
+    --pdg-space-xs:                   4px;
+    --pdg-space-base:                 8px;
+    --pdg-space-sm:                   12px;
+    --pdg-space-md:                   24px;
+    --pdg-space-gutter:               24px;
+    --pdg-space-margin:               32px;
+    --pdg-space-lg:                   48px;
+    --pdg-space-xl:                   80px;
+
+    /* ---- Type ---- */
+    --pdg-font-sans:  "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --pdg-font-mono:  "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+
+    --pdg-layout-sidebar-width:       16rem;   /* 256px */
+    --pdg-layout-content-max:         1440px;
+    --pdg-layout-topbar-height:       4rem;
+
+    --pdg-shadow-sm:  0 1px 2px rgba(16, 24, 40, 0.05);
+    --pdg-shadow-md:  0 4px 12px rgba(16, 24, 40, 0.08);
+}
+
+/*
+ * Type scale, as utility-ish classes the AngularJS templates can apply
+ * directly (Tailwind's font-* / text-* utilities are not available once the
+ * CDN is dropped). Names mirror the prototype's tokens.
+ */
+.pdg-headline-xl { font: 700 48px/56px var(--pdg-font-sans); letter-spacing: -0.02em; }
+.pdg-headline-lg { font: 600 32px/40px var(--pdg-font-sans); letter-spacing: -0.01em; }
+.pdg-headline-md { font: 600 20px/28px var(--pdg-font-sans); }
+.pdg-body-lg     { font: 400 18px/28px var(--pdg-font-sans); }
+.pdg-body-md     { font: 400 16px/24px var(--pdg-font-sans); }
+.pdg-body-sm     { font: 400 14px/20px var(--pdg-font-sans); }
+.pdg-label-md    { font: 500 14px/20px var(--pdg-font-sans); }
+.pdg-label-sm    { font: 500 12px/16px var(--pdg-font-mono); }
+
+/*
+ * Fonts must be bundled, not fetched. Drop the Plus Jakarta Sans and
+ * JetBrains Mono woff2 files under app/index/styles/fonts/ (or a new
+ * pico/fonts/) and declare @font-face here. Material Symbols likewise —
+ * ship the variable icon font locally rather than the CDN link, OR replace
+ * the handful of icons actually used with inline SVGs (fewer bytes, no font
+ * load). The prototype uses: lan, history, settings, logout, person,
+ * play_arrow, terminal, search, filter_list, expand_more, sort, grid_view,
+ * desktop_windows, folder, dns, more_vert, chevron_left, chevron_right.
+ */

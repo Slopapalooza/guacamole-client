@@ -92,6 +92,10 @@
                 <guac-notification notification="guacNotification.getStatus()"></guac-notification>
             </guac-modal>
 
+            <!-- Persistent navigation sidebar (hidden on fullscreen client
+                 views via body class in pico-chrome.css) -->
+            <guac-sidebar></guac-sidebar>
+
             <div id="content" ng-view>
             </div>
 

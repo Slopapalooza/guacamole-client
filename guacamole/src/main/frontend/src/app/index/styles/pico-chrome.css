@@ -1,0 +1,205 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/*
+ * Persistent navigation sidebar and the content offset it requires. The
+ * sidebar renders only in the authenticated "ready" application state, so it
+ * never appears on the login screen. On the fullscreen in-session client and
+ * secondary-monitor views the body carries "client"/"secondaryMonitor" and
+ * the sidebar is removed, restoring the edge-to-edge layout those views need.
+ */
+
+body {
+    font-family: var(--pdg-font-sans);
+}
+
+/* Sidebar */
+
+.pico-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    width: var(--pdg-layout-sidebar-width);
+    height: 100vh;
+    box-sizing: border-box;
+    padding: var(--pdg-space-base);
+    background: var(--pdg-surface-container);
+    border-right: 1px solid var(--pdg-outline-variant);
+}
+
+.pico-sidebar-head {
+    padding: var(--pdg-space-md) var(--pdg-space-sm) var(--pdg-space-lg);
+}
+
+.pico-brand {
+    margin: 0;
+    font: 600 20px/28px var(--pdg-font-sans);
+    color: var(--pdg-on-surface);
+}
+
+.pico-user {
+    display: flex;
+    align-items: center;
+    gap: var(--pdg-space-sm);
+    margin-top: var(--pdg-space-md);
+    padding: var(--pdg-space-sm);
+    background: var(--pdg-surface);
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-full);
+    box-shadow: var(--pdg-shadow-sm);
+}
+
+.pico-user-avatar {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--pdg-radius-pill);
+    background: var(--pdg-primary-container);
+    color: var(--pdg-on-primary-container);
+}
+
+.pico-user-text {
+    overflow: hidden;
+}
+
+.pico-user-name {
+    margin: 0;
+    font: 700 14px/20px var(--pdg-font-sans);
+    color: var(--pdg-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pico-user-role {
+    margin: 0;
+    font: 500 12px/16px var(--pdg-font-mono);
+    color: var(--pdg-on-surface-variant);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Navigation */
+
+.pico-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 var(--pdg-space-sm);
+    flex: 1 1 auto;
+}
+
+.pico-nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--pdg-space-sm);
+    padding: 12px var(--pdg-space-md);
+    border-radius: var(--pdg-radius-full);
+    color: var(--pdg-on-surface-variant);
+    text-decoration: none;
+    font: 500 14px/20px var(--pdg-font-sans);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pico-nav-link:hover {
+    background: var(--pdg-surface-container-high);
+    text-decoration: none;
+}
+
+.pico-nav-link.active {
+    background: var(--pdg-surface);
+    color: var(--pdg-on-surface);
+    font-weight: 700;
+    border: 1px solid var(--pdg-outline-variant);
+    box-shadow: var(--pdg-shadow-sm);
+}
+
+.pico-nav-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+}
+
+.pico-nav-logout {
+    margin-top: var(--pdg-space-lg);
+}
+
+/* Content offset: shift routed pages right of the sidebar */
+
+body:not(.client):not(.secondaryMonitor) #content {
+    margin-left: var(--pdg-layout-sidebar-width);
+}
+
+/* Fullscreen views own the whole viewport */
+
+body.client .pico-sidebar,
+body.secondaryMonitor .pico-sidebar {
+    display: none;
+}
+
+/* The sidebar now provides navigation and logout, so the per-page top-right
+ * user menu is redundant wherever the sidebar is shown. It is kept on the
+ * fullscreen client views, which have no sidebar. */
+body:not(.client):not(.secondaryMonitor) guac-user-menu {
+    display: none;
+}
+
+/* Responsive: collapse the sidebar to icons on narrow viewports */
+
+@media (max-width: 900px) {
+
+    .pico-sidebar {
+        width: 4.5rem;
+        padding: var(--pdg-space-base) 4px;
+    }
+
+    .pico-brand,
+    .pico-user-text,
+    .pico-nav-text {
+        display: none;
+    }
+
+    .pico-user {
+        justify-content: center;
+        padding: var(--pdg-space-base);
+    }
+
+    .pico-nav-link {
+        justify-content: center;
+        padding: 12px;
+    }
+
+    body:not(.client):not(.secondaryMonitor) #content {
+        margin-left: 4.5rem;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pico-nav-link {
+        transition: none;
+    }
+}
