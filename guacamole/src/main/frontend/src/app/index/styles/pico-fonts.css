@@ -1,0 +1,38 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  See the License for the specific language
+ * governing permissions and limitations under the License.
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/*
+ * Locally-bundled Pico de Gallo interface fonts, replacing the prototype's
+ * CDN font loads (this deployment is self-hosted behind a WAF). Both fonts
+ * are licensed under the SIL Open Font License 1.1 - see the LICENSE file
+ * alongside each font under fonts/.
+ *
+ * Plus Jakarta Sans ships as a single variable font covering the full weight
+ * axis, so one file backs the 400-700 range the interface uses.
+ */
+
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('fonts/plus-jakarta-sans/PlusJakartaSans-Variable.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('fonts/jetbrains-mono/JetBrainsMono-Medium.woff2') format('woff2');
+}

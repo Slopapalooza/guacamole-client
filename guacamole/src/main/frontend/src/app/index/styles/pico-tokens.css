@@ -130,12 +130,9 @@
 .pdg-label-sm    { font: 500 12px/16px var(--pdg-font-mono); }
 
 /*
- * Fonts must be bundled, not fetched. Drop the Plus Jakarta Sans and
- * JetBrains Mono woff2 files under app/index/styles/fonts/ (or a new
- * pico/fonts/) and declare @font-face here. Material Symbols likewise —
- * ship the variable icon font locally rather than the CDN link, OR replace
- * the handful of icons actually used with inline SVGs (fewer bytes, no font
- * load). The prototype uses: lan, history, settings, logout, person,
- * play_arrow, terminal, search, filter_list, expand_more, sort, grid_view,
- * desktop_windows, folder, dns, more_vert, chevron_left, chevron_right.
+ * Fonts are bundled locally, not fetched from a CDN: Plus Jakarta Sans and
+ * JetBrains Mono woff2 files live under src/fonts/ (copied to the output by
+ * webpack) and are declared via @font-face in pico-fonts.css. The prototype's
+ * Material Symbols icon font was replaced by inline SVGs at each use site, so
+ * no icon webfont is loaded.
  */
