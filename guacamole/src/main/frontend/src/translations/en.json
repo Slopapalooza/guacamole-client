@@ -4,7 +4,7 @@
     
     "APP" : {
 
-        "NAME"    : "Apache Guacamole",
+        "NAME"    : "Pico de Gallo",
         "VERSION" : "${project.version}",
 
         "ACTION_ACKNOWLEDGE"        : "OK",
@@ -321,6 +321,12 @@
 
         "SECTION_HEADER_ALL_CONNECTIONS"    : "All Connections",
         "SECTION_HEADER_RECENT_CONNECTIONS" : "Recent Connections"
+
+    },
+
+    "SIDEBAR" : {
+
+        "NAV_CONNECTIONS" : "Connections"
 
     },
 

@@ -72,6 +72,16 @@ angular.module('navigation').directive('guacSidebar', [function guacSidebar() {
              */
             $scope.pages = null;
 
+            /**
+             * The URL of the current user's preferences page, which the
+             * identity block links to.
+             *
+             * @type String
+             */
+            $scope.preferencesUrl = '#/settings/'
+                    + encodeURIComponent(authenticationService.getDataSource())
+                    + '/preferences';
+
             // Pull profile details for the identity block
             userService.getUser(authenticationService.getDataSource(), $scope.username)
                     .then(function userRetrieved(user) {
@@ -122,8 +132,22 @@ angular.module('navigation').directive('guacSidebar', [function guacSidebar() {
                 var name = (page.className || '') + ' ' + (page.name || '');
                 if (/settings/i.test(name))    return 'settings';
                 if (/session|history|record/i.test(name)) return 'history';
-                if (/home/i.test(name))        return 'connections';
                 return 'connections';
+            };
+
+            /**
+             * Returns the label to display for the given navigation page. The
+             * home page is presented as "Connections", since that is what it
+             * lists; all other pages use their own name.
+             *
+             * @param {Page} page
+             *     The page whose label is wanted.
+             *
+             * @returns {String}
+             *     The translation key of the label to display.
+             */
+            $scope.getPageLabel = function getPageLabel(page) {
+                return page.url === '/' ? 'SIDEBAR.NAV_CONNECTIONS' : page.name;
             };
 
             /**
