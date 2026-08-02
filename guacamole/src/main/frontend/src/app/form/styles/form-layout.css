@@ -43,7 +43,7 @@
     box-shadow: none;
     padding: 0.25rem;
     margin: 0;
-    color: #2563eb;
+    color: var(--pdg-primary);
     font-size: 0.8125rem;
     cursor: pointer;
     text-shadow: none;
@@ -88,12 +88,12 @@
 }
 
 .form-layout-advanced button.section-toggle:hover {
-    background: #f3f4f6;
+    background: var(--pdg-surface-container-high);
 }
 
 .form-layout-advanced button.section-toggle:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.25);
 }
 
 .form-layout-advanced .section-chevron {
@@ -112,12 +112,12 @@
 .form-layout-advanced .section-title {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #374151;
+    color: var(--pdg-on-surface);
 }
 
 /* Sections holding no set values recede */
 .form-layout-advanced .advanced-section:not(.has-set) .section-title {
-    color: #6b7280;
+    color: var(--pdg-on-surface-variant);
     font-weight: 500;
 }
 
@@ -142,7 +142,7 @@
 .form-layout-advanced .section-set-fields {
     margin: -0.25rem 0 0.5rem 1.625rem;
     font-size: 0.75rem;
-    color: #6b7280;
+    color: var(--pdg-on-surface-variant);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

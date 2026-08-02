@@ -1,0 +1,71 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  See the License for the specific language
+ * governing permissions and limitations under the License.
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/*
+ * Login screen re-theme onto the Pico de Gallo tokens. The login dialog is
+ * still fully overridable by the branding extension (logo, APP.NAME); this
+ * only restyles the surrounding chrome — background, the dialog card, its
+ * fields, and the submit button.
+ */
+
+.login-ui {
+    background: var(--pdg-surface-container);
+    font-family: var(--pdg-font-sans);
+}
+
+.login-ui .login-dialog {
+    background: var(--pdg-surface);
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-full);
+    box-shadow: var(--pdg-shadow-md);
+    color: var(--pdg-on-surface);
+}
+
+.login-ui .login-dialog .app-name {
+    color: var(--pdg-on-surface);
+    font-weight: 600;
+}
+
+.login-ui .login-dialog .login-fields input {
+    box-sizing: border-box;
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-xl);
+    background: var(--pdg-surface);
+    color: var(--pdg-on-surface);
+    font-family: var(--pdg-font-sans);
+}
+
+.login-ui .login-dialog .login-fields input:focus {
+    outline: none;
+    border-color: var(--pdg-primary);
+    box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.25);
+    background: var(--pdg-surface);
+}
+
+.login-ui .login-dialog .buttons input[type=submit],
+.login-ui .login-dialog .buttons button {
+    background: var(--pdg-primary);
+    border: 1px solid var(--pdg-primary);
+    border-radius: var(--pdg-radius-xl);
+    color: var(--pdg-on-primary);
+    font-family: var(--pdg-font-sans);
+    font-weight: 600;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.login-ui .login-dialog .buttons input[type=submit]:hover,
+.login-ui .login-dialog .buttons button:hover {
+    background: #334155;
+    border-color: #334155;
+}

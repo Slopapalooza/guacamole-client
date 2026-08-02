@@ -71,7 +71,7 @@
 
 /* Breadcrumb-style subtitle line under the page header */
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .page-subtitle {
-    color: #6b7280;
+    color: var(--pdg-on-surface-variant);
     font-size: 0.875rem;
     margin: -0.5rem 0 1.25rem;
 }
@@ -89,7 +89,7 @@
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) h2.header,
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .header ~ * .header,
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .header ~ .header {
-    background: #f3f4f6;
+    background: var(--pdg-surface-container-high);
     border: none;
     box-shadow: none;
     border-radius: 8px;
@@ -104,7 +104,7 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #374151;
+    color: var(--pdg-on-surface);
 }
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .header ~ * .header h2,
@@ -113,7 +113,7 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #374151;
+    color: var(--pdg-on-surface);
     margin: 0;
     padding: 0;
 }
@@ -121,9 +121,9 @@
 /* In-card section headers: grey banners bleeding to the card edges */
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .form-group h3.form-header,
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) h3.advanced-header {
-    background: #f3f4f6;
+    background: var(--pdg-surface-container-high);
     border: none;
-    border-bottom: 1px solid #e2e4e9;
+    border-bottom: 1px solid var(--pdg-outline-variant);
     box-shadow: none;
     margin: 1.25rem -1.5rem 1rem;
     padding: 0.625rem 1.5rem;
@@ -137,7 +137,7 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #374151;
+    color: var(--pdg-on-surface);
 }
 
 /* Headers at the very top of a card round into its corners */
@@ -155,7 +155,7 @@
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .section {
     background: #fff;
-    border: 1px solid #e2e4e9;
+    border: 1px solid var(--pdg-outline-variant);
     border-radius: 10px;
     box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
     padding: 1.25rem 1.5rem;
@@ -175,7 +175,7 @@
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .attributes .form-group .form:not(.advanced-section):not(.form-essentials) {
     background: #fff;
-    border: 1px solid #e2e4e9;
+    border: 1px solid var(--pdg-outline-variant);
     border-radius: 10px;
     box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
     padding: 1.25rem 1.5rem;
@@ -238,7 +238,7 @@
     text-align: left;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: var(--pdg-on-surface);
     white-space: normal;
 }
 
@@ -283,7 +283,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: var(--pdg-on-surface);
     padding: 0;
 }
 
@@ -330,7 +330,7 @@
     box-sizing: border-box;
     max-width: 100%;
     padding: 0.375rem 0.625rem;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--pdg-outline-variant);
     border-radius: 8px;
 
     /* Deliberately not the background shorthand: this rule outranks the
@@ -371,8 +371,8 @@
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) :is(input:focus, select:focus, textarea:focus) {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    border-color: var(--pdg-primary);
+    box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.25);
 }
 
 /*
@@ -386,8 +386,8 @@
     appearance: none;
     padding-right: 2rem;
     background-image:
-        linear-gradient(45deg, transparent 50%, #6b7280 50%),
-        linear-gradient(135deg, #6b7280 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, var(--pdg-on-surface-variant) 50%),
+        linear-gradient(135deg, var(--pdg-on-surface-variant) 50%, transparent 50%);
     background-position:
         right 1.05rem center,
         right 0.7rem center;
@@ -430,7 +430,7 @@
     margin: 0;
     border: none;
     border-radius: 999px;
-    background: #d1d5db;
+    background: var(--pdg-outline-variant);
     cursor: pointer;
     transition: background 0.15s ease;
     vertical-align: middle;
@@ -451,7 +451,7 @@
 }
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) :is(table.properties, table.fields, .checkbox-field) input[type=checkbox]:checked {
-    background: #2563eb;
+    background: var(--pdg-primary);
 }
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) :is(table.properties, table.fields, .checkbox-field) input[type=checkbox]:checked::after {
@@ -460,7 +460,7 @@
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) :is(table.properties, table.fields, .checkbox-field) input[type=checkbox]:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.25);
 }
 
 /*
@@ -479,7 +479,7 @@
     background: rgba(255, 255, 255, 0.95);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
-    border-top: 1px solid #e2e4e9;
+    border-top: 1px solid var(--pdg-outline-variant);
     padding: 0.75rem 0.25rem;
     margin: 0 0 1.25rem;
     text-align: initial;
@@ -493,16 +493,16 @@
 }
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .action-buttons button.save {
-    background: #2563eb;
-    border: 1px solid #2563eb;
+    background: var(--pdg-primary);
+    border: 1px solid var(--pdg-primary);
     color: #fff;
     text-shadow: none;
     box-shadow: none;
 }
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .action-buttons button.save:hover {
-    background: #1d4ed8;
-    border-color: #1d4ed8;
+    background: #334155;
+    border-color: #334155;
 }
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .action-buttons button.danger {
@@ -527,7 +527,7 @@
 
 .manage-connection-group .connection-defaults .defaults-help {
     margin: 0 0 1.5rem;
-    color: #6b7280;
+    color: var(--pdg-on-surface-variant);
     font-size: 0.875rem;
 }
 
@@ -546,7 +546,7 @@
 /* A parameter left at its unset state is not in effect; say so quietly by
  * receding its label rather than adding another piece of text */
 .manage-connection-group .connection-defaults .labeled-field.empty .field-header label {
-    color: #9ca3af;
+    color: var(--pdg-outline);
 }
 
 .manage-connection-group .connection-defaults .notice {
@@ -557,8 +557,8 @@
 }
 
 .manage-connection-group .connection-defaults .notice.resize-method-forced {
-    background: #eff6ff;
-    color: #1e40af;
+    background: var(--pdg-primary-container);
+    color: var(--pdg-on-surface-variant);
 }
 
 .manage-connection-group .connection-defaults .notice.monitors-unusable {
@@ -572,7 +572,7 @@
 
 .tri-state-field {
     display: inline-flex;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--pdg-outline-variant);
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
@@ -583,12 +583,12 @@
     padding: 0.375rem 0.75rem;
     min-width: 0;
     border: none;
-    border-right: 1px solid #e2e4e9;
+    border-right: 1px solid var(--pdg-outline-variant);
     border-radius: 0;
     background: #fff;
     box-shadow: none;
     text-shadow: none;
-    color: #374151;
+    color: var(--pdg-on-surface);
     font-size: 0.8125rem;
     line-height: 1.4;
     cursor: pointer;
@@ -600,28 +600,28 @@
 }
 
 .tri-state-field button.tri-state-option:hover {
-    background: #f3f4f6;
+    background: var(--pdg-surface-container-high);
 }
 
 .tri-state-field button.tri-state-option.selected {
-    background: #2563eb;
+    background: var(--pdg-primary);
     color: #fff;
 }
 
 /* The unset state is a real choice, but not an active setting */
 .tri-state-field button.tri-state-option.unset.selected {
-    background: #e5e7eb;
-    color: #4b5563;
+    background: var(--pdg-surface-container-highest);
+    color: var(--pdg-on-surface-variant);
 }
 
 .tri-state-field button.tri-state-option:focus-visible {
     outline: none;
-    box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.5);
+    box-shadow: inset 0 0 0 2px rgba(71, 85, 105, 0.5);
 }
 
 .manage-connection-group .connection-defaults .inherited-defaults {
-    background: #f9fafb;
-    border: 1px solid #e2e4e9;
+    background: var(--pdg-surface-container-low);
+    border: 1px solid var(--pdg-outline-variant);
     border-radius: 8px;
     padding: 0.75rem 1rem;
     margin: 0 0 1.25rem;
@@ -631,7 +631,7 @@
     margin: 0 0 0.5rem;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #374151;
+    color: var(--pdg-on-surface);
 }
 
 .manage-connection-group .connection-defaults .inherited-defaults ul {
@@ -649,18 +649,18 @@
 }
 
 .manage-connection-group .connection-defaults .parameter-name {
-    color: #374151;
+    color: var(--pdg-on-surface);
     font-weight: 500;
     min-width: 12rem;
 }
 
 .manage-connection-group .connection-defaults .parameter-value {
-    color: #111827;
+    color: var(--pdg-on-surface);
     font-family: monospace;
 }
 
 .manage-connection-group .connection-defaults .parameter-source {
-    color: #6b7280;
+    color: var(--pdg-on-surface-variant);
 }
 
 /*
@@ -677,7 +677,7 @@
 }
 
 .manage-connection .labeled-field .inherited-chip {
-    color: #6b7280;
+    color: var(--pdg-on-surface-variant);
 }
 
 .manage-connection .labeled-field .override-chip {
@@ -691,7 +691,7 @@
     padding: 0;
     margin: 0;
     min-width: 0;
-    color: #2563eb;
+    color: var(--pdg-primary);
     font-size: 0.75rem;
     cursor: pointer;
     text-shadow: none;
@@ -727,7 +727,7 @@
     gap: 0.75rem;
     padding: 0.125rem 0;
     font-size: 0.8125rem;
-    color: #374151;
+    color: var(--pdg-on-surface);
 }
 
 .manage-connection .location-changes .parameter-name {
@@ -740,7 +740,7 @@
 }
 
 .manage-connection .location-changes .unset {
-    color: #9ca3af;
+    color: var(--pdg-outline);
     font-style: italic;
     font-family: inherit;
 }
@@ -758,9 +758,9 @@
 :is(.manage-connection, .manage-user) .history th {
     text-align: left;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--pdg-on-surface-variant);
     border: none;
-    border-bottom: 1px solid #e2e4e9;
+    border-bottom: 1px solid var(--pdg-outline-variant);
     padding: 0.5rem;
     background: none;
 }
@@ -771,7 +771,7 @@
 }
 
 :is(.manage-connection, .manage-user) .history tbody tr:nth-child(even) {
-    background: #f9fafb;
+    background: var(--pdg-surface-container-low);
 }
 
 /*

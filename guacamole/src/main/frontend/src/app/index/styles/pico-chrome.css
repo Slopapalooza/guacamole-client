@@ -161,9 +161,10 @@ body.secondaryMonitor .pico-sidebar {
 }
 
 /* The sidebar now provides navigation and logout, so the per-page top-right
- * user menu is redundant wherever the sidebar is shown. It is kept on the
- * fullscreen client views, which have no sidebar. */
-body:not(.client):not(.secondaryMonitor) guac-user-menu {
+ * user menu is redundant wherever the sidebar is shown. The directive
+ * replaces its element with a .user-menu root, so target that. It is kept on
+ * the fullscreen client views, which have no sidebar. */
+body:not(.client):not(.secondaryMonitor) .user-menu {
     display: none;
 }
 

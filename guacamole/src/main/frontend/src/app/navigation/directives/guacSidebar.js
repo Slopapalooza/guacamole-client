@@ -96,10 +96,16 @@ angular.module('navigation').directive('guacSidebar', [function guacSidebar() {
              *     true if the given page is the current page, false otherwise.
              */
             $scope.isActive = function isActive(page) {
-                var current = '#/' === page.url
-                    ? ($location.path() === '/' || $location.path() === '')
-                    : $location.url().indexOf(page.url.replace(/^#/, '')) === 0;
-                return !!current;
+
+                var path = $location.path() || '/';
+
+                // The home page ("/") is active only on an exact match; other
+                // pages are active when the current path is within them
+                if (page.url === '/')
+                    return path === '/';
+
+                return path === page.url || path.indexOf(page.url + '/') === 0;
+
             };
 
             /**

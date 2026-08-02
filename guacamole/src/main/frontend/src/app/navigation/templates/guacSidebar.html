@@ -16,7 +16,7 @@
 
     <!-- Navigation -->
     <nav class="pico-nav">
-        <a ng-repeat="page in pages" href="{{page.url}}"
+        <a ng-repeat="page in pages" href="#{{page.url}}"
            class="pico-nav-link" ng-class="{active: isActive(page)}">
             <span class="pico-nav-icon" ng-switch="getIcon(page)" aria-hidden="true">
                 <svg ng-switch-when="connections" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 6h16v2H4V6Zm0 5h16v2H4v-2Zm0 5h16v2H4v-2Z"/></svg>
