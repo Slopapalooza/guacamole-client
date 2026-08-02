@@ -161,6 +161,17 @@ body:not(.client):not(.secondaryMonitor) .settings-view {
     box-sizing: border-box;
 }
 
+/* The page header bar bleeds back out to the full settings-view width, so its
+ * background spans edge to edge while its text stays aligned with the padded
+ * content below. */
+body:not(.client):not(.secondaryMonitor) .settings-view > .header {
+    margin-left: calc(-1 * var(--pdg-space-margin));
+    margin-right: calc(-1 * var(--pdg-space-margin));
+    padding-left: var(--pdg-space-margin);
+    padding-right: var(--pdg-space-margin);
+    box-sizing: border-box;
+}
+
 /* Fullscreen views own the whole viewport */
 
 body.client .pico-sidebar,
