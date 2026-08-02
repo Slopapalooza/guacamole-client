@@ -125,10 +125,31 @@
 }
 
 /*
- * All connections — carded list
+ * All connections — a carded table (name / protocol / status columns)
  */
 
-.home-view .all-connections .group-list {
+/* Column widths, shared by the header and every row so they line up */
+.home-view .all-connections .col-protocol {
+    flex: 0 0 8rem;
+}
+
+.home-view .all-connections .col-status {
+    flex: 0 0 12rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.home-view .all-connections .col-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--pdg-space-sm);
+}
+
+/* Card container */
+.home-view .all-connections {
     background: var(--pdg-surface);
     border: 1px solid var(--pdg-outline-variant);
     border-radius: var(--pdg-radius-full);
@@ -136,7 +157,21 @@
     box-shadow: var(--pdg-shadow-sm);
 }
 
-/* Each row */
+/* Column header row */
+.home-view .all-connections .table-header {
+    display: flex;
+    align-items: center;
+    gap: var(--pdg-space-sm);
+    padding: var(--pdg-space-md);
+    background: var(--pdg-surface-container-low);
+    border-bottom: 1px solid var(--pdg-outline-variant);
+    font: 500 12px/16px var(--pdg-font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--pdg-outline);
+}
+
+/* Each tree row */
 .home-view .all-connections .list-item .caption {
     display: flex;
     align-items: center;
@@ -150,50 +185,77 @@
     background: var(--pdg-surface-container-low);
 }
 
-/* Folder rows read slightly heavier */
-.home-view .all-connections .connection-group > .caption .name {
-    font-weight: 700;
-    color: var(--pdg-on-surface);
-}
-
+/* The connection/group link fills the row and lays its columns out */
 .home-view .all-connections .home-connection,
 .home-view .all-connections .home-connection-group {
     display: flex;
     align-items: center;
     gap: var(--pdg-space-sm);
     flex: 1 1 auto;
+    min-width: 0;
     text-decoration: none;
     color: var(--pdg-on-surface);
     font: 400 16px/24px var(--pdg-font-sans);
-    min-width: 0;
 }
 
-.home-view .all-connections .home-connection .name,
-.home-view .all-connections .home-connection-group .name {
+.home-view .all-connections .col-name .name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.home-view .all-connections .activeUserCount {
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+/* Folder rows read heavier and have no protocol/status columns */
+.home-view .all-connections .connection-group > .caption .name {
+    font-weight: 700;
+    color: var(--pdg-on-surface);
+}
+
+/* Protocol badge */
+.home-view .all-connections .protocol-badge {
+    display: inline-block;
     padding: 2px 10px;
     border-radius: var(--pdg-radius-pill);
-    background: var(--pdg-surface-container-highest);
-    color: var(--pdg-on-surface-variant);
-    font: 500 12px/16px var(--pdg-font-sans);
-    white-space: nowrap;
+    font: 500 10px/16px var(--pdg-font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--pdg-badge-rdp-bg);
+    color: var(--pdg-badge-rdp-fg);
 }
 
-.home-view .all-connections .connection.active .activeUserCount {
-    background: rgba(59, 130, 246, 0.15);
+.home-view .all-connections .protocol-badge.protocol-ssh {
+    background: var(--pdg-badge-ssh-bg);
+    color: var(--pdg-badge-ssh-fg);
+}
+
+.home-view .all-connections .protocol-badge.protocol-vnc {
+    background: var(--pdg-badge-vnc-bg);
+    color: var(--pdg-badge-vnc-fg);
+}
+
+/* Status column */
+.home-view .all-connections .status-dot {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--pdg-radius-pill);
+    background: var(--pdg-status-idle);
+}
+
+.home-view .all-connections .status-dot.active {
+    background: var(--pdg-status-inuse);
+}
+
+.home-view .all-connections .col-status .activeUserCount {
     color: var(--pdg-status-inuse);
+    font: 400 14px/20px var(--pdg-font-sans);
 }
 
-/* Nesting indentation for child rows */
+.home-view .all-connections .col-status .status-text.idle {
+    color: var(--pdg-on-surface-variant);
+    font: 400 14px/20px var(--pdg-font-sans);
+}
+
+/* Nesting indentation for child rows (indents the name column only) */
 .home-view .all-connections .children .caption {
     padding-left: calc(var(--pdg-space-md) + var(--pdg-space-lg));
 }

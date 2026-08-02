@@ -309,9 +309,15 @@
 
         "INFO_ACTIVE_USER_COUNT" : "@:APP.INFO_ACTIVE_USER_COUNT",
 
+        "INFO_CONNECTION_AVAILABLE" : "Available",
+
         "INFO_NO_RECENT_CONNECTIONS" : "No recent connections.",
-        
+
         "PASSWORD_CHANGED" : "Password changed.",
+
+        "TABLE_HEADER_NAME"     : "Connection Name",
+        "TABLE_HEADER_PROTOCOL" : "Protocol",
+        "TABLE_HEADER_STATUS"   : "Status",
 
         "SECTION_HEADER_ALL_CONNECTIONS"    : "All Connections",
         "SECTION_HEADER_RECENT_CONNECTIONS" : "Recent Connections"

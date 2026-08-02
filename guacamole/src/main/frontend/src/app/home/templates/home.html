@@ -22,6 +22,14 @@
             <guac-user-menu></guac-user-menu>
         </div>
         <div class="all-connections">
+
+            <!-- Column headers -->
+            <div class="table-header">
+                <span class="col-name">{{'HOME.TABLE_HEADER_NAME' | translate}}</span>
+                <span class="col-protocol">{{'HOME.TABLE_HEADER_PROTOCOL' | translate}}</span>
+                <span class="col-status">{{'HOME.TABLE_HEADER_STATUS' | translate}}</span>
+            </div>
+
             <guac-group-list
                 connection-groups="filteredRootConnectionGroups"
                 templates="{

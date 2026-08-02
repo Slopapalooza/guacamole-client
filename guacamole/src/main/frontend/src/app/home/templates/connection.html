@@ -2,15 +2,24 @@
    ng-href="{{ item.getClientURL() }}"
    ng-class="{active: item.getActiveConnections()}">
 
-    <!-- Connection icon -->
-    <div class="icon type" ng-class="item.protocol"></div>
+    <!-- Name column: protocol icon + connection name -->
+    <span class="col-name">
+        <span class="icon type" ng-class="item.protocol"></span>
+        <span class="name">{{item.name}}</span>
+    </span>
 
-    <!-- Connection name -->
-    <span class="name">{{item.name}}</span>
+    <!-- Protocol column -->
+    <span class="col-protocol">
+        <span class="protocol-badge" ng-class="'protocol-' + item.protocol">{{item.protocol}}</span>
+    </span>
 
-    <!-- Active user count -->
-    <span class="activeUserCount" ng-show="item.getActiveConnections()"
-        translate="HOME.INFO_ACTIVE_USER_COUNT"
-        translate-values="{USERS: item.getActiveConnections()}"></span>
+    <!-- Status column -->
+    <span class="col-status">
+        <span class="status-dot" ng-class="{active: item.getActiveConnections()}"></span>
+        <span class="activeUserCount" ng-show="item.getActiveConnections()"
+              translate="HOME.INFO_ACTIVE_USER_COUNT"
+              translate-values="{USERS: item.getActiveConnections()}"></span>
+        <span class="status-text idle" ng-hide="item.getActiveConnections()">{{'HOME.INFO_CONNECTION_AVAILABLE' | translate}}</span>
+    </span>
 
 </a>
