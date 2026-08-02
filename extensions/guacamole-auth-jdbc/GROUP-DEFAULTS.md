@@ -21,7 +21,7 @@ warns which inherited values the move would change before it is saved.
 ## Database
 
 Defaults live in `guacamole_connection_group_parameter`, added by
-`schema/upgrade/upgrade-multimon-001-group-parameters.sql`.
+`schema/upgrade/upgrade-pico-001-group-parameters.sql`.
 
 **There is no automatic migration.** Apply that script by hand to existing
 databases, and remember it for fresh installs and disaster-recovery rebuilds —
