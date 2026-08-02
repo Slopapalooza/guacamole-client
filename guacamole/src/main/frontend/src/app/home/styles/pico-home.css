@@ -1,0 +1,203 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  See the License for the specific language
+ * governing permissions and limitations under the License.
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/*
+ * Home screen reskin onto the Pico de Gallo tokens: a centered content
+ * column, recent connections as a responsive card grid, and the all-
+ * connections tree presented as a single carded, hover-highlighted list.
+ * This themes the existing home structure; the column-based table from the
+ * prototype (separate status/actions columns) is a later restructure.
+ */
+
+.home-view {
+    background: var(--pdg-background);
+}
+
+.home-view .connection-list-ui {
+    max-width: var(--pdg-layout-content-max);
+    margin: 0 auto;
+    padding: var(--pdg-space-gutter) var(--pdg-space-margin) var(--pdg-space-xl);
+    box-sizing: border-box;
+}
+
+/* Section headers */
+
+.home-view .header {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: var(--pdg-space-lg) 0 var(--pdg-space-md);
+}
+
+.home-view .header:first-child {
+    margin-top: var(--pdg-space-md);
+}
+
+.home-view .header h2 {
+    font: 600 20px/28px var(--pdg-font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--pdg-on-surface);
+}
+
+/*
+ * Recent connections — card grid
+ */
+
+.home-view .recent-connections {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: var(--pdg-space-gutter);
+}
+
+.home-view .recent-connections .placeholder {
+    grid-column: 1 / -1;
+    color: var(--pdg-on-surface-variant);
+    font: 400 16px/24px var(--pdg-font-sans);
+}
+
+.home-view .recent-connections .connection {
+    position: relative;
+    background: var(--pdg-surface);
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-full);
+    overflow: hidden;
+    box-shadow: var(--pdg-shadow-sm);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.home-view .recent-connections .connection:hover {
+    box-shadow: var(--pdg-shadow-md);
+    transform: translateY(-4px);
+}
+
+.home-view .recent-connections .connection > a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.home-view .recent-connections .thumbnail {
+    aspect-ratio: 16 / 9;
+    background: var(--pdg-inverse-surface);
+    border-bottom: 1px solid var(--pdg-outline-variant);
+    overflow: hidden;
+}
+
+.home-view .recent-connections .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: transform 0.5s ease;
+}
+
+.home-view .recent-connections .connection:hover .thumbnail img {
+    transform: scale(1.05);
+}
+
+.home-view .recent-connections .caption {
+    padding: var(--pdg-space-md);
+}
+
+.home-view .recent-connections .caption .name {
+    font: 600 20px/28px var(--pdg-font-sans);
+    color: var(--pdg-on-surface);
+}
+
+/* Keep the "remove from recent" affordance, restyled as a corner control */
+.home-view .recent-connections .remove-recent {
+    position: absolute;
+    top: var(--pdg-space-sm);
+    right: var(--pdg-space-sm);
+    z-index: 2;
+}
+
+/*
+ * All connections — carded list
+ */
+
+.home-view .all-connections .group-list {
+    background: var(--pdg-surface);
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-full);
+    overflow: hidden;
+    box-shadow: var(--pdg-shadow-sm);
+}
+
+/* Each row */
+.home-view .all-connections .list-item .caption {
+    display: flex;
+    align-items: center;
+    gap: var(--pdg-space-sm);
+    padding: 12px var(--pdg-space-md);
+    border-bottom: 1px solid var(--pdg-outline-variant);
+    transition: background 0.15s ease;
+}
+
+.home-view .all-connections .list-item .caption:hover {
+    background: var(--pdg-surface-container-low);
+}
+
+/* Folder rows read slightly heavier */
+.home-view .all-connections .connection-group > .caption .name {
+    font-weight: 700;
+    color: var(--pdg-on-surface);
+}
+
+.home-view .all-connections .home-connection,
+.home-view .all-connections .home-connection-group {
+    display: flex;
+    align-items: center;
+    gap: var(--pdg-space-sm);
+    flex: 1 1 auto;
+    text-decoration: none;
+    color: var(--pdg-on-surface);
+    font: 400 16px/24px var(--pdg-font-sans);
+    min-width: 0;
+}
+
+.home-view .all-connections .home-connection .name,
+.home-view .all-connections .home-connection-group .name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.home-view .all-connections .activeUserCount {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: var(--pdg-radius-pill);
+    background: var(--pdg-surface-container-highest);
+    color: var(--pdg-on-surface-variant);
+    font: 500 12px/16px var(--pdg-font-sans);
+    white-space: nowrap;
+}
+
+.home-view .all-connections .connection.active .activeUserCount {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--pdg-status-inuse);
+}
+
+/* Nesting indentation for child rows */
+.home-view .all-connections .children .caption {
+    padding-left: calc(var(--pdg-space-md) + var(--pdg-space-lg));
+}
+
+.home-view .all-connections .children .children .caption {
+    padding-left: calc(var(--pdg-space-md) + var(--pdg-space-lg) * 2);
+}
