@@ -140,10 +140,10 @@ body {
 }
 
 .pico-nav-link.active {
-    background: var(--pdg-surface);
-    color: var(--pdg-on-surface);
+    background: var(--pdg-accent-container);
+    color: var(--pdg-accent);
     font-weight: 700;
-    border: 1px solid var(--pdg-outline-variant);
+    border: 1px solid var(--pdg-accent);
     box-shadow: var(--pdg-shadow-sm);
 }
 

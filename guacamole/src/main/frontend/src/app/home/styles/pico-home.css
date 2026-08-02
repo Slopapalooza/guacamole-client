@@ -125,6 +125,121 @@
 }
 
 /*
+ * List toolbar — filter box, protocol filter, sort, and view mode
+ */
+
+.home-view .list-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--pdg-space-sm);
+    flex-wrap: wrap;
+}
+
+/* Give the filter box a filled background so it reads as an input rather
+ * than disappearing into the page */
+.home-view .list-toolbar .filter input,
+.home-view .list-toolbar input[type=text] {
+    box-sizing: border-box;
+    min-width: 16rem;
+    padding: 8px 12px;
+    background: var(--pdg-surface-container-high);
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-pill);
+    font: 400 14px/20px var(--pdg-font-sans);
+    color: var(--pdg-on-surface);
+}
+
+.home-view .list-toolbar .filter input:focus,
+.home-view .list-toolbar input[type=text]:focus {
+    outline: none;
+    background: var(--pdg-surface);
+    border-color: var(--pdg-accent);
+    box-shadow: 0 0 0 3px var(--pdg-accent-ring);
+}
+
+.home-view .toolbar-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 8px 14px;
+    min-width: 0;
+    background: var(--pdg-surface);
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-xl);
+    box-shadow: var(--pdg-shadow-sm);
+    color: var(--pdg-on-surface-variant);
+    font: 500 14px/20px var(--pdg-font-sans);
+    text-shadow: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.home-view .toolbar-button:hover {
+    background: var(--pdg-surface-container-low);
+    color: var(--pdg-on-surface);
+}
+
+.home-view .toolbar-button.active {
+    border-color: var(--pdg-accent);
+    color: var(--pdg-accent);
+    background: var(--pdg-accent-container);
+}
+
+.home-view .toolbar-button.icon-only {
+    padding: 8px 10px;
+}
+
+/* Protocol dropdown */
+
+.home-view .toolbar-menu {
+    position: relative;
+}
+
+.home-view .toolbar-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 20;
+    min-width: 11rem;
+    padding: 4px;
+    background: var(--pdg-surface);
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-xl);
+    box-shadow: var(--pdg-shadow-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+.home-view .toolbar-menu:hover .toolbar-dropdown,
+.home-view .toolbar-menu:focus-within .toolbar-dropdown {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.home-view .toolbar-dropdown a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: var(--pdg-radius-lg);
+    color: var(--pdg-on-surface);
+    font: 400 14px/20px var(--pdg-font-sans);
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.home-view .toolbar-dropdown a:hover {
+    background: var(--pdg-surface-container-high);
+    text-decoration: none;
+}
+
+.home-view .toolbar-dropdown a.selected {
+    background: var(--pdg-accent-container);
+    color: var(--pdg-accent);
+    font-weight: 600;
+}
+
+/*
  * All connections — a carded table (name / protocol / status columns)
  */
 
@@ -185,6 +300,18 @@
     background: var(--pdg-surface-container-low);
 }
 
+/*
+ * Each row's link is wrapped in an ng-include element. Without an explicit
+ * flex rule that wrapper is sized to its content, so every row's columns
+ * landed at a different position; making it grow is what lets the protocol
+ * and status columns line up down the list.
+ */
+.home-view .all-connections .caption > ng-include {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
 /* The connection/group link fills the row and lays its columns out */
 .home-view .all-connections .home-connection,
 .home-view .all-connections .home-connection-group {
@@ -218,6 +345,11 @@
     font: 500 10px/16px var(--pdg-font-sans);
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    background: var(--pdg-badge-other-bg);
+    color: var(--pdg-badge-other-fg);
+}
+
+.home-view .all-connections .protocol-badge.protocol-rdp {
     background: var(--pdg-badge-rdp-bg);
     color: var(--pdg-badge-rdp-fg);
 }
@@ -255,11 +387,106 @@
     font: 400 14px/20px var(--pdg-font-sans);
 }
 
-/* Nesting indentation for child rows (indents the name column only) */
-.home-view .all-connections .children .caption {
-    padding-left: calc(var(--pdg-space-md) + var(--pdg-space-lg));
+/*
+ * Nesting indentation. Applied to the name column rather than to the row, so
+ * that the protocol and status columns stay aligned at every depth. One step
+ * per level, kept modest so deep trees do not march across the row.
+ */
+.home-view .all-connections .children .caption > .icon.expand,
+.home-view .all-connections .children .caption .col-name {
+    margin-left: 1.25rem;
 }
 
-.home-view .all-connections .children .children .caption {
-    padding-left: calc(var(--pdg-space-md) + var(--pdg-space-lg) * 2);
+.home-view .all-connections .children .children .caption > .icon.expand,
+.home-view .all-connections .children .children .caption .col-name {
+    margin-left: 2.5rem;
+}
+
+/* An expand icon already offsets its row's name, so do not indent twice */
+.home-view .all-connections .caption > .icon.expand ~ ng-include .col-name {
+    margin-left: 0;
+}
+
+/* Connection names take the accent on hover, so rows read as actionable */
+.home-view .all-connections .home-connection:hover .col-name .name {
+    color: var(--pdg-accent);
+}
+
+/*
+ * Grid view — the same rows laid out as cards
+ */
+
+.home-view .all-connections.grid-view {
+    background: none;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+}
+
+.home-view .all-connections.grid-view .table-header {
+    display: none;
+}
+
+.home-view .all-connections.grid-view .group-list-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: var(--pdg-space-gutter);
+    align-items: start;
+}
+
+/* Groups become titled sections spanning the grid */
+.home-view .all-connections.grid-view .connection-group {
+    grid-column: 1 / -1;
+}
+
+.home-view .all-connections.grid-view .connection-group > .caption {
+    border-bottom: none;
+    padding-left: 0;
+}
+
+/* Nested children lay out as their own grid */
+.home-view .all-connections.grid-view .children {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: var(--pdg-space-gutter);
+    align-items: start;
+    margin-top: var(--pdg-space-sm);
+}
+
+/* Each connection becomes a card */
+.home-view .all-connections.grid-view .connection > .caption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: var(--pdg-space-md);
+    background: var(--pdg-surface);
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-full);
+    box-shadow: var(--pdg-shadow-sm);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.home-view .all-connections.grid-view .connection > .caption:hover {
+    box-shadow: var(--pdg-shadow-md);
+    transform: translateY(-2px);
+    background: var(--pdg-surface);
+}
+
+.home-view .all-connections.grid-view .connection .home-connection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.home-view .all-connections.grid-view .col-name,
+.home-view .all-connections.grid-view .col-protocol,
+.home-view .all-connections.grid-view .col-status {
+    flex: 0 0 auto;
+    margin-left: 0;
+}
+
+.home-view .all-connections.grid-view .col-name .name {
+    font: 600 16px/24px var(--pdg-font-sans);
+    white-space: normal;
 }

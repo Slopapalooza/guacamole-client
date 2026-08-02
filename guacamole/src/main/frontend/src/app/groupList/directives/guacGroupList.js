@@ -94,7 +94,15 @@ angular.module('groupList').directive('guacGroupList', [function guacGroupList()
              *
              * @type Boolean
              */
-            expandAll : '='
+            expandAll : '=',
+
+            /**
+             * Whether items should be listed in descending rather than
+             * ascending order. Optional; ascending by default.
+             *
+             * @type Boolean
+             */
+            sortDescending : '='
 
         },
 

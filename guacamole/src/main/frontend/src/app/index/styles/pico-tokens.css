@@ -76,6 +76,17 @@
     --pdg-inverse-surface:            #1e293b;
     --pdg-inverse-on-surface:         #f8fafc;
 
+    /* ---- Accent ----
+     * A single saturated accent lifts the interface off the neutral slate
+     * without competing with the status colors or the destructive red.
+     * Used for active navigation, links, focus rings, and selected controls.
+     */
+    --pdg-accent:                     #4f46e5;
+    --pdg-accent-hover:               #4338ca;
+    --pdg-accent-container:           #eef2ff;
+    --pdg-on-accent:                  #ffffff;
+    --pdg-accent-ring:                rgba(79, 70, 229, 0.25);
+
     /* ---- Status (connection state dots + protocol badges) ---- */
     --pdg-status-active:              #10b981;   /* green — active/connected */
     --pdg-status-inuse:               #3b82f6;   /* blue — in use by others */
@@ -83,8 +94,9 @@
 
     --pdg-badge-ssh-bg:               #dbeafe;   --pdg-badge-ssh-fg:  #1e40af;
     --pdg-badge-vnc-bg:               #f3e8ff;   --pdg-badge-vnc-fg:  #6b21a8;
-    --pdg-badge-rdp-bg:               var(--pdg-surface-container-highest);
-    --pdg-badge-rdp-fg:               var(--pdg-on-surface-variant);
+    --pdg-badge-rdp-bg:               #d1fae5;   --pdg-badge-rdp-fg:  #065f46;
+    --pdg-badge-other-bg:             var(--pdg-surface-container-highest);
+    --pdg-badge-other-fg:             var(--pdg-on-surface-variant);
 
     /* ---- Radii (note: the prototype's scale, not pill-shaped) ---- */
     --pdg-radius:                     0.125rem;

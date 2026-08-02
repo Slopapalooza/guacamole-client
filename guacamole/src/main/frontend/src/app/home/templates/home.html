@@ -14,14 +14,50 @@
         <!-- All connections for this user -->
         <div class="header">
             <h2 id="section-header-all-connections">{{'HOME.SECTION_HEADER_ALL_CONNECTIONS' | translate}}</h2>
-            <guac-group-list-filter connection-groups="rootConnectionGroups"
-                filtered-connection-groups="filteredRootConnectionGroups"
-                placeholder="'HOME.FIELD_PLACEHOLDER_FILTER' | translate"
-                connection-properties="filteredConnectionProperties"
-                connection-group-properties="filteredConnectionGroupProperties"></guac-group-list-filter>
+
+            <div class="list-toolbar">
+
+                <guac-group-list-filter connection-groups="protocolFilteredGroups"
+                    filtered-connection-groups="filteredRootConnectionGroups"
+                    placeholder="'HOME.FIELD_PLACEHOLDER_FILTER' | translate"
+                    connection-properties="filteredConnectionProperties"
+                    connection-group-properties="filteredConnectionGroupProperties"></guac-group-list-filter>
+
+                <!-- Protocol filter -->
+                <div class="toolbar-menu" ng-show="availableProtocols.length > 1">
+                    <button type="button" class="toolbar-button" ng-class="{active: protocolFilter}">
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 5h18v2H3V5Zm3 6h12v2H6v-2Zm4 6h4v2h-4v-2Z"/></svg>
+                        <span>{{protocolFilter || ('HOME.ACTION_FILTER_PROTOCOL' | translate)}}</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="m7 10 5 5 5-5H7Z"/></svg>
+                    </button>
+                    <div class="toolbar-dropdown">
+                        <a href="" ng-click="setProtocolFilter(null)"
+                           ng-class="{selected: !protocolFilter}">{{'HOME.ACTION_FILTER_ALL_PROTOCOLS' | translate}}</a>
+                        <a href="" ng-repeat="protocol in availableProtocols"
+                           ng-click="setProtocolFilter(protocol)"
+                           ng-class="{selected: protocolFilter === protocol}">{{protocol}}</a>
+                    </div>
+                </div>
+
+                <!-- Sort order -->
+                <button type="button" class="toolbar-button" ng-click="toggleSortOrder()"
+                        title="{{'HOME.ACTION_SORT_BY_NAME' | translate}}">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 6h12v2H3V6Zm0 5h9v2H3v-2Zm0 5h6v2H3v-2Zm16.5-9.5v9.1l2.3-2.3 1.1 1.1-4.1 4.1-4.1-4.1 1.1-1.1 2.2 2.3V6.5h1.5Z"/></svg>
+                    <span>{{'HOME.ACTION_SORT_BY_NAME' | translate}}</span>
+                </button>
+
+                <!-- View mode -->
+                <button type="button" class="toolbar-button icon-only" ng-click="toggleViewMode()"
+                        title="{{(viewMode === 'grid' ? 'HOME.ACTION_VIEW_LIST' : 'HOME.ACTION_VIEW_GRID') | translate}}">
+                    <svg ng-show="viewMode !== 'grid'" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+                    <svg ng-show="viewMode === 'grid'" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 5h18v2H3V5Zm0 6h18v2H3v-2Zm0 6h18v2H3v-2Z"/></svg>
+                </button>
+
+            </div>
+
             <guac-user-menu></guac-user-menu>
         </div>
-        <div class="all-connections">
+        <div class="all-connections" ng-class="{'grid-view': viewMode === 'grid'}">
 
             <!-- Column headers -->
             <div class="table-header">
@@ -37,6 +73,7 @@
                     'connection-group' : 'app/home/templates/connectionGroup.html'
                 }"
                 expand-all="preferences.expandConnectionGroups"
+                sort-descending="sortDescending"
                 page-size="20"></guac-group-list>
         </div>
 

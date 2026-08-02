@@ -22,7 +22,7 @@
 
             <!-- Children of item (if any) -->
             <div class="children" ng-if="item.expanded">
-                <div class="list-item" ng-repeat="item in item.children | orderBy : 'name'"
+                <div class="list-item" ng-repeat="item in item.children | orderBy : 'name' : sortDescending"
                     ng-include="'nestedItem.html'"></div>
             </div>
 
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Pager for connections / groups -->
-    <guac-pager page="childrenPage" items="rootItems | orderBy : ['weight', 'name']"
+    <guac-pager page="childrenPage" items="rootItems | orderBy : ['weight', 'name'] : sortDescending"
                 page-size="pageSize"></guac-pager>
 
 </div>

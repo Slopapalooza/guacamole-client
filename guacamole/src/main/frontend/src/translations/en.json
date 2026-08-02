@@ -309,6 +309,12 @@
 
         "INFO_ACTIVE_USER_COUNT" : "@:APP.INFO_ACTIVE_USER_COUNT",
 
+        "ACTION_FILTER_ALL_PROTOCOLS" : "All protocols",
+        "ACTION_FILTER_PROTOCOL"      : "Protocol",
+        "ACTION_SORT_BY_NAME"         : "Name",
+        "ACTION_VIEW_GRID"            : "Grid view",
+        "ACTION_VIEW_LIST"            : "List view",
+
         "INFO_CONNECTION_AVAILABLE" : "Available",
 
         "INFO_NO_RECENT_CONNECTIONS" : "No recent connections.",
