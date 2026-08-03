@@ -58,8 +58,8 @@ body {
  */
 .pico-logo {
     display: block;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 100%;
+    height: 4.5rem;
     margin: 0 auto var(--pdg-space-sm);
     background-image: var(--pdg-logo, url('images/guac-tricolor.svg'));
     background-repeat: no-repeat;
@@ -348,4 +348,20 @@ body:not(.client):not(.secondaryMonitor) .pico-sidebar.collapsed ~ #content {
     margin: 6px 0 0;
     font-size: 0.8125rem;
     color: var(--pdg-on-surface-variant);
+}
+
+
+/* Native selects keep the user agent's text color, which is black in every
+ * theme; the option popup is drawn by the browser and needs the same. */
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view, .home-view) select,
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view, .home-view) select option,
+:is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view, .home-view) select optgroup {
+    color: var(--pdg-on-surface);
+    background-color: var(--pdg-surface);
+}
+
+/* The stock header carries width:100%, which with the negative-margin bleed
+ * left the bar short of the right edge by twice the gutter. */
+body:not(.client):not(.secondaryMonitor) .settings-view > .header {
+    width: auto;
 }

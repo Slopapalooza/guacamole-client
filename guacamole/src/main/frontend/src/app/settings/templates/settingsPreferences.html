@@ -15,7 +15,7 @@
                 <tr>
                     <th>{{'SETTINGS_PREFERENCES.FIELD_HEADER_SITE_NAME' | translate}}</th>
                     <td>
-                        <input type="text" ng-model="siteName" ng-blur="saveSiteName()"
+                        <input type="text" ng-model="siteName"
                                placeholder="{{'APP.NAME' | translate}}">
                     </td>
                 </tr>
@@ -32,6 +32,12 @@
                     </td>
                 </tr>
             </table>
+            <div class="action-buttons branding-actions">
+                <button class="save" ng-disabled="!isBrandingModified()"
+                        ng-click="saveBranding()">{{'SETTINGS_PREFERENCES.ACTION_SAVE_BRANDING' | translate}}</button>
+                <button ng-disabled="!isBrandingModified()"
+                        ng-click="revertBranding()">{{'SETTINGS_PREFERENCES.ACTION_REVERT_BRANDING' | translate}}</button>
+            </div>
         </div>
     </div>
 

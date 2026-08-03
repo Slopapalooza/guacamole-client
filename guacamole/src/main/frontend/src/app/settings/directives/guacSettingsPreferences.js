@@ -136,6 +136,33 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
             });
 
             /**
+             * Returns whether the branding fields differ from what is stored,
+             * so the save action is offered only when there is a change.
+             *
+             * @returns {Boolean}
+             *     true if the site name has been edited, false otherwise.
+             */
+            $scope.isBrandingModified = function isBrandingModified() {
+                return ($scope.siteName || null) !== (brandingService.siteName || null);
+            };
+
+            /**
+             * Discards edits to the branding fields.
+             */
+            $scope.revertBranding = function revertBranding() {
+                $scope.siteName = brandingService.siteName;
+            };
+
+            /**
+             * Stores the edited branding. Changes are applied only on request
+             * rather than as the administrator types, since these settings
+             * affect everyone using the deployment.
+             */
+            $scope.saveBranding = function saveBranding() {
+                $scope.saveSiteName();
+            };
+
+            /**
              * Stores the edited site name.
              */
             $scope.saveSiteName = function saveSiteName() {

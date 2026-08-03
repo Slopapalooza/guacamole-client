@@ -1216,7 +1216,9 @@
 
         "FIELD_HEADER_EXPAND_CONNECTION_GROUPS" : "Expand connection groups by default:",
         "ACTION_ACKNOWLEDGE"  : "@:APP.ACTION_ACKNOWLEDGE",
-        "ACTION_REMOVE_LOGO"  : "Remove logo",
+        "ACTION_REMOVE_LOGO"     : "Remove logo",
+        "ACTION_REVERT_BRANDING" : "Revert",
+        "ACTION_SAVE_BRANDING"   : "Save branding",
 
         "DIALOG_HEADER_ERROR" : "@:APP.DIALOG_HEADER_ERROR",
 
