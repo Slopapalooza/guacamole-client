@@ -332,6 +332,9 @@
 
     "SIDEBAR" : {
 
+        "ACTION_COLLAPSE" : "Collapse sidebar",
+        "ACTION_EXPAND"   : "Expand sidebar",
+
         "NAV_CONNECTIONS" : "Connections"
 
     },

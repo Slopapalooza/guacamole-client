@@ -24,7 +24,7 @@
                     connection-group-properties="filteredConnectionGroupProperties"></guac-group-list-filter>
 
                 <!-- Protocol filter -->
-                <div class="toolbar-menu" ng-show="availableProtocols.length > 1">
+                <div class="toolbar-menu" ng-show="availableProtocols.length">
                     <button type="button" class="toolbar-button" ng-class="{active: protocolFilter}">
                         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 5h18v2H3V5Zm3 6h12v2H6v-2Zm4 6h4v2h-4v-2Z"/></svg>
                         <span>{{protocolFilter || ('HOME.ACTION_FILTER_PROTOCOL' | translate)}}</span>

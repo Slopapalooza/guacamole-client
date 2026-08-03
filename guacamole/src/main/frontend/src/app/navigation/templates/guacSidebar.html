@@ -1,7 +1,16 @@
-<aside class="pico-sidebar">
+<aside class="pico-sidebar" ng-class="{collapsed: collapsed}">
+
+    <!-- Collapse/expand control -->
+    <button type="button" class="pico-collapse-toggle" ng-click="toggleCollapsed()"
+            title="{{(collapsed ? 'SIDEBAR.ACTION_EXPAND' : 'SIDEBAR.ACTION_COLLAPSE') | translate}}"
+            aria-label="{{(collapsed ? 'SIDEBAR.ACTION_EXPAND' : 'SIDEBAR.ACTION_COLLAPSE') | translate}}">
+        <svg ng-hide="collapsed" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4-4.6-4.6 4.6-4.6Z"/></svg>
+        <svg ng-show="collapsed" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8.6 16.6 10 18l6-6-6-6-1.4 1.4 4.6 4.6-4.6 4.6Z"/></svg>
+    </button>
 
     <!-- Product identity + current user -->
     <div class="pico-sidebar-head">
+        <div class="pico-logo logo" aria-hidden="true"></div>
         <h1 class="pico-brand">{{'APP.NAME' | translate}}</h1>
         <a class="pico-user" ng-hide="isAnonymous()" href="{{preferencesUrl}}"
            title="{{'SETTINGS_PREFERENCES.SECTION_HEADER_PREFERENCES' | translate}}">

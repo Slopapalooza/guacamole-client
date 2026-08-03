@@ -136,6 +136,13 @@ angular.module('settings').provider('preferenceService', ['$injector',
         expandConnectionGroups : true,
 
         /**
+         * Whether the navigation sidebar is collapsed to icons only.
+         *
+         * @type Boolean
+         */
+        sidebarCollapsed : false,
+
+        /**
          * The default input method. This may be any of the values defined
          * within preferenceService.inputMethods.
          *

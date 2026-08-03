@@ -40,9 +40,27 @@ angular.module('navigation').directive('guacSidebar', [function guacSidebar() {
             // Required services
             var $location             = $injector.get('$location');
             var authenticationService = $injector.get('authenticationService');
+            var preferenceService     = $injector.get('preferenceService');
             var requestService        = $injector.get('requestService');
             var userService           = $injector.get('userService');
             var userPageService       = $injector.get('userPageService');
+
+            /**
+             * Whether the sidebar is collapsed to icons only, hiding the
+             * product identity and navigation labels. Persisted as a user
+             * preference so the choice survives navigation and reloads.
+             *
+             * @type Boolean
+             */
+            $scope.collapsed = !!preferenceService.preferences.sidebarCollapsed;
+
+            /**
+             * Collapses the sidebar to icons, or restores it.
+             */
+            $scope.toggleCollapsed = function toggleCollapsed() {
+                $scope.collapsed = !$scope.collapsed;
+                preferenceService.preferences.sidebarCollapsed = $scope.collapsed;
+            };
 
             /**
              * The username of the current user.
