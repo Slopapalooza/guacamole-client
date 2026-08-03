@@ -154,7 +154,7 @@
  */
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile, .settings-view) .section {
-    background: #fff;
+    background: var(--pdg-surface);
     border: 1px solid var(--pdg-outline-variant);
     border-radius: 10px;
     box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
@@ -174,7 +174,7 @@
 }
 
 :is(.manage-connection, .manage-connection-group, .manage-user, .manage-user-group, .manage-sharing-profile) .attributes .form-group .form:not(.advanced-section):not(.form-essentials) {
-    background: #fff;
+    background: var(--pdg-surface);
     border: 1px solid var(--pdg-outline-variant);
     border-radius: 10px;
     box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
@@ -337,7 +337,7 @@
      * select rule below (:is() takes the specificity of its most specific
      * argument, and input[type=text] carries an attribute selector), so a
      * shorthand here would erase the chevron drawn there */
-    background-color: #fff;
+    background-color: var(--pdg-surface);
     font-size: 0.9375rem;
     line-height: 1.4;
 }
@@ -445,7 +445,7 @@
     width: calc(1.25rem - 4px);
     height: calc(1.25rem - 4px);
     border-radius: 50%;
-    background: #fff;
+    background: var(--pdg-surface);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     transition: left 0.15s ease;
 }
@@ -476,7 +476,7 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 0.625rem;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--pdg-surface);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     border-top: 1px solid var(--pdg-outline-variant);
@@ -562,7 +562,7 @@
 }
 
 .manage-connection-group .connection-defaults .notice.monitors-unusable {
-    background: #fffbeb;
+    background: var(--pdg-accent-container);
     color: #92400e;
 }
 
@@ -575,7 +575,7 @@
     border: 1px solid var(--pdg-outline-variant);
     border-radius: 8px;
     overflow: hidden;
-    background: #fff;
+    background: var(--pdg-surface);
 }
 
 .tri-state-field button.tri-state-option {
@@ -585,7 +585,7 @@
     border: none;
     border-right: 1px solid var(--pdg-outline-variant);
     border-radius: 0;
-    background: #fff;
+    background: var(--pdg-surface);
     box-shadow: none;
     text-shadow: none;
     color: var(--pdg-on-surface);
@@ -705,7 +705,7 @@
 /* Warning shown when re-parenting changes inherited values */
 .manage-connection .location-changes {
     border-color: #fcd34d;
-    background: #fffbeb;
+    background: var(--pdg-accent-container);
 }
 
 .manage-connection .location-changes .notice {
