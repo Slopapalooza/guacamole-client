@@ -1215,6 +1215,18 @@
         "NAME_INPUT_METHOD_TEXT" : "@:CLIENT.NAME_INPUT_METHOD_TEXT",
 
         "FIELD_HEADER_EXPAND_CONNECTION_GROUPS" : "Expand connection groups by default:",
+        "FIELD_HEADER_THEME"      : "Theme:",
+        "FIELD_HEADER_THEME_MODE" : "Appearance:",
+
+        "NAME_MODE_AUTO"  : "Match my system",
+        "NAME_MODE_DARK"  : "Dark",
+        "NAME_MODE_LIGHT" : "Light",
+
+        "NAME_THEME_BLUE"  : "Blue",
+        "NAME_THEME_GREEN" : "Green",
+        "NAME_THEME_GREY"  : "Dark Grey",
+        "NAME_THEME_RED"   : "Red",
+        "NAME_THEME_SLATE" : "Slate",
 
         "SECTION_HEADER_APPEARANCE"           : "Appearance",
         "SECTION_HEADER_DEFAULT_INPUT_METHOD" : "Default Input Method",

@@ -43,6 +43,7 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
             const permissionService     = $injector.get('permissionService');
             const preferenceService     = $injector.get('preferenceService');
             const requestService        = $injector.get('requestService');
+            const themeService          = $injector.get('themeService');
             const schemaService         = $injector.get('schemaService');
             const userService           = $injector.get('userService');
 
@@ -100,6 +101,20 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
              * @type Object.<String, Object>
              */
             $scope.preferences = preferenceService.preferences;
+
+            /**
+             * The themes available for selection.
+             *
+             * @type Object[]
+             */
+            $scope.themes = themeService.themes;
+
+            /**
+             * The color modes available for selection.
+             *
+             * @type Object[]
+             */
+            $scope.themeModes = themeService.modes;
 
             /**
              * All available user attributes. This is only the set of attribute

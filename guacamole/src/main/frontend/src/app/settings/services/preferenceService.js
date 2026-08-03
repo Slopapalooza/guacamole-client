@@ -143,6 +143,21 @@ angular.module('settings').provider('preferenceService', ['$injector',
         sidebarCollapsed : false,
 
         /**
+         * The identifier of the selected theme.
+         *
+         * @type String
+         */
+        theme : 'slate',
+
+        /**
+         * The selected color mode: "light", "dark", or "auto" to follow the
+         * operating system setting.
+         *
+         * @type String
+         */
+        themeMode : 'light',
+
+        /**
          * The default input method. This may be any of the values defined
          * within preferenceService.inputMethods.
          *

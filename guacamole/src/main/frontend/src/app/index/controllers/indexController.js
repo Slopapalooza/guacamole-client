@@ -48,6 +48,19 @@ angular.module('index').controller('indexController', ['$scope', '$injector',
     const clipboardService       = $injector.get('clipboardService');
     const guacNotification       = $injector.get('guacNotification');
     const guacClientManager      = $injector.get('guacClientManager');
+    const preferenceService      = $injector.get('preferenceService');
+    const themeService           = $injector.get('themeService');
+
+    /*
+     * Apply the selected theme immediately and whenever the selection
+     * changes. Preferences are read from local storage, so this themes the
+     * login screen too, before any user has authenticated.
+     */
+    themeService.apply();
+    $scope.$watchGroup([
+        function selectedTheme() { return preferenceService.preferences.theme; },
+        function selectedMode()  { return preferenceService.preferences.themeMode; }
+    ], themeService.apply);
 
     /**
      * The error that prevents the current page from rendering at all. If no

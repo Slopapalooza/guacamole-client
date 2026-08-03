@@ -13,6 +13,20 @@
         <div class='form'>
             <table class='fields'>
                 <tr>
+                    <th>{{'SETTINGS_PREFERENCES.FIELD_HEADER_THEME' | translate}}</th>
+                    <td>
+                        <select ng-model="preferences.theme"
+                                ng-options="theme.id as theme.name | translate for theme in themes"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{'SETTINGS_PREFERENCES.FIELD_HEADER_THEME_MODE' | translate}}</th>
+                    <td>
+                        <select ng-model="preferences.themeMode"
+                                ng-options="mode.id as mode.name | translate for mode in themeModes"></select>
+                    </td>
+                </tr>
+                <tr>
                     <th>{{'SETTINGS_PREFERENCES.FIELD_HEADER_SHOW_RECENT_CONNECTIONS' | translate}}</th>
                     <td><input ng-model="preferences.showRecentConnections" type="checkbox"/></td>
                 </tr>
