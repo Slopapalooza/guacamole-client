@@ -86,7 +86,7 @@
 .user-menu .menu-dropdown .menu-contents .profile {
     margin: 1em;
     padding-bottom: 1em;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid var(--pdg-outline-variant);
     width: 2in;
 }
 

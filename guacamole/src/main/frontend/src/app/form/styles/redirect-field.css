@@ -24,7 +24,8 @@
     left: 0;
     top: 0;
     display: table;
-    background: white;
+    background: var(--pdg-background);
+    color: var(--pdg-on-surface);
 }
 
 .redirect-field {

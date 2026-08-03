@@ -24,7 +24,8 @@ div.login-ui {
     left: 0;
     top: 0;
     display: table;
-    background: white;
+    background: var(--pdg-surface-container);
+    color: var(--pdg-on-surface);
     z-index: 20;
 }
 
@@ -43,13 +44,13 @@ div.login-ui {
     padding: 1em;
     margin: 0.2em;
 
-    background: #FDD;
-    border: 1px solid #964040;
+    background: var(--pdg-error-container);
+    border: 1px solid var(--pdg-error);
     -moz-border-radius: 0.25em;
     -webkit-border-radius: 0.25em;
     -khtml-border-radius: 0.25em;
     text-align: center;
-    color: #964040;
+    color: var(--pdg-on-error-container);
 }
 
 .login-ui .login-fields .form-field .password-field .toggle-password {
@@ -82,5 +83,5 @@ div.login-ui {
 }
 
 .login-ui .login-fields .labeled-field input:focus {
-    background: white;
+    background: var(--pdg-surface);
 }

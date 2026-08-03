@@ -18,7 +18,14 @@
  */
 
 body.client {
-    background: black;
+
+    /*
+     * The in-session page is a media well: whatever is not covered by the
+     * remote display stays a neutral dark backdrop rather than following the
+     * page background token.
+     */
+    background: var(--pdg-inverse-surface);
+
     padding: 0;
     margin: 0;
     overflow: hidden;
@@ -129,7 +136,7 @@ body.client {
 }
 
 .client .drop-pending .display {
-    background: #3161a9;
+    background: var(--pdg-accent);
 }
 
 .client .drop-pending .display > *{

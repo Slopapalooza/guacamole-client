@@ -33,38 +33,38 @@
 :root {
 
     /* ---- Core palette (slate-based) ---- */
-    --pdg-primary:                    #475569;
+    --pdg-primary:                    #3C445D;
     --pdg-on-primary:                 #ffffff;
-    --pdg-primary-container:          #f1f5f9;
-    --pdg-on-primary-container:       #0f172a;
+    --pdg-primary-container:          #E0E5F5;
+    --pdg-on-primary-container:       #232839;
 
-    --pdg-secondary:                  #64748b;
+    --pdg-secondary:                  #4B526C;
     --pdg-on-secondary:               #ffffff;
-    --pdg-secondary-container:        #e2e8f0;
-    --pdg-on-secondary-container:     #0f172a;
+    --pdg-secondary-container:        #D4DAEF;
+    --pdg-on-secondary-container:     #232839;
 
-    --pdg-tertiary:                   #64748b;
-    --pdg-tertiary-container:         #f1f5f9;
+    --pdg-tertiary:                   #4B526C;
+    --pdg-tertiary-container:         #E0E5F5;
 
     /* ---- Surfaces (elevation ladder, lowest to highest) ---- */
-    --pdg-surface:                    #ffffff;
-    --pdg-surface-container-lowest:   #ffffff;
-    --pdg-surface-container-low:      #f8fafc;
-    --pdg-surface-container:          #f8fafc;
-    --pdg-surface-container-high:     #f1f5f9;
-    --pdg-surface-container-highest:  #e2e8f0;
-    --pdg-surface-dim:                #e2e8f0;
-    --pdg-surface-bright:             #ffffff;
-    --pdg-background:                 #ffffff;
+    --pdg-surface:                    #F9FAFE;
+    --pdg-surface-container-lowest:   #FCFDFE;
+    --pdg-surface-container-low:      #F1F3FC;
+    --pdg-surface-container:          #DEE3F6;
+    --pdg-surface-container-high:     #CFD6EF;
+    --pdg-surface-container-highest:  #BDC6E6;
+    --pdg-surface-dim:                #C9D0E9;
+    --pdg-surface-bright:             #FCFDFE;
+    --pdg-background:                 #ECEFF7;
 
     /* ---- Content / text ---- */
-    --pdg-on-surface:                 #0f172a;
-    --pdg-on-surface-variant:         #475569;
-    --pdg-on-background:              #0f172a;
+    --pdg-on-surface:                 #232839;
+    --pdg-on-surface-variant:         #4B526C;
+    --pdg-on-background:              #232839;
 
     /* ---- Lines ---- */
-    --pdg-outline:                    #94a3b8;
-    --pdg-outline-variant:            #cbd5e1;
+    --pdg-outline:                    #636D8F;
+    --pdg-outline-variant:            #AFB8D7;
 
     /* ---- Error ---- */
     --pdg-error:                      #b91c1c;
@@ -72,29 +72,39 @@
     --pdg-error-container:            #fee2e2;
     --pdg-on-error-container:         #7f1d1d;
 
+    /* ---- Media well ----
+     * The backdrop behind remote-desktop thumbnails and session tiles. It
+     * stays dark in EVERY theme and mode on purpose: it sits behind captured
+     * screen images of arbitrary color, and a light well makes them float.
+     * Deliberately NOT --pdg-inverse-surface, which correctly inverts per
+     * mode and therefore turns light in dark mode.
+     */
+    --pdg-media-well:                 #12161F;
+    --pdg-on-media-well:              #E8EBF2;
+
     /* ---- Inverse (for the in-session/dark card backdrops) ---- */
-    --pdg-inverse-surface:            #1e293b;
-    --pdg-inverse-on-surface:         #f8fafc;
+    --pdg-inverse-surface:            #1F263D;
+    --pdg-inverse-on-surface:         #EEF1F9;
 
     /* ---- Accent ----
      * A single saturated accent lifts the interface off the neutral slate
      * without competing with the status colors or the destructive red.
      * Used for active navigation, links, focus rings, and selected controls.
      */
-    --pdg-accent:                     #4f46e5;
-    --pdg-accent-hover:               #4338ca;
-    --pdg-accent-container:           #eef2ff;
+    --pdg-accent:                     #473BCE;
+    --pdg-accent-hover:               #3225C1;
+    --pdg-accent-container:           #CCC8FB;
     --pdg-on-accent:                  #ffffff;
-    --pdg-accent-ring:                rgba(79, 70, 229, 0.25);
+    --pdg-accent-ring:                rgba(71, 59, 206, 0.32);
 
     /* ---- Status (connection state dots + protocol badges) ---- */
-    --pdg-status-active:              #10b981;   /* green — active/connected */
-    --pdg-status-inuse:               #3b82f6;   /* blue — in use by others */
-    --pdg-status-idle:                var(--pdg-outline);
+    --pdg-status-active:              #007A3D;   /* green — active/connected */
+    --pdg-status-inuse:               #004BE0;   /* blue — in use by others */
+    --pdg-status-idle:                           #676D81;
 
     --pdg-badge-ssh-bg:               #dbeafe;   --pdg-badge-ssh-fg:  #1e40af;
     --pdg-badge-vnc-bg:               #f3e8ff;   --pdg-badge-vnc-fg:  #6b21a8;
-    --pdg-badge-rdp-bg:               #d1fae5;   --pdg-badge-rdp-fg:  #065f46;
+    --pdg-badge-rdp-bg:               #e2e8f0;   --pdg-badge-rdp-fg:  #475569;
     --pdg-badge-other-bg:             var(--pdg-surface-container-highest);
     --pdg-badge-other-fg:             var(--pdg-on-surface-variant);
 

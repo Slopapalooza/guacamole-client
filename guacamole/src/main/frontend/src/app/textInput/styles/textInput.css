@@ -32,8 +32,8 @@
     align-items: center;
 
     width: 100%;
-    background: #222;
-    color: white;
+    background: var(--pdg-surface-container);
+    color: var(--pdg-on-surface);
 
 }
 
@@ -57,7 +57,7 @@
 
     display: inline-block;
     vertical-align: middle;
-    color: white;
+    color: var(--pdg-on-surface);
     font-size: 12pt;
     width: 100%;
     height: auto;
@@ -98,15 +98,15 @@
     margin: 0.1em;
     min-width: 3em;
 
-    background: #444;
+    background: var(--pdg-surface-container-high);
 
-    border: 0.125em solid #666;
+    border: 0.125em solid var(--pdg-outline);
     -moz-border-radius:    0.25em;
     -webkit-border-radius: 0.25em;
     -khtml-border-radius:  0.25em;
     border-radius:         0.25em;
 
-    color: white;
+    color: var(--pdg-on-surface);
     font-weight: lighter;
     text-align: center;
 
@@ -118,11 +118,12 @@
 }
 
 .text-input .text-input-buttons button:active {
-    background: #822;
-    border-color: #D44;
+    background: var(--pdg-accent);
+    border-color: var(--pdg-accent-hover);
+    color: var(--pdg-on-accent);
 }
 
 .text-input .text-input-buttons button.pressed {
-    background: #882;
-    border-color: #DD4;
+    background: var(--pdg-accent-container);
+    border-color: var(--pdg-accent);
 }

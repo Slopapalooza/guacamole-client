@@ -104,7 +104,7 @@ guac-player-progress-indicator .guac-player-progress-bar {
     -moz-border-radius: 128px;
     border-radius: 128px;
 
-    border: 12px solid #5AF;
+    border: 12px solid var(--pdg-accent);
     border-bottom-color: transparent;
     border-right-color: transparent;
 

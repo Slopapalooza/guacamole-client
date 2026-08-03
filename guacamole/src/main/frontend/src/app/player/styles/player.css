@@ -73,7 +73,13 @@ guac-player .guac-player-controls {
 
 .guac-player-controls .guac-player-play,
 .guac-player-controls .guac-player-pause {
-    color: white;
+
+    /*
+     * Transport controls sit on the recording's dark well, so they take the
+     * inverse foreground (matching .guac-player-button in history-player.css).
+     */
+    color: var(--pdg-inverse-on-surface);
+
     background: transparent;
     border: none;
     width: 2em;
@@ -85,7 +91,13 @@ guac-player .guac-player-controls {
 
 .guac-player-controls .guac-player-play:hover,
 .guac-player-controls .guac-player-pause:hover {
+
+    /*
+     * Deliberately left as a literal wash: it lightens the fixed dark scrim
+     * behind the control bar, and the play/pause glyphs are baked white.
+     */
     background: rgba(255, 255, 255, 0.5);
+
 }
 
 .guac-player-controls .pause-icon,

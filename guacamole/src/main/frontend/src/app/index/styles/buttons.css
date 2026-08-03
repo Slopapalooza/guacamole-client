@@ -27,10 +27,10 @@ input[type="submit"], button, a.button {
     -webkit-appearance: none;
     text-decoration: none;
 
-    background-color: #3C3C3C;
-    border: 1px solid rgba(0, 0, 0, 0.4);
+    background-color: var(--pdg-primary);
+    border: 1px solid var(--pdg-outline);
 
-    color: white;
+    color: var(--pdg-on-primary);
     text-shadow: -1px -1px rgba(0, 0, 0, 0.3);
     font-size: 1em;
     font-weight: bold;
@@ -40,39 +40,54 @@ input[type="submit"], button, a.button {
     min-width: 5em;
     margin: 0.25em;
 
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--pdg-shadow-sm);
 
 }
 
 input[type="submit"]:hover, button:hover, a.button:hover {
-    background-color: #5A5A5A;
+    background-color: var(--pdg-accent);
+    border-color: var(--pdg-accent);
+    color: var(--pdg-on-accent);
 }
 
 input[type="submit"]:active, button:active, a.button:active {
 
-    background-color: #2C2C2C;
-    
-    box-shadow: 
+    background-color: var(--pdg-accent-hover);
+    border-color: var(--pdg-accent-hover);
+    color: var(--pdg-on-accent);
+
+    box-shadow:
                 inset 1px 1px 0.25em rgba(0, 0, 0, 0.25),
                 -1px -1px 0.25em rgba(0, 0, 0, 0.25),
                 1px 1px 0.25em rgba(255, 255, 255, 0.25);
 }
 
 button.danger, a.button.danger {
-    background: #A43;
+    background: var(--pdg-error);
+    border-color: var(--pdg-error);
+    color: var(--pdg-on-error);
 }
 
+/* No dedicated error-hover token exists, so the destructive states swap to the
+ * error container pair. That reads as a deeper red in light themes and a
+ * brighter one in dark themes, and both halves of the pair are contrast-checked
+ * against each other in every palette. */
 button.danger:hover, a.button.danger:hover {
-    background: #C54;
+    background: var(--pdg-on-error-container);
+    border-color: var(--pdg-on-error-container);
+    color: var(--pdg-error-container);
 }
 
 button.danger:active, a.button.danger:active {
-    background: #932;
+    background: var(--pdg-error);
+    border-color: var(--pdg-error);
+    color: var(--pdg-on-error);
 }
 
 input[type="submit"]:disabled, button:disabled, button.danger:disabled {
-    background-color: #3C3C3C;
-    color: rgba(255, 255, 255, 0.5);
+    background-color: var(--pdg-primary);
+    border-color: var(--pdg-outline-variant);
+    color: var(--pdg-on-primary);
     opacity: 0.75;
 }
 

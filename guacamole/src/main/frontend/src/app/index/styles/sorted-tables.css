@@ -22,13 +22,14 @@ table.sorted {
 }
 
 table.sorted th {
-    background: rgba(0, 0, 0, 0.125);
+    background: var(--pdg-surface-container-low);
+    color: var(--pdg-on-surface);
     font-weight: normal;
 }
 
 table.sorted th,
 table.sorted td {
-    border: 1px solid #AAA;
+    border: 1px solid var(--pdg-outline-variant);
     padding: 0.5em 1em;
 }
 

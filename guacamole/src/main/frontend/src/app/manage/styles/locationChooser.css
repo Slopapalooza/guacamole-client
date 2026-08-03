@@ -27,8 +27,9 @@
     max-height: 2in;
     overflow: auto;
 
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    background: white;
+    border: 1px solid var(--pdg-outline);
+    background: var(--pdg-surface);
+    color: var(--pdg-on-surface);
 
     font-size: 10pt;
 

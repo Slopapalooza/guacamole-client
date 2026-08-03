@@ -22,7 +22,7 @@
 }
 
 .settings table.session-list tr.session:hover {
-    background: #CDA;
+    background: var(--pdg-surface-container-high);
 }
 
 .settings table.session-list .select-session {

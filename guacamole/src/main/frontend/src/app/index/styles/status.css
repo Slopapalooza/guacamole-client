@@ -17,6 +17,8 @@
  * under the License.
  */
 
+/* Dimming scrim behind the modal, not a surface — it reads correctly over any
+ * theme and stays a literal overlay. */
 .global-status-modal guac-modal {
     background: rgba(0, 0, 0, 0.5);
 }

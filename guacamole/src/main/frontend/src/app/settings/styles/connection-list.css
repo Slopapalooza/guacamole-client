@@ -34,5 +34,5 @@
 .settings.connections .connection-list .new-sharing-profile a:hover,
 .settings.connections .connection-list .new-sharing-profile a:visited {
     text-decoration:none;
-    color: black;
+    color: var(--pdg-on-surface);
 }

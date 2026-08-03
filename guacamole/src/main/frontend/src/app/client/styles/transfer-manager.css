@@ -18,7 +18,8 @@
  */
 
 .transfer-manager {
-    background: white;
+    background: var(--pdg-surface);
+    color: var(--pdg-on-surface);
 }
 
 .transfer-manager .header h2 {

@@ -86,14 +86,32 @@ a.home-connection, .empty.balancer a.home-connection-group {
 }
 
 .recent-connections .connection .remove-recent::after {
+
     content: '';
     display: block;
     height: 100%;
     width: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
-    background-image: url('images/x-black.svg');
+
+    /*
+     * The glyph is a fixed-black SVG, which is invisible against a dark
+     * surface. It is drawn as a mask and filled with a themed color instead
+     * of being painted directly, so the control follows the theme.
+     */
+
+    background-color: var(--pdg-on-surface);
+
+    -webkit-mask-image: url('images/x-black.svg');
+    mask-image: url('images/x-black.svg');
+
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
+    -webkit-mask-size: contain;
+    mask-size: contain;
+
+    -webkit-mask-position: center center;
+    mask-position: center center;
+
 }
 
 .recent-connections .connection .remove-recent {

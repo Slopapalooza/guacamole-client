@@ -62,8 +62,9 @@
     cursor: auto;
     text-decoration: none;
     font-weight: bold;
-    background: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--pdg-accent-container);
+    color: var(--pdg-accent);
+    border: 1px solid var(--pdg-accent);
     -moz-border-radius: 0.2em;
     -webkit-border-radius: 0.2em;
     -khtml-border-radius: 0.2em;

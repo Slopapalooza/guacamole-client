@@ -38,7 +38,7 @@
 
 .settings.users table.user-list tr.user.disabled,
 .settings.users table.user-list tr.user.disabled td.username a[href] {
-    color: gray;
+    color: var(--pdg-on-surface-variant);
     font-style: italic;
 }
 

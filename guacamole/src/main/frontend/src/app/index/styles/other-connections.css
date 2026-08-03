@@ -24,8 +24,8 @@
     right: 0;
     bottom: 0;
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--pdg-outline-variant);
+    background: var(--pdg-surface-container);
     max-width: 100%;
     white-space: nowrap;
     transition: max-width 0.125s, width 0.125s;
@@ -43,6 +43,10 @@
     max-width: 16px;
 }
 
+/* Show/hide grip. Its chevron (arrows/right.svg) is a baked black glyph, so it
+ * loses contrast against the dark end of the surface ladder; recoloring it
+ * needs a mask-based icon treatment, which is a change to the shared icon
+ * assets rather than to this rule. */
 #other-connections .client-panel-handle {
 
     position: absolute;
@@ -52,7 +56,7 @@
     width: 16px;
     z-index: 1;
 
-    background-color: white;
+    background-color: var(--pdg-surface-container-highest);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
@@ -82,15 +86,17 @@
 
 }
 
+/* Each entry is a live thumbnail of a remote desktop, so the tile itself stays
+ * a neutral dark well rather than a themed surface. */
 #other-connections .client-panel-connection {
 
     display: inline-block;
     position: relative;
 
     margin: 0.5em;
-    border: 1px solid white;
-    background: black;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--pdg-outline-variant);
+    background: var(--pdg-media-well);
+    box-shadow: var(--pdg-shadow-sm);
 
     animation: 0.1s linear 0s popin;
     opacity: 0.5;
@@ -102,6 +108,9 @@
 
 }
 
+/* Attention scrim, drawn over the thumbnail image itself. warning-white.svg is
+ * a baked white glyph, so this backdrop stays a fixed dark scrim in every
+ * theme; a surface token would invert underneath it and erase the icon. */
 #other-connections .client-panel-connection a[href]::before {
 
     display: block;
@@ -153,6 +162,9 @@
     opacity: 1;
 }
 
+/* Destructive chip sitting on the thumbnail. Its glyph (x.svg) is a baked white
+ * mark, so the red stays fixed and dark: --pdg-error is a light salmon in every
+ * dark palette and would drop the white x to roughly 2.6:1. */
 #other-connections button.close-other-connection img {
     background: #A43;
     border-radius: 18px;
@@ -187,8 +199,8 @@
     z-index: 2;
 
     text-align: left;
-    color: white;
-    background: rgba(0, 0, 0, 0.5);
+    color: var(--pdg-on-media-well);
+    background: var(--pdg-media-well);
     font-size: 0.75em;
     font-weight: bold;
 

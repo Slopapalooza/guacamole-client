@@ -53,15 +53,15 @@
     top:    0;
     bottom: 0;
 
-    background: #444;
+    background: var(--pdg-surface-container-high);
 
-    border: 0.125em solid #666;
+    border: 0.125em solid var(--pdg-outline);
     -moz-border-radius:    0.25em;
     -webkit-border-radius: 0.25em;
     -khtml-border-radius:  0.25em;
     border-radius:         0.25em;
 
-    color: white;
+    color: var(--pdg-on-surface);
     font-size: 40%;
     font-weight: lighter;
     text-align: center;
@@ -79,8 +79,8 @@
 }
 
 .guac-keyboard .guac-keyboard-key.highlight {
-    background: #666;
-    border-color: #666;
+    background: var(--pdg-surface-container-highest);
+    border-color: var(--pdg-outline);
 }
 
 /* Align some keys to the left */
@@ -124,13 +124,14 @@
 
 /* Active latin */
 .guac-keyboard.guac-keyboard-modifier-lat .guac-keyboard-key-latin {
-    background: #882;
-    border-color: #DD4;
+    background: var(--pdg-accent-container);
+    border-color: var(--pdg-accent);
 }
 
 .guac-keyboard .guac-keyboard-key.guac-keyboard-pressed {
-    background: #822;
-    border-color: #D44;
+    background: var(--pdg-accent);
+    border-color: var(--pdg-accent-hover);
+    color: var(--pdg-on-accent);
 }
 
 .guac-keyboard .guac-keyboard-group {

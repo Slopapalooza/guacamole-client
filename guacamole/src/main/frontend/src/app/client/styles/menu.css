@@ -24,8 +24,9 @@
     height: 100%;
     max-width: 100%;
     width: 480px;
-    background: #EEE;
-    box-shadow: inset -1px 0 2px white, 1px 0 2px black;
+    background: var(--pdg-surface);
+    color: var(--pdg-on-surface);
+    box-shadow: inset -1px 0 2px var(--pdg-outline-variant), 1px 0 2px rgba(0, 0, 0, 0.5);
     z-index: 100;
     -webkit-transition: left 0.125s, opacity 0.125s;
     -moz-transition: left 0.125s, opacity 0.125s;

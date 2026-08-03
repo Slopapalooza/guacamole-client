@@ -18,12 +18,13 @@
  */
 
 .clipboard, .clipboard-service-target {
-    background: white;
+    background: var(--pdg-surface);
+    color: var(--pdg-on-surface);
 }
 
 .clipboard  {
     position: relative;
-    border: 1px solid #AAA;
+    border: 1px solid var(--pdg-outline-variant);
     -moz-border-radius: 0.25em;
     -webkit-border-radius: 0.25em;
     -khtml-border-radius: 0.25em;
@@ -44,7 +45,7 @@
     max-height: 100%;
     display: block;
     margin: 0 auto;
-    border: 1px solid black;
+    border: 1px solid var(--pdg-outline);
     background: url('images/checker.svg');
 }
 
@@ -91,8 +92,8 @@
 
     flex: 1;
 
-    background: rgba(0, 0, 0, 0.125);
-    color: #888;
+    background: var(--pdg-surface-container-high);
+    color: var(--pdg-on-surface-variant);
 
     padding: 0.5em;
     overflow: hidden;

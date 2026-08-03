@@ -58,7 +58,8 @@
 }
 
 .login-ui .login-dialog th {
-    text-shadow: 1px 1px white;
+    color: var(--pdg-on-surface);
+    text-shadow: 1px 1px var(--pdg-surface);
 }
 
 .login-ui .login-dialog .version {
@@ -86,8 +87,8 @@
     -khtml-border-radius: 0.5em;
     border-radius: 0.5em;
 
-    color: white;
-    background: green;
+    color: var(--pdg-on-surface-variant);
+    background: var(--pdg-surface-container-highest);
     font-size: 0.5em;
     font-style: italic;
     opacity: 0.5;

@@ -68,7 +68,7 @@
 
 .transfer.in-progress .progress {
 
-    background-color: #EEE;
+    background-color: var(--pdg-surface-container-high);
     background-image: url('images/progress.svg');
 
     background-size: 16px 16px;
@@ -90,7 +90,7 @@
 
 .transfer .progress .bar {
     display: none;
-    background: #A3D655;
+    background: var(--pdg-status-active);
     position: absolute;
     top: 0;
     left: 0;
@@ -107,12 +107,13 @@
 }
 
 .transfer.savable .filename {
-    color: blue;
+    color: var(--pdg-accent);
     text-decoration: underline;
 }
 
 .transfer.error {
-    background: #FDD;
+    background: var(--pdg-error-container);
+    color: var(--pdg-on-error-container);
 }
 
 .transfer.error .text,

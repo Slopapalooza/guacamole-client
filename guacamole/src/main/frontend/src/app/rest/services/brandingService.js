@@ -26,9 +26,10 @@ angular.module('rest').factory('brandingService', ['$injector',
         function brandingService($injector) {
 
     // Required services
-    var $document = $injector.get('$document');
-    var $http     = $injector.get('$http');
-    var $q        = $injector.get('$q');
+    var $document             = $injector.get('$document');
+    var $http                 = $injector.get('$http');
+    var $q                    = $injector.get('$q');
+    var authenticationService = $injector.get('authenticationService');
 
     var service = {};
 
@@ -97,7 +98,7 @@ angular.module('rest').factory('brandingService', ['$injector',
      *     A promise which resolves once the name has been stored.
      */
     service.setSiteName = function setSiteName(siteName) {
-        return $http({
+        return authenticationService.request({
             method : 'PUT',
             url    : 'api/branding',
             data   : { siteName : siteName }
@@ -122,7 +123,7 @@ angular.module('rest').factory('brandingService', ['$injector',
         var reader = new FileReader();
 
         reader.onload = function fileRead() {
-            $http({
+            authenticationService.request({
                 method  : 'POST',
                 url     : 'api/branding/logo',
                 data    : reader.result,
@@ -152,7 +153,7 @@ angular.module('rest').factory('brandingService', ['$injector',
      *     A promise which resolves once the logo has been removed.
      */
     service.removeLogo = function removeLogo() {
-        return $http({
+        return authenticationService.request({
             method : 'DELETE',
             url    : 'api/branding/logo'
         })

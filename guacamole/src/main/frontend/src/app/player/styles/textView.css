@@ -36,7 +36,7 @@
 .text-batches .text-batch .timestamp {
 
     white-space: pre-wrap;
-    color: blue;
+    color: var(--pdg-accent);
 
 }
 
@@ -45,8 +45,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: white;
-    color: black;
+    background-color: var(--pdg-surface);
+    color: var(--pdg-on-surface);
 }
 
 .guac-player-text-container .text-controls {
@@ -111,6 +111,6 @@
 
 .text-batches .text .future {
 
-    color: dimgray;
+    color: var(--pdg-on-surface-variant);
 
 }

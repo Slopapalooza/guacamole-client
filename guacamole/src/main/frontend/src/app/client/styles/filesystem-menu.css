@@ -38,8 +38,8 @@
 
 #filesystem-menu .header.breadcrumbs {
     display: block;
-    background: rgba(0,0,0,0.0125);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: var(--pdg-surface-container-low);
+    border-bottom: 1px solid var(--pdg-outline-variant);
     box-shadow: none;
     margin-top: 0;
     border-top: none;
@@ -53,7 +53,8 @@
 }
 
 #filesystem-menu .header.breadcrumbs .breadcrumb:hover {
-    background-color: #CDA;
+    background-color: var(--pdg-accent-container);
+    color: var(--pdg-accent);
     cursor: pointer;
 }
 

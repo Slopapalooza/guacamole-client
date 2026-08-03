@@ -27,8 +27,8 @@
 .client-zoom .client-zoom-out,
 .client-zoom .client-zoom-in {
     max-width: 3em;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--pdg-outline);
+    background: var(--pdg-surface-container-high);
     border-radius: 2em;
     margin: 0.5em;
     cursor: pointer;
@@ -42,8 +42,8 @@
 
 .client-zoom .client-zoom-out:hover,
 .client-zoom .client-zoom-in:hover {
-    border: 1px solid rgba(0, 0, 0, 1);
-    background: #CDA;
+    border: 1px solid var(--pdg-accent);
+    background: var(--pdg-accent-container);
 }
 
 .client-zoom .client-zoom-out:hover img,
@@ -65,7 +65,8 @@
     font-size: 1em;
     padding: 0;
     background: transparent;
-    border-color: rgba(0, 0, 0, 0.125);
+    color: var(--pdg-on-surface);
+    border-color: var(--pdg-outline-variant);
 }
 
 .client-zoom .client-zoom-state input::-webkit-inner-spin-button,

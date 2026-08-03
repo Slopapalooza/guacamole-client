@@ -30,8 +30,8 @@
 }
 
 .file-browser .list-item.focused .caption {
-    border: 1px dotted rgba(0, 0, 0, 0.5);
-    background: rgba(204, 221, 170, 0.5);
+    border: 1px dotted var(--pdg-outline);
+    background: var(--pdg-accent-container);
 }
 
 /* Directory / file icons */

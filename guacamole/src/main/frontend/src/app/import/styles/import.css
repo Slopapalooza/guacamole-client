@@ -34,7 +34,7 @@
 
 .import .errors .error-message {
 
-    color: red;
+    color: var(--pdg-error);
 
 }
 
@@ -53,8 +53,10 @@
 
     width: fit-content;
 
-    border: 1px solid rgba(0,0,0,.25);
-    box-shadow: 1px 1px 2px rgb(0 0 0 / 25%);
+    background: var(--pdg-surface);
+    color: var(--pdg-on-surface);
+    border: 1px solid var(--pdg-outline-variant);
+    box-shadow: var(--pdg-shadow-sm);
 
     margin-left: auto;
     margin-right: auto;
@@ -87,7 +89,7 @@
 
 .file-upload-container .file-error {
 
-    color: red;
+    color: var(--pdg-error);
 
 }
 
@@ -114,14 +116,15 @@
     width: 500px;
     height: 200px;
 
-    background: rgba(0,0,0,.04);
-    border: 1px solid black;
+    background: var(--pdg-surface-container-low);
+    color: var(--pdg-on-surface);
+    border: 1px solid var(--pdg-outline);
 
 }
 
 .file-upload-container .drop-target.file-present {
 
-    background: rgba(0,0,0,.15);
+    background: var(--pdg-surface-container-high);
 
 }
 
@@ -135,7 +138,9 @@
 
 .file-upload-container .drop-target.drop-pending {
 
-    background: #3161a9;
+    background: var(--pdg-accent);
+    border-color: var(--pdg-accent);
+    color: var(--pdg-on-accent);
 
 }
 

@@ -39,8 +39,15 @@
 }
 
 .client-status-modal .notification {
-    background: rgba(40, 40, 40, 0.75);
-    color: white;
+
+    /*
+     * Status chrome floats on top of the remote display well, so it is drawn
+     * with the inverse pair rather than the page surface tokens (matching the
+     * recording player chrome in history-player.css).
+     */
+    background: var(--pdg-inverse-surface);
+    color: var(--pdg-inverse-on-surface);
+
     width: 100%;
     max-width: 100%;
     padding: 1em;
@@ -49,7 +56,8 @@
 }
 
 .client-status-modal .notification.error {
-    background: rgba(112, 9, 8, 0.75)
+    background: var(--pdg-error);
+    color: var(--pdg-on-error);
 }
 
 .client-status-modal .notification .title-bar {
@@ -57,8 +65,16 @@
 }
 
 .client-status-modal .notification .button {
+
     background: transparent;
-    border: 2px solid white;
+
+    /*
+     * currentColor keeps the outline and label tied to whichever foreground
+     * the surrounding notification is using (normal or error variant).
+     */
+    border: 2px solid currentColor;
+    color: inherit;
+
     box-shadow: none;
     text-shadow: none;
     font-weight: normal;
@@ -66,11 +82,13 @@
 
 .client-status-modal .notification .button:hover {
     text-decoration: underline;
-    background: rgba(255, 255, 255, 0.25);
+    background: var(--pdg-accent-container);
+    color: var(--pdg-accent);
 }
 
 .client-status-modal .notification .button:active {
-    background: rgba(255, 255, 255, 0.5);
+    background: var(--pdg-accent);
+    color: var(--pdg-on-accent);
 }
 
 .client-status-modal .notification .parameters {
@@ -90,6 +108,6 @@
 .client-status-modal .notification .parameters input[type=text],
 .client-status-modal .notification .parameters textarea {
     background: transparent;
-    border: 2px solid white;
-    color: white; 
+    border: 2px solid currentColor;
+    color: inherit;
 }

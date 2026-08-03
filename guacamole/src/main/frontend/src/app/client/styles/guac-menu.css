@@ -118,8 +118,8 @@
 #guac-menu #devices .device, #guac-menu #multi-monitor .add-monitor {
 
     padding: 1em;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--pdg-outline-variant);
+    background: var(--pdg-surface-container-low);
 
     padding-left: 3.5em;
     background-size:         1.5em 1.5em;
@@ -134,7 +134,7 @@
 
 #guac-menu #devices .device:hover, #guac-menu #multi-monitor .add-monitor:hover {
     cursor: pointer;
-    border-color: black;
+    border-color: var(--pdg-accent);
 }
 
 #guac-menu #devices .device.filesystem {
@@ -147,14 +147,14 @@
 
 #guac-menu #multi-monitor .add-monitor.disabled {
     pointer-events: none;
-    color: grey;
+    color: var(--pdg-on-surface-variant);
 }
 
 #guac-menu #share-links {
 
     padding: 1em;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--pdg-outline-variant);
+    background: var(--pdg-surface-container-low);
 
     font-size: 0.8em;
 

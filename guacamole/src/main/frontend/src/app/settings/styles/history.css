@@ -73,7 +73,7 @@
 }
 
 .settings.connectionHistory a.history-session-recording {
-    color: #0000ee;
+    color: var(--pdg-accent);
 }
 
 .settings.connectionHistory a.history-session-recording::after {

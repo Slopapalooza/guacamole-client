@@ -26,9 +26,9 @@
 }
 
 .terminal-color-scheme-field .custom-color-scheme {
-    background: #EEE;
+    background: var(--pdg-surface-container-high);
     padding: 0.5em;
-    border: 1px solid silver;
+    border: 1px solid var(--pdg-outline-variant);
     border-spacing: 0;
     margin-top: -2px;
     width: 100%;
@@ -54,6 +54,11 @@
     text-align: center;
     font-size: 0.75em;
     cursor: pointer;
+
+    /* NOT theme colors: the swatch background is the user's chosen terminal
+     * color, applied inline. The literal black/white below is the readable
+     * contrast against that arbitrary color (the "dark" class is computed
+     * from the swatch's own luminance), so it must not follow the theme. */
     color: black;
 
     -ms-flex: 1;
@@ -106,7 +111,7 @@
 /* Render show/hide as a link */
 .terminal-color-scheme-field .custom-color-scheme-hide-details,
 .terminal-color-scheme-field .custom-color-scheme-show-details {
-    color: blue;
+    color: var(--pdg-accent);
     text-decoration: underline;
     cursor: pointer;
     margin: 0 0.25em;

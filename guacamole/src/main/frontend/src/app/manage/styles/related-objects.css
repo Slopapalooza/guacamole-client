@@ -39,8 +39,9 @@
     margin: 0.25em;
     padding: 0.25em;
 
-    border: 1px solid silver;
-    background: #F5F5F5;
+    border: 1px solid var(--pdg-outline-variant);
+    background: var(--pdg-surface-container-highest);
+    color: var(--pdg-on-surface);
     -moz-border-radius: 0.25em;
     -webkit-border-radius: 0.25em;
     -khtml-border-radius: 0.25em;
@@ -67,7 +68,7 @@
 }
 
 .related-objects .all-related-objects {
-    border-top: 1px solid silver;
+    border-top: 1px solid var(--pdg-outline-variant);
 }
 
 .related-objects .abbreviated-related-objects p.no-related-objects,

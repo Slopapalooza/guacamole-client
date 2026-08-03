@@ -46,8 +46,11 @@
 
 .settings.connectionHistoryPlayer {
 
-    background: black;
-    color: white;
+    /* Playback of a recorded remote session: this is a media well, so it
+     * stays a neutral dark surface in every theme rather than following the
+     * page background. */
+    background: var(--pdg-media-well);
+    color: var(--pdg-on-media-well);
 
     position: absolute;
     top: 0;
@@ -77,10 +80,12 @@
 
     display: inline-block;
 
-    border: 2px solid white;
+    /* Player chrome sits on top of the dark well, so it is drawn with the
+     * inverse pair rather than the page surface tokens */
+    border: 2px solid var(--pdg-on-media-well);
     border-radius: 0;
-    background: black;
-    color: white;
+    background: var(--pdg-media-well);
+    color: var(--pdg-on-media-well);
     font-weight: bold;
 
     padding: 0.5em 1em;

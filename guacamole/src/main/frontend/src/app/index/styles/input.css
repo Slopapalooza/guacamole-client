@@ -18,11 +18,11 @@
  */
 
 input[type=checkbox], input[type=number], input[type=text], input[type=email], input[type=radio], label, textarea {
-    -webkit-tap-highlight-color: rgba(128,192,128,0.5);
+    -webkit-tap-highlight-color: var(--pdg-accent-ring);
 }
 
 div.location, input[type=text], input[type=email], input[type=number], input[type=password], textarea {
-    border: 1px solid #777;
+    border: 1px solid var(--pdg-outline);
     -moz-border-radius: 0.2em;
     -webkit-border-radius: 0.2em;
     -khtml-border-radius: 0.2em;
@@ -31,7 +31,8 @@ div.location, input[type=text], input[type=email], input[type=number], input[typ
     max-width: 16em;
     padding: 0.25em;
     font-size: 0.8em;
-    background: white;
+    background: var(--pdg-surface);
+    color: var(--pdg-on-surface);
     cursor: text;
 }
 

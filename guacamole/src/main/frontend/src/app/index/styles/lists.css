@@ -29,7 +29,7 @@
 .connection a,
 .connection-group a {
     text-decoration:none;
-    color: black;
+    color: var(--pdg-on-surface);
 }
 
 .user a:hover,
@@ -37,7 +37,7 @@
 .connection a:hover,
 .connection-group a:hover {
     text-decoration:none;
-    color: black;
+    color: var(--pdg-on-surface);
 }
 
 .user a:visited,
@@ -45,11 +45,11 @@
 .connection a:visited,
 .connection-group a:visited {
     text-decoration:none;
-    color: black;
+    color: var(--pdg-on-surface);
 }
 
 .recent-connections .connection:hover {
-    background: #CDA;
+    background: var(--pdg-surface-container-high);
 }
 
 .recent-connections .connection .thumbnail {
@@ -57,10 +57,12 @@
     margin: 0.5em;
 }
 
+/* The thumbnail is a miniature of the remote desktop, so its well stays a
+ * neutral dark backdrop rather than a themed surface. */
 .recent-connections .connection .thumbnail > * {
-    border: 1px solid black;
-    background: black;
-    box-shadow: 1px 1px 5px black;
+    border: 1px solid var(--pdg-outline-variant);
+    background: var(--pdg-media-well);
+    box-shadow: var(--pdg-shadow-md);
     max-width: 75%;
     display: inline-block;
 }
@@ -77,10 +79,13 @@
     margin-left: 0.25em;
 }
 
+/* Empty-state caption. The stock rule painted near-white text and relied on a
+ * dark text-shadow to keep it legible against the page; a muted content token
+ * says the same thing directly and survives a dark background, so the rescue
+ * shadow is no longer needed. */
 .placeholder {
 
-    color: rgba(255, 255, 255, 0.5);
-    text-shadow: -1px -1px rgba(0, 0, 0, 0.5);
+    color: var(--pdg-on-surface-variant);
     text-align: center;
     opacity: 0.5;
 
