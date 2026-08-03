@@ -11,7 +11,7 @@
     <!-- Product identity + current user -->
     <div class="pico-sidebar-head">
         <div class="pico-logo logo" aria-hidden="true"></div>
-        <h1 class="pico-brand">{{'APP.NAME' | translate}}</h1>
+        <h1 class="pico-brand">{{branding.siteName || ('APP.NAME' | translate)}}</h1>
         <a class="pico-user" ng-hide="isAnonymous()" href="{{preferencesUrl}}"
            title="{{'SETTINGS_PREFERENCES.SECTION_HEADER_PREFERENCES' | translate}}">
             <div class="pico-user-avatar" aria-hidden="true">

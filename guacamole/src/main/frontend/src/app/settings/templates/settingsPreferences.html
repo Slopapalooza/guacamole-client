@@ -6,6 +6,35 @@
         <guac-form content="localeFields" model="preferences" namespace="'SETTINGS_PREFERENCES'"></guac-form>
     </div>
 
+    <!-- Branding (administrators only) -->
+    <h2 class="header" ng-show="canManageBranding">{{'SETTINGS_PREFERENCES.SECTION_HEADER_BRANDING' | translate}}</h2>
+    <div class="settings section branding" ng-show="canManageBranding">
+        <p>{{'SETTINGS_PREFERENCES.HELP_BRANDING' | translate}}</p>
+        <div class='form'>
+            <table class='fields'>
+                <tr>
+                    <th>{{'SETTINGS_PREFERENCES.FIELD_HEADER_SITE_NAME' | translate}}</th>
+                    <td>
+                        <input type="text" ng-model="siteName" ng-blur="saveSiteName()"
+                               placeholder="{{'APP.NAME' | translate}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{'SETTINGS_PREFERENCES.FIELD_HEADER_LOGO' | translate}}</th>
+                    <td>
+                        <div class="logo-editor">
+                            <div class="logo-preview logo"></div>
+                            <input type="file" accept="image/png,image/jpeg,image/webp,image/gif"
+                                   pico-file-select="uploadLogo(file)">
+                            <button ng-show="branding.hasLogo" ng-click="removeLogo()">{{'SETTINGS_PREFERENCES.ACTION_REMOVE_LOGO' | translate}}</button>
+                        </div>
+                        <p class="logo-help">{{'SETTINGS_PREFERENCES.HELP_LOGO' | translate}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
     <!-- Appearance -->
     <h2 class="header">{{'SETTINGS_PREFERENCES.SECTION_HEADER_APPEARANCE' | translate}}</h2>
     <div class="settings section appearance">

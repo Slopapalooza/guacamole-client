@@ -44,6 +44,7 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
             const preferenceService     = $injector.get('preferenceService');
             const requestService        = $injector.get('requestService');
             const themeService          = $injector.get('themeService');
+            const brandingService       = $injector.get('brandingService');
             const schemaService         = $injector.get('schemaService');
             const userService           = $injector.get('userService');
 
@@ -115,6 +116,68 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
              * @type Object[]
              */
             $scope.themeModes = themeService.modes;
+
+            /**
+             * The deployment's branding.
+             *
+             * @type Object
+             */
+            $scope.branding = brandingService;
+
+            /**
+             * The site name as currently edited, before being saved.
+             *
+             * @type String
+             */
+            $scope.siteName = null;
+
+            brandingService.load().then(function loaded() {
+                $scope.siteName = brandingService.siteName;
+            });
+
+            /**
+             * Stores the edited site name.
+             */
+            $scope.saveSiteName = function saveSiteName() {
+                brandingService.setSiteName($scope.siteName)
+                ['catch'](requestService.createErrorCallback(function failed(error) {
+                    guacNotification.showStatus({
+                        className : 'error',
+                        title     : 'SETTINGS_PREFERENCES.DIALOG_HEADER_ERROR',
+                        text      : error.translatableMessage,
+                        actions   : [{ name : 'SETTINGS_PREFERENCES.ACTION_ACKNOWLEDGE',
+                                       callback : function ack() { guacNotification.showStatus(false); } }]
+                    });
+                }));
+            };
+
+            /**
+             * Uploads the chosen image as the logo.
+             *
+             * @param {File} file
+             *     The image chosen by the administrator.
+             */
+            $scope.uploadLogo = function uploadLogo(file) {
+                if (!file)
+                    return;
+                brandingService.setLogo(file)
+                ['catch'](requestService.createErrorCallback(function failed(error) {
+                    guacNotification.showStatus({
+                        className : 'error',
+                        title     : 'SETTINGS_PREFERENCES.DIALOG_HEADER_ERROR',
+                        text      : error.translatableMessage,
+                        actions   : [{ name : 'SETTINGS_PREFERENCES.ACTION_ACKNOWLEDGE',
+                                       callback : function ack() { guacNotification.showStatus(false); } }]
+                    });
+                }));
+            };
+
+            /**
+             * Removes the stored logo, restoring the default.
+             */
+            $scope.removeLogo = function removeLogo() {
+                brandingService.removeLogo()['catch'](requestService.IGNORE);
+            };
 
             /**
              * All available user attributes. This is only the set of attribute
@@ -232,6 +295,10 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
                         // Or if implicitly granted through being an administrator
                         || PermissionSet.hasSystemPermission(permissions,
                             PermissionSet.SystemPermissionType.ADMINISTER));
+
+                // Branding may only be changed by administrators
+                $scope.canManageBranding = PermissionSet.hasSystemPermission(
+                        permissions, PermissionSet.SystemPermissionType.ADMINISTER);
 
             })
             ['catch'](requestService.createErrorCallback(function permissionsFailed(error) {

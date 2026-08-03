@@ -69,3 +69,8 @@
     background: #334155;
     border-color: #334155;
 }
+
+/* The configured logo, falling back to the shipped mark when none is set */
+.login-ui .login-dialog .logo {
+    background-image: var(--pdg-logo, url('images/guac-tricolor.svg'));
+}

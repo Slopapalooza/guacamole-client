@@ -61,7 +61,7 @@ body {
     width: 2.5rem;
     height: 2.5rem;
     margin: 0 auto var(--pdg-space-sm);
-    background-image: url('images/guac-tricolor.svg');
+    background-image: var(--pdg-logo, url('images/guac-tricolor.svg'));
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -321,4 +321,31 @@ body:not(.client):not(.secondaryMonitor) .pico-sidebar.collapsed ~ #content {
     .pico-nav-link {
         transition: none;
     }
+}
+
+/* Branding editor (Settings > Preferences, administrators only) */
+
+.settings.branding .logo-editor {
+    display: flex;
+    align-items: center;
+    gap: var(--pdg-space-sm);
+    flex-wrap: wrap;
+}
+
+.settings.branding .logo-preview {
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 auto;
+    border: 1px solid var(--pdg-outline-variant);
+    border-radius: var(--pdg-radius-lg);
+    background-image: var(--pdg-logo, url('images/guac-tricolor.svg'));
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.settings.branding .logo-help {
+    margin: 6px 0 0;
+    font-size: 0.8125rem;
+    color: var(--pdg-on-surface-variant);
 }

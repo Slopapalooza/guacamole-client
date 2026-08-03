@@ -40,6 +40,7 @@ angular.module('navigation').directive('guacSidebar', [function guacSidebar() {
             // Required services
             var $location             = $injector.get('$location');
             var authenticationService = $injector.get('authenticationService');
+            var brandingService       = $injector.get('brandingService');
             var preferenceService     = $injector.get('preferenceService');
             var requestService        = $injector.get('requestService');
             var userService           = $injector.get('userService');
@@ -53,6 +54,13 @@ angular.module('navigation').directive('guacSidebar', [function guacSidebar() {
              * @type Boolean
              */
             $scope.collapsed = !!preferenceService.preferences.sidebarCollapsed;
+
+            /**
+             * The deployment's branding, providing the configured site name.
+             *
+             * @type Object
+             */
+            $scope.branding = brandingService;
 
             /**
              * Collapses the sidebar to icons, or restores it.

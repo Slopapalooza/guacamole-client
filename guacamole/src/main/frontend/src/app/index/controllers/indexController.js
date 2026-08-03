@@ -48,8 +48,13 @@ angular.module('index').controller('indexController', ['$scope', '$injector',
     const clipboardService       = $injector.get('clipboardService');
     const guacNotification       = $injector.get('guacNotification');
     const guacClientManager      = $injector.get('guacClientManager');
+    const brandingService        = $injector.get('brandingService');
     const preferenceService      = $injector.get('preferenceService');
     const themeService           = $injector.get('themeService');
+
+    // Retrieve the deployment's branding; readable without authentication,
+    // so the login screen shows the configured name and logo
+    brandingService.load();
 
     /*
      * Apply the selected theme immediately and whenever the selection

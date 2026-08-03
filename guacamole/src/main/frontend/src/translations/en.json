@@ -1215,6 +1215,13 @@
         "NAME_INPUT_METHOD_TEXT" : "@:CLIENT.NAME_INPUT_METHOD_TEXT",
 
         "FIELD_HEADER_EXPAND_CONNECTION_GROUPS" : "Expand connection groups by default:",
+        "ACTION_ACKNOWLEDGE"  : "@:APP.ACTION_ACKNOWLEDGE",
+        "ACTION_REMOVE_LOGO"  : "Remove logo",
+
+        "DIALOG_HEADER_ERROR" : "@:APP.DIALOG_HEADER_ERROR",
+
+        "FIELD_HEADER_LOGO"       : "Logo:",
+        "FIELD_HEADER_SITE_NAME"  : "Site name:",
         "FIELD_HEADER_THEME"      : "Theme:",
         "FIELD_HEADER_THEME_MODE" : "Appearance:",
 
@@ -1228,7 +1235,11 @@
         "NAME_THEME_RED"   : "Red",
         "NAME_THEME_SLATE" : "Slate",
 
+        "HELP_BRANDING" : "The site name and logo shown on the login page, in the sidebar, and in the browser tab. These apply to everyone using this deployment.",
+        "HELP_LOGO"     : "PNG, JPEG, WebP, or GIF, up to 256 KB.",
+
         "SECTION_HEADER_APPEARANCE"           : "Appearance",
+        "SECTION_HEADER_BRANDING"             : "Branding",
         "SECTION_HEADER_DEFAULT_INPUT_METHOD" : "Default Input Method",
         "SECTION_HEADER_DEFAULT_MOUSE_MODE"   : "Default Mouse Emulation Mode",
         "SECTION_HEADER_UPDATE_PASSWORD"      : "Change Password"

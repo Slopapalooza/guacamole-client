@@ -70,6 +70,7 @@ angular.module('login').directive('guacLogin', [function guacLogin() {
         var $rootScope            = $injector.get('$rootScope');
         var $route                = $injector.get('$route');
         var $translate            = $injector.get('$translate');
+        var brandingService       = $injector.get('brandingService');
         var authenticationService = $injector.get('authenticationService');
         var cacheService          = $injector.get('cacheService');
         var requestService        = $injector.get('requestService');
@@ -96,6 +97,13 @@ angular.module('login').directive('guacLogin', [function guacLogin() {
          *
          * @type TranslatableMessage
          */
+        /**
+         * The deployment's branding, providing the configured site name.
+         *
+         * @type Object
+         */
+        $scope.branding = brandingService;
+
         $scope.loginError = null;
 
         /**
